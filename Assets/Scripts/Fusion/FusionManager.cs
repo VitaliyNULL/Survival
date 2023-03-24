@@ -12,6 +12,7 @@ namespace VitaliyNULL.Fusion
         #region Private Fields
 
         private NetworkRunner _runner;
+        private SessionInfo _sessionInfo;
 
         #endregion
 
@@ -19,11 +20,13 @@ namespace VitaliyNULL.Fusion
 
         public void Host()
         {
+            if(_runner!=null) return;
             StartGame(GameMode.Host);
         }
 
         public void Join()
         {
+            if(_runner!=null) return;
             StartGame(GameMode.Client);
         }
 
@@ -55,6 +58,7 @@ namespace VitaliyNULL.Fusion
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
             Debug.Log($"Player with id: {player.PlayerId} joined the room ");
+            SceneManager.LoadScene(1);
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -76,10 +80,12 @@ namespace VitaliyNULL.Fusion
 
         public void OnConnectedToServer(NetworkRunner runner)
         {
+            Debug.Log($"Player connected to server ");
         }
 
         public void OnDisconnectedFromServer(NetworkRunner runner)
         {
+            Debug.Log($"Player connected to server ");
         }
 
         public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
