@@ -5,7 +5,7 @@ namespace VitaliyNULL.UI
 {
     public class InputUserName : MonoBehaviour
     {
-        private string _username;
+        private string _username = "";
         private TMP_InputField _inputField;
 
         private void Start()
@@ -15,14 +15,15 @@ namespace VitaliyNULL.UI
 
         public void OnChangeInput()
         {
-            if (_username.Length >= 20)
+            if (_inputField.text.Length <= 12)
             {
-                _inputField.text = _username;
-                
+                _username = _inputField.text;
+                UIMainMenuManager.Instance.CleanWarningText();
             }
             else
             {
-                _username = _inputField.text;
+                _inputField.text = _username;
+                UIMainMenuManager.Instance.ChangeWarningText("Username cannot be longer than 12 symbols");
             }
         }
     }
