@@ -26,5 +26,10 @@ namespace VitaliyNULL.UI
                 UIMainMenuManager.Instance.ChangeWarningText("Username cannot be longer than 12 symbols");
             }
         }
+
+        private void OnDisable()
+        {
+            UIMainMenuManager.Instance.CleanWarningText();
+        }
     }
 }

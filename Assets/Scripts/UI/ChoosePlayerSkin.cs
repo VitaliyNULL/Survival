@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace VitaliyNULL.UI
@@ -15,8 +15,12 @@ namespace VitaliyNULL.UI
     {
         public PlayerSkin playerSkinId;
         private Button _button;
-        
-        
+
+        private void Start()
+        {
+            _button = GetComponent<Button>();
+        }
+
         public void GetPlayerSkin()
         {
             Debug.Log(playerSkinId);
