@@ -10994,7 +10994,6 @@ MonoBehaviour:
   waitingForPlayerUI: {fileID: 725216984}
   mainMenuUI: {fileID: 1052720988}
   lobbyUI: {fileID: 1049256184}
-  roomUI: {fileID: 0}
   createRoomUI: {fileID: 751290103}
   warningUI: {fileID: 1094666214}
 --- !u!4 &1995077652

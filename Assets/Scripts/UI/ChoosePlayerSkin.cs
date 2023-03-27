@@ -1,17 +1,11 @@
 using Fusion;
 using UnityEngine;
 using UnityEngine.UI;
+using VitaliyNULL.Core;
+using VitaliyNULL.NetworkPlayer;
 
 namespace VitaliyNULL.UI
 {
-    public enum PlayerSkin
-    {
-        Farmer0,
-        Farmer1,
-        Farmer2,
-        Farmer3,
-    }
-
     public class ChoosePlayerSkin : MonoBehaviour
     {
         public PlayerSkin playerSkinId;
@@ -27,7 +21,7 @@ namespace VitaliyNULL.UI
         public void GetPlayerSkin()
         {
             Debug.Log($"{playerSkinId} was chose");
-            
+            NetworkSpawner.Instance.SpawnPlayerManager(playerSkinId);
         }
     }
 }
