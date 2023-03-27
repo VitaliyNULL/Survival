@@ -16,7 +16,7 @@ namespace VitaliyNULL.Fusion
 
         private NetworkRunner _runner;
         private SessionInfo _sessionInfo;
-        
+        private readonly string _sceneName = "GameScene";
         private PlayerRef _player;
         private readonly string _lobbyName = "MainLobby";
 
@@ -32,7 +32,12 @@ namespace VitaliyNULL.Fusion
 
         private void Start()
         {
-            Instance ??= this;
+            if (Instance != null)
+            {
+                Destroy(Instance.gameObject);
+            }
+
+            Instance = this;
         }
 
         #endregion
@@ -43,10 +48,8 @@ namespace VitaliyNULL.Fusion
         {
             UIMainMenuManager.Instance.OpenLoadingUI();
             _runner ??= gameObject.AddComponent<NetworkRunner>();
-            // _runner ??= Instantiate(new GameObject().AddComponent<NetworkRunner>());
-            var clientTask = CreateRoom(sessionInfo);
+            var clientTask = CreateRoom(sessionInfo,_sceneName);
             yield return new WaitUntil(predicate: () => clientTask.IsCompleted);
-            UIMainMenuManager.Instance.OpenRoomUI();
             Debug.Log("Final");
         }
 
@@ -55,7 +58,6 @@ namespace VitaliyNULL.Fusion
         {
             UIMainMenuManager.Instance.OpenLoadingUI();
             _runner ??= gameObject.AddComponent<NetworkRunner>();
-            // _runner ??= Instantiate(new GameObject().AddComponent<NetworkRunner>());
             Debug.Log($"{_runner.gameObject.name}");
             var clientTask = JoinLobby();
             yield return new WaitUntil(predicate: () => clientTask.IsCompleted);
@@ -65,10 +67,8 @@ namespace VitaliyNULL.Fusion
         {
             UIMainMenuManager.Instance.OpenLoadingUI();
             _runner ??= gameObject.AddComponent<NetworkRunner>();
-            // _runner ??= Instantiate(new GameObject().AddComponent<NetworkRunner>());
             var clientTask = JoinRoom(info);
             yield return new WaitUntil(predicate: () => clientTask.IsCompleted);
-            UIMainMenuManager.Instance.OpenRoomUI();
         }
 
         private async Task JoinLobby()
@@ -84,7 +84,7 @@ namespace VitaliyNULL.Fusion
             }
         }
 
-        private async Task CreateRoom(string sessionName)
+        private async Task CreateRoom(string sessionName,string sceneName)
         {
             _runner.ProvideInput = true;
             // Start or join (depends on gamemode) a session with a specific name
@@ -94,7 +94,7 @@ namespace VitaliyNULL.Fusion
                 CustomLobbyName = _lobbyName,
                 SessionName = sessionName,
                 PlayerCount = 2,
-                Scene = SceneManager.GetActiveScene().buildIndex,
+                Scene = SceneUtility.GetBuildIndexByScenePath($"Scenes/{sceneName}"),
                 SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
             });
         }
@@ -112,7 +112,8 @@ namespace VitaliyNULL.Fusion
                 SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
             });
         }
-
+        
+        
 
 
         #endregion
@@ -133,9 +134,13 @@ namespace VitaliyNULL.Fusion
         {
             StartCoroutine(WaitForJoinRoom(info));
         }
+
+        public void OnDisconnect()
+        {
+            _runner.Shutdown();
+            SceneManager.LoadScene(0);
+        }
         
-
-
         #endregion
         
         #region INetworkRunnerCallbacks
@@ -160,6 +165,7 @@ namespace VitaliyNULL.Fusion
 
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
+            Debug.Log($"Shut down {runner.LocalPlayer.PlayerId}");
         }
 
         public void OnConnectedToServer(NetworkRunner runner)
@@ -187,13 +193,13 @@ namespace VitaliyNULL.Fusion
 
         public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
         {
+            UIMainMenuManager.Instance.CleanAllSessionInfoContainers();
             if (sessionList.Count == 0)
             {
                 Debug.Log("Joined Lobby, no sessions founds");
             }
             else
             {
-                UIMainMenuManager.Instance.CleanAllSessionInfoContainers();
                 foreach (SessionInfo session in sessionList)
                 {
                     UIMainMenuManager.Instance.SpawnSessionInfoUIContainer(session);
@@ -204,6 +210,7 @@ namespace VitaliyNULL.Fusion
 
         public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
         {
+            
         }
 
         public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)

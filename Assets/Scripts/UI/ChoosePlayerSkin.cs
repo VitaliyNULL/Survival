@@ -1,4 +1,4 @@
-using System;
+using Fusion;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,19 +11,23 @@ namespace VitaliyNULL.UI
         Farmer2,
         Farmer3,
     }
-    public class ChoosePlayerSkin: MonoBehaviour
+
+    public class ChoosePlayerSkin : MonoBehaviour
     {
         public PlayerSkin playerSkinId;
         private Button _button;
+        [Networked] public NetworkBool Waiting { get; set; }
 
         private void Start()
         {
             _button = GetComponent<Button>();
+            _button.onClick.AddListener(GetPlayerSkin);
         }
 
         public void GetPlayerSkin()
         {
-            Debug.Log(playerSkinId);
+            Debug.Log($"{playerSkinId} was chose");
+            
         }
     }
 }

@@ -16,10 +16,10 @@ namespace VitaliyNULL.UI
         [SerializeField] private GameObject waitingForPlayerUI;
         [SerializeField] private GameObject mainMenuUI;
         [SerializeField] private GameObject lobbyUI;
-        [SerializeField] private GameObject roomUI;
         [SerializeField] private GameObject createRoomUI;
         [SerializeField] private GameObject warningUI;
         private GameObject _currentUIObject;
+        private readonly string _gameSceneName = "GameScene";
         private string _sessionName;
 
         #endregion
@@ -34,7 +34,12 @@ namespace VitaliyNULL.UI
 
         private void Start()
         {
-            Instance ??= this;
+            if (Instance != null)
+            {
+                Destroy(Instance.gameObject);
+            }
+
+            Instance = this;
             _currentUIObject = mainMenuUI;
         }
 
@@ -47,12 +52,6 @@ namespace VitaliyNULL.UI
             ChangeCurrentUIObject(createRoomUI);
             OpenCurrentUIObject();
         }
-        public void OpenRoomUI()
-        {
-            ChangeCurrentUIObject(roomUI);
-            OpenCurrentUIObject();
-        }
-
         public void OpenMainMenuUI()
         {
             ChangeCurrentUIObject(mainMenuUI);
@@ -97,6 +96,12 @@ namespace VitaliyNULL.UI
         {
             FusionManager.Instance.OnCreateRoom(_sessionName);
             Debug.Log(_sessionName);
+        }
+
+        public void OpenWaitingUI()
+        {
+            ChangeCurrentUIObject(waitingForPlayerUI);
+            OpenCurrentUIObject();
         }
 
         public void OpenLoadingUI()
