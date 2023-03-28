@@ -7,8 +7,6 @@ namespace VitaliyNULL.NetworkPlayer
     {
         [SerializeField] private PlayerManager playerManager;
         public static NetworkSpawner Instance;
-
-
         private void Start()
         {
             if (Instance != null)
@@ -21,9 +19,13 @@ namespace VitaliyNULL.NetworkPlayer
 
         public void SpawnPlayerManager(PlayerSkin playerSkin)
         {
+            
             PlayerManager pM = Instantiate(playerManager);
             pM.SetPlayerSkin(playerSkin);
-            
+            if (pM != null)
+            {
+                Debug.Log("Player Manager is exists");
+            }
         }
     }
 }

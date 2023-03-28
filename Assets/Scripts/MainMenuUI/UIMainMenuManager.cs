@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using VitaliyNULL.Fusion;
 
-namespace VitaliyNULL.UI
+namespace VitaliyNULL.MainMenuUI
 {
     public class UIMainMenuManager : MonoBehaviour
     {

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7658595599847740533}
   - component: {fileID: 1768955478626323138}
-  - component: {fileID: 8097410655484782927}
+  - component: {fileID: -8225881878311808430}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -46,8 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _playerController: {fileID: 2388106772278875235, guid: 456a82629c450664e9103ccbbc8a9a15, type: 3}
---- !u!114 &8097410655484782927
+  playerController: {fileID: 2388106772278875235, guid: 456a82629c450664e9103ccbbc8a9a15, type: 3}
+  posForSpawnPlayers:
+  - {x: 0, y: 1, z: 0}
+  - {x: 3, y: 2, z: 0}
+--- !u!114 &-8225881878311808430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

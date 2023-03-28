@@ -2,9 +2,8 @@ using Fusion;
 using UnityEngine;
 using UnityEngine.UI;
 using VitaliyNULL.Core;
-using VitaliyNULL.NetworkPlayer;
 
-namespace VitaliyNULL.UI
+namespace VitaliyNULL.GameSceneUI
 {
     public class ChoosePlayerSkin : MonoBehaviour
     {
@@ -21,7 +20,7 @@ namespace VitaliyNULL.UI
         public void GetPlayerSkin()
         {
             Debug.Log($"{playerSkinId} was chose");
-            NetworkSpawner.Instance.SpawnPlayerManager(playerSkinId);
+            ConfirmPlayerSkin.Instance.SetPlayerSkin(playerSkinId);
         }
     }
 }

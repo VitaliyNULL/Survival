@@ -6,7 +6,6 @@ namespace VitaliyNULL.NetworkPlayer
     {
         public void PlayerLeft(PlayerRef player)
         {
-            throw new System.NotImplementedException();
         }
     }
 }

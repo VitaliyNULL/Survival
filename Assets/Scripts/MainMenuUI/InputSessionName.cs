@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace VitaliyNULL.UI
+namespace VitaliyNULL.MainMenuUI
 {
     public class InputSessionName: MonoBehaviour
     {

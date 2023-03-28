@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace VitaliyNULL.UI
+namespace VitaliyNULL.MainMenuUI
 {
     public class SessionInfoUIContainer : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VitaliyNULL.UI
+namespace VitaliyNULL.GameSceneUI
 {
     public class GameUIManager : MonoBehaviour
     {
@@ -37,6 +37,5 @@ namespace VitaliyNULL.UI
             ChangeCurrentUI(gameUI);
             OpenCurrenUI();
         }
-        
     }
 }
