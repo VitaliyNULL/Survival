@@ -2,10 +2,8 @@ using Fusion;
 
 namespace VitaliyNULL.NetworkPlayer
 {
-    public class PlayerController : NetworkBehaviour, IPlayerLeft
+    public class PlayerController : NetworkBehaviour
     {
-        public void PlayerLeft(PlayerRef player)
-        {
-        }
+       
     }
 }

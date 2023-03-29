@@ -3,13 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using VitaliyNULL.Core;
 
-namespace VitaliyNULL.GameSceneUI
+namespace VitaliyNULL.MainMenuUI
 {
     public class ChoosePlayerSkin : MonoBehaviour
     {
         public PlayerSkin playerSkinId;
+        private readonly string _mySkin = "MY_SKIN";
         private Button _button;
-        [Networked] public NetworkBool Waiting { get; set; }
 
         private void Start()
         {
@@ -20,7 +20,7 @@ namespace VitaliyNULL.GameSceneUI
         public void GetPlayerSkin()
         {
             Debug.Log($"{playerSkinId} was chose");
-            ConfirmPlayerSkin.Instance.SetPlayerSkin(playerSkinId);
+            PlayerPrefs.SetInt(_mySkin, (int)playerSkinId);
         }
     }
 }

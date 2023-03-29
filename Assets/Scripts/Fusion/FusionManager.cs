@@ -7,25 +7,24 @@ using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VitaliyNULL.MainMenuUI;
+using VitaliyNULL.NetworkPlayer;
 
 namespace VitaliyNULL.Fusion
 {
     public class FusionManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         #region Private Fields
-
-        private NetworkRunner _runner;
+        [HideInInspector] public NetworkRunner runner;
         private SessionInfo _sessionInfo;
         private readonly string _sceneName = "GameScene";
         private PlayerRef _player;
         private readonly string _lobbyName = "MainLobby";
-
+        [SerializeField] private PlayerController playerController;
         #endregion
 
         #region Public Fields
-
         public static FusionManager Instance;
-
+        public Dictionary<PlayerRef, PlayerController> spawnedCharacters = new Dictionary<PlayerRef, PlayerController>();
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -47,8 +46,8 @@ namespace VitaliyNULL.Fusion
         private IEnumerator WaitForCreatedRoom(string sessionInfo)
         {
             UIMainMenuManager.Instance.OpenLoadingUI();
-            _runner ??= gameObject.AddComponent<NetworkRunner>();
-            var clientTask = CreateRoom(sessionInfo,_sceneName);
+            runner ??= gameObject.AddComponent<NetworkRunner>();
+            var clientTask = CreateRoom(sessionInfo, _sceneName);
             yield return new WaitUntil(predicate: () => clientTask.IsCompleted);
             Debug.Log("Final");
         }
@@ -57,23 +56,24 @@ namespace VitaliyNULL.Fusion
         private IEnumerator WaitForJoinLobby()
         {
             UIMainMenuManager.Instance.OpenLoadingUI();
-            _runner ??= gameObject.AddComponent<NetworkRunner>();
-            Debug.Log($"{_runner.gameObject.name}");
+            runner ??= gameObject.AddComponent<NetworkRunner>();
+            Debug.Log($"{runner.gameObject.name}");
             var clientTask = JoinLobby();
             yield return new WaitUntil(predicate: () => clientTask.IsCompleted);
             UIMainMenuManager.Instance.OpenJoinLobbyUI();
         }
+
         private IEnumerator WaitForJoinRoom(SessionInfo info)
         {
             UIMainMenuManager.Instance.OpenLoadingUI();
-            _runner ??= gameObject.AddComponent<NetworkRunner>();
+            runner ??= gameObject.AddComponent<NetworkRunner>();
             var clientTask = JoinRoom(info);
             yield return new WaitUntil(predicate: () => clientTask.IsCompleted);
         }
 
         private async Task JoinLobby()
         {
-            var result = await _runner.JoinSessionLobby(SessionLobby.Custom, _lobbyName);
+            var result = await runner.JoinSessionLobby(SessionLobby.Custom, _lobbyName);
             if (result.Ok)
             {
                 Debug.Log("Joined Lobby");
@@ -84,11 +84,11 @@ namespace VitaliyNULL.Fusion
             }
         }
 
-        private async Task CreateRoom(string sessionName,string sceneName)
+        private async Task CreateRoom(string sessionName, string sceneName)
         {
-            _runner.ProvideInput = true;
+            runner.ProvideInput = true;
             // Start or join (depends on gamemode) a session with a specific name
-            await _runner.StartGame(new StartGameArgs()
+            await runner.StartGame(new StartGameArgs()
             {
                 GameMode = GameMode.Host,
                 CustomLobbyName = _lobbyName,
@@ -98,11 +98,12 @@ namespace VitaliyNULL.Fusion
                 SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
             });
         }
+
         private async Task JoinRoom(SessionInfo sessionInfo)
         {
-            _runner.ProvideInput = true;
+            runner.ProvideInput = true;
             // Start or join (depends on gamemode) a session with a specific name
-            await _runner.StartGame(new StartGameArgs()
+            await runner.StartGame(new StartGameArgs()
             {
                 GameMode = GameMode.Client,
                 CustomLobbyName = _lobbyName,
@@ -112,9 +113,6 @@ namespace VitaliyNULL.Fusion
                 SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
             });
         }
-        
-        
-
 
         #endregion
 
@@ -137,22 +135,37 @@ namespace VitaliyNULL.Fusion
 
         public void OnDisconnect()
         {
-            _runner.Shutdown();
+            runner.Shutdown();
             SceneManager.LoadScene(0);
         }
-        
+
         #endregion
-        
+
         #region INetworkRunnerCallbacks
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
             Debug.Log($"Player with id: {player.PlayerId} joined the room ");
+            if (runner.IsServer)
+            {
+                // Create a unique position for the player
+                Vector3 spawnPosition =
+                    new Vector3((player.RawEncoded % runner.Config.Simulation.DefaultPlayers) * 3, 1, 0);
+                PlayerController playerController =
+                    runner.Spawn(this.playerController, spawnPosition, Quaternion.identity, player);
+                // Keep track of the player avatars so we can remove it when they disconnect
+                spawnedCharacters.Add(player, playerController);
+            }
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
             Debug.Log($"Player with id: {player.PlayerId} left the room ");
+            if (spawnedCharacters.TryGetValue(player, out PlayerController playerController))
+            {
+                runner.Despawn(playerController.Object);
+                spawnedCharacters.Remove(player);
+            }
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -166,6 +179,16 @@ namespace VitaliyNULL.Fusion
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
             Debug.Log($"Shut down {runner.LocalPlayer.PlayerId}");
+            // Can check if the Runner is being shutdown because of the Host Migration
+            if (shutdownReason == ShutdownReason.HostMigration)
+            {
+                // ...
+                Debug.Log("Closed by HostMigration");
+            }
+            else
+            {
+                // Or a normal Shutdown
+            }
         }
 
         public void OnConnectedToServer(NetworkRunner runner)
@@ -210,11 +233,39 @@ namespace VitaliyNULL.Fusion
 
         public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
         {
-            
         }
 
-        public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
+        public async void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
         {
+            Debug.Log("OnHostMigration");
+            await runner.Shutdown(shutdownReason: ShutdownReason.HostMigration);
+            // Step 2.2
+            // Create a new Runner.
+            var newRunner = Instantiate(new GameObject("FusionManager").AddComponent<NetworkRunner>());
+            FusionManager fusionManager = newRunner.gameObject.AddComponent<FusionManager>();
+            // setup the new runner...
+            // Start the new Runner using the "HostMigrationToken" and pass a callback ref in "HostMigrationResume".
+            StartGameResult result = await newRunner.StartGame(new StartGameArgs()
+            {
+                // SessionName = SessionName,              // ignored, peer never disconnects from the Photon Cloud
+                // GameMode = gameMode,                    // ignored, Game Mode comes with the HostMigrationToken
+                HostMigrationToken = hostMigrationToken, // contains all necessary info to restart the Runner
+                HostMigrationResume = HostMigrationResume, // this will be invoked to resume the simulation
+                PlayerCount = 2,
+                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+                // other args
+            });
+
+            // Check StartGameResult as usual
+            if (result.Ok == false)
+            {
+                Debug.LogWarning(result.ShutdownReason);
+            }
+            else
+            {
+                Debug.Log("Done");
+            }
+            // newRunner.gameObject.AddComponent<FusionManager>();
         }
 
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
@@ -227,6 +278,39 @@ namespace VitaliyNULL.Fusion
 
         public void OnSceneLoadStart(NetworkRunner runner)
         {
+        }
+
+        #endregion
+
+        #region HostMigration
+
+        // Step 3.
+        // Resume Simulation on the new Runner
+        void HostMigrationResume(NetworkRunner runner)
+        {
+            Debug.Log("HostMigrationResume");
+            // Get a temporary reference for each NO from the old Host
+            foreach (var resumeNO in runner.GetResumeSnapshotNetworkObjects())
+            {
+                if (resumeNO.TryGetBehaviour<NetworkPositionRotation>(out var posRot))
+                {
+                    runner.Spawn(resumeNO, position: posRot.ReadPosition(), rotation: posRot.ReadRotation(),
+                        onBeforeSpawned: (runner, newNO) =>
+                        {
+                            // One key aspects of the Host Migration is to have a simple way of restoring the old NetworkObjects state
+                            // If all state of the old NetworkObject is all what is necessary, just call the NetworkObject.CopyStateFrom
+                            newNO.CopyStateFrom(resumeNO);
+
+                            // and/or
+
+                            // If only partial State is necessary, it is possible to copy it only from specific NetworkBehaviours
+                            if (resumeNO.TryGetBehaviour<NetworkBehaviour>(out var myCustomNetworkBehaviour))
+                            {
+                                newNO.GetComponent<NetworkBehaviour>().CopyStateFrom(myCustomNetworkBehaviour);
+                            }
+                        });
+                }
+            }
         }
 
         #endregion

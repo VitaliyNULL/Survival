@@ -18,6 +18,7 @@ namespace VitaliyNULL.MainMenuUI
         [SerializeField] private GameObject lobbyUI;
         [SerializeField] private GameObject createRoomUI;
         [SerializeField] private GameObject warningUI;
+        [SerializeField] private GameObject choosePlayerUI;
         private GameObject _currentUIObject;
         private readonly string _gameSceneName = "GameScene";
         private string _sessionName;
@@ -47,6 +48,11 @@ namespace VitaliyNULL.MainMenuUI
         
         #region Public Methods
 
+        public void OpenChoosePlayerUI()
+        {
+            ChangeCurrentUIObject(choosePlayerUI);
+            OpenCurrentUIObject();
+        }
         public void OpenCreateRoomUI()
         {
             ChangeCurrentUIObject(createRoomUI);
