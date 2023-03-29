@@ -18,13 +18,14 @@ namespace VitaliyNULL.Fusion
         private SessionInfo _sessionInfo;
         private readonly string _sceneName = "GameScene";
         private PlayerRef _player;
+        private readonly string _nameKey = "USERNAME";
         private readonly string _lobbyName = "MainLobby";
-        [SerializeField] private PlayerController playerController;
+        [SerializeField] private NetworkObject playerController;
         #endregion
 
         #region Public Fields
         public static FusionManager Instance;
-        public Dictionary<PlayerRef, PlayerController> spawnedCharacters = new Dictionary<PlayerRef, PlayerController>();
+        public Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -120,7 +121,10 @@ namespace VitaliyNULL.Fusion
 
         public void OnJoinLobby()
         {
-            StartCoroutine(WaitForJoinLobby());
+            if (PlayerPrefs.GetString(_nameKey).Length > 0)
+            {
+                StartCoroutine(WaitForJoinLobby());
+            }
         }
 
         public void OnCreateRoom(string sessionName)
@@ -151,8 +155,9 @@ namespace VitaliyNULL.Fusion
                 // Create a unique position for the player
                 Vector3 spawnPosition =
                     new Vector3((player.RawEncoded % runner.Config.Simulation.DefaultPlayers) * 3, 1, 0);
-                PlayerController playerController =
+                NetworkObject playerController =
                     runner.Spawn(this.playerController, spawnPosition, Quaternion.identity, player);
+                playerController.GetComponentInChildren<PlayerController>().ChangeSkin();
                 // Keep track of the player avatars so we can remove it when they disconnect
                 spawnedCharacters.Add(player, playerController);
             }
@@ -161,9 +166,9 @@ namespace VitaliyNULL.Fusion
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
             Debug.Log($"Player with id: {player.PlayerId} left the room ");
-            if (spawnedCharacters.TryGetValue(player, out PlayerController playerController))
+            if (spawnedCharacters.TryGetValue(player, out NetworkObject playerController))
             {
-                runner.Despawn(playerController.Object);
+                runner.Despawn(playerController);
                 spawnedCharacters.Remove(player);
             }
         }

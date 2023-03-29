@@ -21,6 +21,7 @@ namespace VitaliyNULL.MainMenuUI
         [SerializeField] private GameObject choosePlayerUI;
         private GameObject _currentUIObject;
         private readonly string _gameSceneName = "GameScene";
+        private readonly string _nameKey = "USERNAME";
         private string _sessionName;
 
         #endregion
@@ -45,7 +46,7 @@ namespace VitaliyNULL.MainMenuUI
         }
 
         #endregion
-        
+
         #region Public Methods
 
         public void OpenChoosePlayerUI()
@@ -53,11 +54,16 @@ namespace VitaliyNULL.MainMenuUI
             ChangeCurrentUIObject(choosePlayerUI);
             OpenCurrentUIObject();
         }
+
         public void OpenCreateRoomUI()
         {
-            ChangeCurrentUIObject(createRoomUI);
-            OpenCurrentUIObject();
+            if (PlayerPrefs.GetString(_nameKey).Length > 0)
+            {
+                ChangeCurrentUIObject(createRoomUI);
+                OpenCurrentUIObject();
+            }
         }
+
         public void OpenMainMenuUI()
         {
             ChangeCurrentUIObject(mainMenuUI);
@@ -133,12 +139,12 @@ namespace VitaliyNULL.MainMenuUI
 
         private void ChangeCurrentUIObject(GameObject obj)
         {
-            if (_currentUIObject != null)
-            {
-                _currentUIObject.SetActive(false);
-            }
+                if (_currentUIObject != null)
+                {
+                    _currentUIObject.SetActive(false);
+                }
 
-            _currentUIObject = obj;
+                _currentUIObject = obj;
         }
 
         private void OpenCurrentUIObject()
