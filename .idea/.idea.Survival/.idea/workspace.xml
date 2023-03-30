@@ -2,14 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac3a7e1-3b96-4ad8-9296-96be1b38113b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/NetworkInputData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/NetworkInputData.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/SetPlayerSkin.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/SetPlayerSkin.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources/NetworkProjectConfig.fusion" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources/NetworkProjectConfig.fusion" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/GameAnimations/farmer0/farmer0.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/GameAnimations/farmer0/farmer0.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/GameAnimations/farmer1/farmer1.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/GameAnimations/farmer1/farmer1.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/GameAnimations/farmer2/farmer2.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/GameAnimations/farmer2/farmer2.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/GameAnimations/farmer3/farmer3.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/GameAnimations/farmer3/farmer3.controller.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/PlayerController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/PlayerController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/LobbyScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/LobbyScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Fusion/FusionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Fusion/FusionManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/NetworkInputData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/NetworkInputData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerInput.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +33,15 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/12/5f3b5672/NetworkTransform.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/70/1e42f74f/Simulation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/7f/de30fd52/INetworkRunnerCallbacks.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/8d/4c1f79d1/NetworkInput.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/93/b5d622f2/NetworkInputUtils.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/b0/4d977cf1/StartGameArgs.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/da/65e61c0d/NetworkButtons.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/dd/1003fb8d/INetworkInput.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/e5/63a2022d/NetworkRunner.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/ea/bd214412/NetworkBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9d3d0b5eea2149139d21af730ecd911826e00/5f/fedf8197/RuntimeAnimatorController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a010c5bf70234641967c94e44dc39bf47400/c3/ffcdef0f/Input.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bae255e3e08e46f7bc2fbd23dde96338158800/f3/719eee07/Resources.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../My shit/Programming Projects/Unity/StrikeOnline/Assets/Scripts/Managers/Launcher.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../My shit/Programming Projects/Unity/StrikeOnline/Assets/Scripts/UpdatedPlayer/WeaponController.cs" root0="SKIP_HIGHLIGHTING" />
@@ -100,7 +120,7 @@
       <workItem from="1679901477761" duration="26666000" />
       <workItem from="1679987800082" duration="3292000" />
       <workItem from="1680073851432" duration="26183000" />
-      <workItem from="1680160274131" duration="15197000" />
+      <workItem from="1680160274131" duration="22433000" />
     </task>
     <servers />
   </component>

@@ -5,7 +5,7 @@ namespace VitaliyNULL.NetworkPlayer
 {
     public struct NetworkInputData : INetworkInput
     {
-        public Vector2 direction;
+        public Vector3 direction;
 
     }
 }

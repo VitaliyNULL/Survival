@@ -185,25 +185,25 @@ namespace VitaliyNULL.Fusion
             if (Input.GetKey(KeyCode.W))
             {
                 Debug.Log("Pressed W");
-                data.direction += Vector2.up;
+                data.direction += Vector3.up;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
                 Debug.Log("Pressed A");
-                data.direction += Vector2.left;
+                data.direction += Vector3.left;
             }
 
             if (Input.GetKey(KeyCode.S))
             {
                 Debug.Log("Pressed S");
-                data.direction += Vector2.down;
+                data.direction += Vector3.down;
             }
 
             if (Input.GetKey(KeyCode.D))
             {
                 Debug.Log("Pressed D");
-                data.direction += Vector2.right;
+                data.direction += Vector3.right;
             }
 
             input.Set(data);
