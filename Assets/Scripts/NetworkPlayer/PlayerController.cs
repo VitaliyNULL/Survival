@@ -14,37 +14,29 @@ namespace VitaliyNULL.NetworkPlayer
         [SerializeField] private RuntimeAnimatorController farmer3;
         private readonly string _mySkin = "MY_SKIN";
 
-        // public override void Spawned()
-        // {
-        //     if(HasInputAuthority) return;
-        //     testcount++;
-        //     Debug.Log(testcount);
-        //     if (Object.HasInputAuthority)
-        //     {
-        //         RPC_ChangeSkin((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
-        //         Destroy(Object);
-        //         Debug.Log("spawned local player");
-        //     }
-        //     else
-        //     {
-        //         Debug.Log("spawned remote player");
-        //     }
-        //     
-        // }
-
-        public void ChangeSkin()
+        public override void Spawned()
         {
             if (Object.HasInputAuthority)
             {
                 RPC_ChangeSkin((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
-                Destroy(Object);
                 Debug.Log("spawned local player");
             }
             else
             {
                 Debug.Log("spawned remote player");
             }
+            
         }
+
+        // public void ChangeSkin()
+        // {
+        //     Debug.Log(Object);
+        //     
+        //         RPC_ChangeSkin((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
+        //         Destroy(Object);
+        //         Debug.Log("spawned local player");
+        //
+        // }
         private void SetAnimator(PlayerSkin playerSkin)
         {
             _animator ??= GetComponent<Animator>();
@@ -65,7 +57,7 @@ namespace VitaliyNULL.NetworkPlayer
             }
         }
 
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
         private void RPC_ChangeSkin(PlayerSkin skin, RpcInfo info = default)
         {
             Debug.Log($"[RPC] {info.Source.PlayerId} called RPC");

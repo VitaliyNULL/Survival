@@ -157,7 +157,6 @@ namespace VitaliyNULL.Fusion
                     new Vector3((player.RawEncoded % runner.Config.Simulation.DefaultPlayers) * 3, 1, 0);
                 NetworkObject playerController =
                     runner.Spawn(this.playerController, spawnPosition, Quaternion.identity, player);
-                playerController.GetComponentInChildren<PlayerController>().ChangeSkin();
                 // Keep track of the player avatars so we can remove it when they disconnect
                 spawnedCharacters.Add(player, playerController);
             }
