@@ -167,7 +167,6 @@ namespace VitaliyNULL.Fusion
                 // Keep track of the player avatars so we can remove it when they disconnect
                 spawnedCharacters.Add(player, playerController);
             }
-
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -182,7 +181,34 @@ namespace VitaliyNULL.Fusion
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
+            var data = new NetworkInputData();
+            if (Input.GetKey(KeyCode.W))
+            {
+                Debug.Log("Pressed W");
+                data.direction += Vector2.up;
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                Debug.Log("Pressed A");
+                data.direction += Vector2.left;
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                Debug.Log("Pressed S");
+                data.direction += Vector2.down;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                Debug.Log("Pressed D");
+                data.direction += Vector2.right;
+            }
+
+            input.Set(data);
         }
+
 
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
         {
@@ -325,7 +351,6 @@ namespace VitaliyNULL.Fusion
             //             });
             //     }
             // }
-            
         }
 
         #endregion

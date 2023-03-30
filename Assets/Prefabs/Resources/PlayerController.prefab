@@ -229,7 +229,7 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
-  gravity: -20
+  gravity: 0
   jumpImpulse: 8
   acceleration: 10
   braking: 10
