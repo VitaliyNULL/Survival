@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac3a7e1-3b96-4ad8-9296-96be1b38113b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkGun.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkGun.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/WeaponController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/WeaponController.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/PlayerController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/PlayerController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerInput.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Sprites/Props.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Sprites/Props.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +107,7 @@
       <workItem from="1679901477761" duration="26666000" />
       <workItem from="1679987800082" duration="3292000" />
       <workItem from="1680073851432" duration="26183000" />
-      <workItem from="1680160274131" duration="23105000" />
+      <workItem from="1680160274131" duration="24740000" />
     </task>
     <servers />
   </component>
