@@ -3,48 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4ac3a7e1-3b96-4ad8-9296-96be1b38113b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PlayerController.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PlayerController.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer0.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer0/dead.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer0/dead.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer0/farmer0.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer0/farmer0.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer0/run.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer0/run.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer0/stand.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer0/stand.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer1.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer1/dead.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer1/dead.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer1/farmer1.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer1/farmer1.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer1/run.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer1/run.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer1/stand.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer1/stand.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer2.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer2/dead.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer2/dead.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer2/farmer2.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer2/farmer2.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer2/run.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer2/run.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer2/stand.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer2/stand.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer3.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer3/dead.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer3/dead.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer3/farmer3.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer3/farmer3.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer3/run.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer3/run.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer3/stand.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/GameAnimations/farmer3/stand.anim.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Fusion/FusionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Fusion/FusionManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/ChoosePlayerSkin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/ChoosePlayerSkin.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,7 +19,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bae255e3e08e46f7bc2fbd23dde96338158800/f3/719eee07/Resources.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../My shit/Programming Projects/Unity/StrikeOnline/Assets/Scripts/Managers/Launcher.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../My shit/Programming Projects/Unity/StrikeOnline/Assets/Scripts/UpdatedPlayer/WeaponController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/DebugTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameSceneUI/GameUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainMenuUI/LoadingAnimation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainMenuUI/MainMenuCharacterAnim.cs" root0="FORCE_HIGHLIGHTING" />
@@ -136,7 +94,7 @@
       <workItem from="1679901477761" duration="26666000" />
       <workItem from="1679987800082" duration="3292000" />
       <workItem from="1680073851432" duration="26183000" />
-      <workItem from="1680160274131" duration="9582000" />
+      <workItem from="1680160274131" duration="12634000" />
     </task>
     <servers />
   </component>

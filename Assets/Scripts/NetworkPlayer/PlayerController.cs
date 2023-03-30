@@ -20,11 +20,8 @@ namespace VitaliyNULL.NetworkPlayer
                 RPC_ChangeSkin((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
                 Debug.Log("spawned local player");
             }
-
-            if (!HasStateAuthority && !HasInputAuthority)
-            {
-                RPC_ChangeSkinRemotePlayer();
-            }
+            RPC_ChangeSkinRemotePlayer();
+            
         }
 
         private void SetAnimator(PlayerSkin playerSkin)
@@ -58,11 +55,25 @@ namespace VitaliyNULL.NetworkPlayer
            
         }
 
-        [Rpc(RpcSources.Proxies, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.All, RpcTargets.All)]
         private void RPC_ChangeSkinRemotePlayer(RpcInfo info = default)
         {
-            Debug.Log($"[RPC_ChangeSkinRemotePlayer] {info.Source.PlayerId} called RPC");
-            SetAnimator((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
+            if (HasInputAuthority && HasStateAuthority)
+            {
+                Debug.Log($"[RPC_ChangeSkinRemotePlayer] {info.Source.PlayerId} called RPC");
+                SetAnimator((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
+                RPC_TakeRpc((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
+            }
+
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.Proxies)]
+        private void RPC_TakeRpc(PlayerSkin skin,RpcInfo info = default)
+        {
+            if (!HasInputAuthority && !HasStateAuthority)
+            {
+                SetAnimator(skin);
+            }
         }
 
         public void PlayerLeft(PlayerRef player)

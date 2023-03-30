@@ -304,27 +304,28 @@ namespace VitaliyNULL.Fusion
         {
             Debug.Log("HostMigrationResume");
             // Get a temporary reference for each NO from the old Host
-            foreach (var resumeNO in runner.GetResumeSnapshotNetworkObjects())
-            {
-                if (resumeNO.TryGetBehaviour<NetworkPositionRotation>(out var posRot))
-                {
-                    runner.Spawn(resumeNO, position: posRot.ReadPosition(), rotation: posRot.ReadRotation(),
-                        onBeforeSpawned: (runner, newNO) =>
-                        {
-                            // One key aspects of the Host Migration is to have a simple way of restoring the old NetworkObjects state
-                            // If all state of the old NetworkObject is all what is necessary, just call the NetworkObject.CopyStateFrom
-                            newNO.CopyStateFrom(resumeNO);
-
-                            // and/or
-
-                            // If only partial State is necessary, it is possible to copy it only from specific NetworkBehaviours
-                            if (resumeNO.TryGetBehaviour<NetworkBehaviour>(out var myCustomNetworkBehaviour))
-                            {
-                                newNO.GetComponent<NetworkBehaviour>().CopyStateFrom(myCustomNetworkBehaviour);
-                            }
-                        });
-                }
-            }
+            // foreach (var resumeNO in runner.GetResumeSnapshotNetworkObjects())
+            // {
+            //     if (resumeNO.TryGetBehaviour<NetworkPositionRotation>(out var posRot))
+            //     {
+            //         runner.Spawn(resumeNO, position: posRot.ReadPosition(), rotation: posRot.ReadRotation(),
+            //             onBeforeSpawned: (runner, newNO) =>
+            //             {
+            //                 // One key aspects of the Host Migration is to have a simple way of restoring the old NetworkObjects state
+            //                 // If all state of the old NetworkObject is all what is necessary, just call the NetworkObject.CopyStateFrom
+            //                 newNO.CopyStateFrom(resumeNO);
+            //
+            //                 // and/or
+            //
+            //                 // If only partial State is necessary, it is possible to copy it only from specific NetworkBehaviours
+            //                 if (resumeNO.TryGetBehaviour<NetworkBehaviour>(out var myCustomNetworkBehaviour))
+            //                 {
+            //                     newNO.GetComponent<NetworkBehaviour>().CopyStateFrom(myCustomNetworkBehaviour);
+            //                 }
+            //             });
+            //     }
+            // }
+            
         }
 
         #endregion
