@@ -4,9 +4,8 @@ using VitaliyNULL.Core;
 
 namespace VitaliyNULL.NetworkPlayer
 {
-    public class PlayerController : NetworkBehaviour
+    public class PlayerController : NetworkBehaviour, IPlayerLeft
     {
-        // static int testcount = 0;
         private Animator _animator;
         [SerializeField] private RuntimeAnimatorController farmer0;
         [SerializeField] private RuntimeAnimatorController farmer1;
@@ -16,27 +15,18 @@ namespace VitaliyNULL.NetworkPlayer
 
         public override void Spawned()
         {
-            if (Object.HasInputAuthority)
+            if (HasInputAuthority)
             {
                 RPC_ChangeSkin((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
                 Debug.Log("spawned local player");
             }
-            else
+
+            if (!HasStateAuthority && !HasInputAuthority)
             {
-                Debug.Log("spawned remote player");
+                RPC_ChangeSkinRemotePlayer();
             }
-            
         }
 
-        // public void ChangeSkin()
-        // {
-        //     Debug.Log(Object);
-        //     
-        //         RPC_ChangeSkin((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
-        //         Destroy(Object);
-        //         Debug.Log("spawned local player");
-        //
-        // }
         private void SetAnimator(PlayerSkin playerSkin)
         {
             _animator ??= GetComponent<Animator>();
@@ -57,12 +47,28 @@ namespace VitaliyNULL.NetworkPlayer
             }
         }
 
-        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.All, RpcTargets.All)]
         private void RPC_ChangeSkin(PlayerSkin skin, RpcInfo info = default)
         {
-            Debug.Log($"[RPC] {info.Source.PlayerId} called RPC");
-            SetAnimator(skin);
+           
+                Debug.Log($"[RPC_ChangeSkin] {info.Source.PlayerId} called RPC");
+                SetAnimator(skin);
+            
+            
+           
         }
 
+        [Rpc(RpcSources.Proxies, RpcTargets.StateAuthority)]
+        private void RPC_ChangeSkinRemotePlayer(RpcInfo info = default)
+        {
+            Debug.Log($"[RPC_ChangeSkinRemotePlayer] {info.Source.PlayerId} called RPC");
+            SetAnimator((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
+        }
+
+        public void PlayerLeft(PlayerRef player)
+        {
+            Runner.Despawn(Object);
+            Debug.Log("Despawn Object");
+        }
     }
 }

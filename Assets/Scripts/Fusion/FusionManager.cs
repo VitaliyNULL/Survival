@@ -6,6 +6,7 @@ using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using VitaliyNULL.Core;
 using VitaliyNULL.MainMenuUI;
 using VitaliyNULL.NetworkPlayer;
 
@@ -14,18 +15,23 @@ namespace VitaliyNULL.Fusion
     public class FusionManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         #region Private Fields
+
         [HideInInspector] public NetworkRunner runner;
         private SessionInfo _sessionInfo;
         private readonly string _sceneName = "GameScene";
         private PlayerRef _player;
         private readonly string _nameKey = "USERNAME";
         private readonly string _lobbyName = "MainLobby";
-        [SerializeField] private NetworkObject playerController;
+        private readonly string _mySkin = "MY_SKIN";
+        private NetworkObject playerController;
+
         #endregion
 
         #region Public Fields
+
         public static FusionManager Instance;
         public Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -38,6 +44,7 @@ namespace VitaliyNULL.Fusion
             }
 
             Instance = this;
+            playerController = Resources.Load<NetworkObject>("PlayerController");
         }
 
         #endregion
@@ -160,6 +167,7 @@ namespace VitaliyNULL.Fusion
                 // Keep track of the player avatars so we can remove it when they disconnect
                 spawnedCharacters.Add(player, playerController);
             }
+
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -247,6 +255,8 @@ namespace VitaliyNULL.Fusion
             // Create a new Runner.
             var newRunner = Instantiate(new GameObject("FusionManager").AddComponent<NetworkRunner>());
             FusionManager fusionManager = newRunner.gameObject.AddComponent<FusionManager>();
+            fusionManager.playerController = Resources.Load<NetworkObject>("PlayerController");
+            Debug.Log(fusionManager.playerController);
             // setup the new runner...
             // Start the new Runner using the "HostMigrationToken" and pass a callback ref in "HostMigrationResume".
             StartGameResult result = await newRunner.StartGame(new StartGameArgs()
