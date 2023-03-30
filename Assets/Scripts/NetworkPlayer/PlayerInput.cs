@@ -11,6 +11,7 @@ namespace VitaliyNULL.NetworkPlayer
     {
         #region Private Fields
 
+        private float _speed = 5f;
         private NetworkRunner _runner;
         private NetworkCharacterControllerPrototype _controller;
 
@@ -20,7 +21,6 @@ namespace VitaliyNULL.NetworkPlayer
 
         private void Start()
         {
-            _controller = GetComponent<NetworkCharacterControllerPrototype>();
             _runner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
 
             _runner.AddCallbacks(this);
@@ -34,8 +34,8 @@ namespace VitaliyNULL.NetworkPlayer
         {
             if (GetInput(out NetworkInputData data))
             {
-                data.direction.Normalize(); 
-                _controller?.Move(5*data.direction * Runner.DeltaTime);
+                data.direction.Normalize();
+                transform.position = Vector3.MoveTowards(transform.position, transform.position+data.direction, _speed*Runner.DeltaTime);
             }
         }
 
@@ -54,25 +54,21 @@ namespace VitaliyNULL.NetworkPlayer
             var data = new NetworkInputData();
             if (Input.GetKey(KeyCode.W))
             {
-                Debug.Log("Pressed W");
                 data.direction += Vector3.up;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
-                Debug.Log("Pressed A");
                 data.direction += Vector3.left;
             }
 
             if (Input.GetKey(KeyCode.S))
             {
-                Debug.Log("Pressed S");
                 data.direction += Vector3.down;
             }
 
             if (Input.GetKey(KeyCode.D))
             {
-                Debug.Log("Pressed D");
                 data.direction += Vector3.right;
             }
 
