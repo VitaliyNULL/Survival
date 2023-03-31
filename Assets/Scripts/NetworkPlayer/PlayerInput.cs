@@ -4,16 +4,18 @@ using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using VitaliyNULL.Fusion;
 
 namespace VitaliyNULL.NetworkPlayer
 {
-    public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
+    public class PlayerInput : MonoBehaviour, INetworkRunnerCallbacks
     {
         #region Private Fields
 
-        private float _speed = 5f;
         private NetworkRunner _runner;
-        private NetworkCharacterControllerPrototype _controller;
+        private bool _touchedJoystick = false;
+        [SerializeField] private VariableJoystick movementJoystick;
+        [SerializeField] private VariableJoystick weaponJoystick;
 
         #endregion
 
@@ -22,24 +24,20 @@ namespace VitaliyNULL.NetworkPlayer
         private void Start()
         {
             _runner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
-
             _runner.AddCallbacks(this);
         }
-        
+
         #endregion
 
-        #region NetworkBehaviour Callbacks
-
-        public override void FixedUpdateNetwork()
+        public void EventPointerDown()
         {
-            if (GetInput(out NetworkInputData data))
-            {
-                data.direction.Normalize();
-                transform.position = Vector3.MoveTowards(transform.position, transform.position+data.direction, _speed*Runner.DeltaTime);
-            }
+            _touchedJoystick = true;
         }
 
-        #endregion
+        public void EventPointerUp()
+        {
+            _touchedJoystick = false;
+        }
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
@@ -52,26 +50,18 @@ namespace VitaliyNULL.NetworkPlayer
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
             var data = new NetworkInputData();
-            if (Input.GetKey(KeyCode.W))
+
+            if (_touchedJoystick)
             {
-                data.direction += Vector3.up;
+                data.isShoot = true;
+            }
+            else
+            {
+                data.isShoot = false;
             }
 
-            if (Input.GetKey(KeyCode.A))
-            {
-                data.direction += Vector3.left;
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                data.direction += Vector3.down;
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                data.direction += Vector3.right;
-            }
-
+            data.directionToMove = movementJoystick.Direction;
+            data.directionToShoot = weaponJoystick.Direction;
             input.Set(data);
         }
 
@@ -112,10 +102,48 @@ namespace VitaliyNULL.NetworkPlayer
         {
         }
 
-        public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
+        public async void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
         {
+            Debug.Log("OnHostMigration");
+            _runner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
+            _runner.AddCallbacks(this);
+            await runner.Shutdown(shutdownReason: ShutdownReason.HostMigration);
+            // Step 2.2
+            // Create a new Runner.
+            var newRunner = Instantiate(new GameObject("FusionManager").AddComponent<NetworkRunner>());
+            FusionManager fusionManager = newRunner.gameObject.AddComponent<FusionManager>();
+            fusionManager.playerController = Resources.Load<NetworkObject>("PlayerController");
+            Debug.Log(fusionManager.playerController);
+            // setup the new runner...
+            // Start the new Runner using the "HostMigrationToken" and pass a callback ref in "HostMigrationResume".
+            StartGameResult result = await newRunner.StartGame(new StartGameArgs()
+            {
+                // SessionName = SessionName,              // ignored, peer never disconnects from the Photon Cloud
+                // GameMode = gameMode,                    // ignored, Game Mode comes with the HostMigrationToken
+                HostMigrationToken = hostMigrationToken, // contains all necessary info to restart the Runner
+                HostMigrationResume = HostMigrationResume, // this will be invoked to resume the simulation
+                PlayerCount = 2,
+                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+                // other args
+            });
+
+            // Check StartGameResult as usual
+            if (result.Ok == false)
+            {
+                Debug.LogWarning(result.ShutdownReason);
+            }
+            else
+            {
+                Debug.Log("Done");
+            }
         }
 
+        void HostMigrationResume(NetworkRunner runner)
+        {
+            Debug.Log("HostMigrationResume");
+            runner.AddCallbacks(this);
+
+        }
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
         {
         }

@@ -6,7 +6,6 @@ using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using VitaliyNULL.Core;
 using VitaliyNULL.MainMenuUI;
 using VitaliyNULL.NetworkPlayer;
 
@@ -23,7 +22,8 @@ namespace VitaliyNULL.Fusion
         private readonly string _nameKey = "USERNAME";
         private readonly string _lobbyName = "MainLobby";
         private readonly string _mySkin = "MY_SKIN";
-        private NetworkObject playerController;
+        public NetworkObject playerController;
+        private NetworkObject _playerInput;
 
         #endregion
 
@@ -59,7 +59,6 @@ namespace VitaliyNULL.Fusion
             yield return new WaitUntil(predicate: () => clientTask.IsCompleted);
             Debug.Log("Final");
         }
-
 
         private IEnumerator WaitForJoinLobby()
         {
@@ -146,8 +145,9 @@ namespace VitaliyNULL.Fusion
 
         public void OnDisconnect()
         {
-            runner.Shutdown();
+            runner.Disconnect(runner.LocalPlayer);
             SceneManager.LoadScene(0);
+            Debug.Log("Disconnected");
         }
 
         #endregion
@@ -174,39 +174,13 @@ namespace VitaliyNULL.Fusion
             Debug.Log($"Player with id: {player.PlayerId} left the room ");
             if (spawnedCharacters.TryGetValue(player, out NetworkObject playerController))
             {
-                runner.Despawn(playerController);
-                spawnedCharacters.Remove(player);
+                // runner.Despawn(playerController);
+                // spawnedCharacters.Remove(player);
             }
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
-            var data = new NetworkInputData();
-            if (Input.GetKey(KeyCode.W))
-            {
-                Debug.Log("Pressed W");
-                data.direction += Vector3.up;
-            }
-
-            if (Input.GetKey(KeyCode.A))
-            {
-                Debug.Log("Pressed A");
-                data.direction += Vector3.left;
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                Debug.Log("Pressed S");
-                data.direction += Vector3.down;
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                Debug.Log("Pressed D");
-                data.direction += Vector3.right;
-            }
-
-            input.Set(data);
         }
 
 
@@ -226,6 +200,7 @@ namespace VitaliyNULL.Fusion
             else
             {
                 // Or a normal Shutdown
+                Debug.Log("Closed by Hui zna sho");
             }
         }
 
@@ -275,37 +250,37 @@ namespace VitaliyNULL.Fusion
 
         public async void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
         {
-            Debug.Log("OnHostMigration");
-            await runner.Shutdown(shutdownReason: ShutdownReason.HostMigration);
-            // Step 2.2
-            // Create a new Runner.
-            var newRunner = Instantiate(new GameObject("FusionManager").AddComponent<NetworkRunner>());
-            FusionManager fusionManager = newRunner.gameObject.AddComponent<FusionManager>();
-            fusionManager.playerController = Resources.Load<NetworkObject>("PlayerController");
-            Debug.Log(fusionManager.playerController);
-            // setup the new runner...
-            // Start the new Runner using the "HostMigrationToken" and pass a callback ref in "HostMigrationResume".
-            StartGameResult result = await newRunner.StartGame(new StartGameArgs()
-            {
-                // SessionName = SessionName,              // ignored, peer never disconnects from the Photon Cloud
-                // GameMode = gameMode,                    // ignored, Game Mode comes with the HostMigrationToken
-                HostMigrationToken = hostMigrationToken, // contains all necessary info to restart the Runner
-                HostMigrationResume = HostMigrationResume, // this will be invoked to resume the simulation
-                PlayerCount = 2,
-                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
-                // other args
-            });
-
-            // Check StartGameResult as usual
-            if (result.Ok == false)
-            {
-                Debug.LogWarning(result.ShutdownReason);
-            }
-            else
-            {
-                Debug.Log("Done");
-            }
-            // newRunner.gameObject.AddComponent<FusionManager>();
+            // Debug.Log("OnHostMigration");
+            // await runner.Shutdown(shutdownReason: ShutdownReason.HostMigration);
+            // // Step 2.2
+            // // Create a new Runner.
+            // var newRunner = Instantiate(new GameObject("FusionManager").AddComponent<NetworkRunner>());
+            // FusionManager fusionManager = newRunner.gameObject.AddComponent<FusionManager>();
+            // fusionManager.playerController = Resources.Load<NetworkObject>("PlayerController");
+            // Debug.Log(fusionManager.playerController);
+            // // setup the new runner...
+            // // Start the new Runner using the "HostMigrationToken" and pass a callback ref in "HostMigrationResume".
+            // StartGameResult result = await newRunner.StartGame(new StartGameArgs()
+            // {
+            //     // SessionName = SessionName,              // ignored, peer never disconnects from the Photon Cloud
+            //     // GameMode = gameMode,                    // ignored, Game Mode comes with the HostMigrationToken
+            //     HostMigrationToken = hostMigrationToken, // contains all necessary info to restart the Runner
+            //     HostMigrationResume = HostMigrationResume, // this will be invoked to resume the simulation
+            //     PlayerCount = 2,
+            //     SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+            //     // other args
+            // });
+            //
+            // // Check StartGameResult as usual
+            // if (result.Ok == false)
+            // {
+            //     Debug.LogWarning(result.ShutdownReason);
+            // }
+            // else
+            // {
+            //     Debug.Log("Done");
+            // }
+            // // newRunner.gameObject.AddComponent<FusionManager>();
         }
 
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
