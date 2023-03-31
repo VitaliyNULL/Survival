@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99bd25c7ffd949499ccac2f887749638, type: 3}
+  m_Name: ShootgunConfig
+  m_EditorClassIdentifier: 
+  gunName: Shootgun
+  damage: 10
+  storageCapacity: 5
+  ammoCapacity: 60
+  bulletSpeed: 30
+  timeToWaitBetweenShoot: 2
+  timeToReload: 5
+  gunBullet: {fileID: 8512406641450245065, guid: e335243d6e0184649b83abd05b3febb8, type: 3}
+  gunShootSound: {fileID: 8300000, guid: 14f24de2a9a70154e96297de25e2184c, type: 3}
+  gunImageUI: {fileID: -762074860, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
