@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4510608261096160249}
   - component: {fileID: 3881941913245216041}
-  - component: {fileID: 8539851028781101866}
   - component: {fileID: 389475840519065305}
+  - component: {fileID: 3773212611617121394}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -86,20 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8539851028781101866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3594309692037615313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cdc84157b4b41d7865349314e5aec46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  gunConfig: {fileID: 11400000, guid: b5d98bfcb31083d4596bedce4b61d479, type: 2}
 --- !u!114 &389475840519065305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,5 +108,19 @@ MonoBehaviour:
     RawGuidValue: 2ad0e2ce11e035e4ea2686263026f7d5
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 8539851028781101866}
+  - {fileID: 3773212611617121394}
   SimulationBehaviours: []
+--- !u!114 &3773212611617121394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3594309692037615313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e2c163aaf7427fa04b50cac16eff44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  gunConfig: {fileID: 11400000, guid: b5d98bfcb31083d4596bedce4b61d479, type: 2}

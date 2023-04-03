@@ -9,40 +9,51 @@ namespace VitaliyNULL.NetworkWeapon
 {
     public class NetworkGun : NetworkBehaviour, INetworkGun
     {
-        [SerializeField] private GunConfig gunConfig;
-        private string _gunName;
-        private int _damage;
-        private int _storageCapacity;
-        private int _ammoCapacity;
-        private float _bulletSpeed;
-        private GunBullet _gunBullet;
-        private AudioClip _gunShootSound;
-        private Sprite _gunImageUI;
-        private float _timeToWaitBetweenShoot;
-        private float _timeToReload;
-        private Coroutine _waitBetweenShoot;
-        private Action _gunEvent;
-        private Vector2 _gunDirection;
+        [SerializeField] protected GunConfig gunConfig;
+        protected string _gunName;
+        protected int _damage;
+        protected int _storageCapacity;
+        protected int _ammoCapacity;
+        protected float _bulletSpeed;
+        protected GunBullet _gunBullet;
+        protected AudioClip _gunShootSound;
+        protected Sprite _gunImageUI;
+        protected float _timeToWaitBetweenShoot;
+        protected float _timeToReload;
+        protected Coroutine _waitBetweenShoot;
+        protected Action _gunEvent;
+        protected Vector2 _gunDirection;
+        protected Quaternion _gunRotation;
 
         public void Shoot()
         {
             _gunEvent?.Invoke();
-            _waitBetweenShoot ??= StartCoroutine(WaitBeetwenShoot());
+            Debug.Log("Invoke gunEvent");
+            _waitBetweenShoot ??= StartCoroutine(WaitBetweenShoot());
+            Debug.Log("Invoke Coroutine");
         }
 
         public override void FixedUpdateNetwork()
         {
+            if(!HasInputAuthority) return;
             if (GetInput(out NetworkInputData data))
             {
-                _gunDirection = data.directionToShoot;
+                _gunDirection = data.directionToShoot.normalized;
+                Vector3 rotation = data.directionToShoot - transform.position;
+                float rotateZ = Mathf.Atan2(rotation.y, rotation.z) * Mathf.Rad2Deg;
+                _gunRotation = Quaternion.Euler(0, 0, rotateZ);
             }
         }
 
-        private void SpawnBullet()
+        protected virtual void SpawnBullet()
         {
-            GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, Quaternion.identity);
-            bullet.SetDirection(_gunDirection);
-            Debug.Log("Shoot");
+            if (HasInputAuthority)
+            {
+                GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, _gunRotation);
+                Debug.Log($"Bullet Speed {_bulletSpeed} Gun Direction {_gunDirection}");
+                bullet.SetDirectionAndSpeed(_gunDirection, _bulletSpeed);
+                Debug.Log("Shoot");
+            }
         }
 
         public void Reload()
@@ -50,18 +61,20 @@ namespace VitaliyNULL.NetworkWeapon
             Debug.Log("Reload");
         }
 
-        private IEnumerator WaitBeetwenShoot()
+        private IEnumerator WaitBetweenShoot()
         {
             _gunEvent -= RPC_GunShoot;
             _gunEvent -= RPC_RemoteShoot;
             yield return new WaitForSeconds(_timeToWaitBetweenShoot);
             _waitBetweenShoot = null;
-            if (Object.HasInputAuthority)
+            if (HasStateAuthority)
+            {
+                _gunEvent += RPC_RemoteShoot;
+            }
+            else if (Object.HasInputAuthority)
             {
                 _gunEvent += RPC_GunShoot;
             }
-
-            _gunEvent += RPC_RemoteShoot;
         }
 
         private IEnumerator WaitForReload()
@@ -69,12 +82,14 @@ namespace VitaliyNULL.NetworkWeapon
             _gunEvent -= RPC_GunShoot;
             _gunEvent -= RPC_RemoteShoot;
             yield return new WaitForSeconds(_timeToReload);
-            if (Object.HasInputAuthority)
+            if (HasStateAuthority)
+            {
+                _gunEvent += RPC_RemoteShoot;
+            }
+            else if (Object.HasInputAuthority)
             {
                 _gunEvent += RPC_GunShoot;
             }
-
-            _gunEvent += RPC_RemoteShoot;
         }
 
         private void Awake()
@@ -89,12 +104,14 @@ namespace VitaliyNULL.NetworkWeapon
             _gunImageUI = gunConfig.GunImageUI;
             _timeToWaitBetweenShoot = gunConfig.TimeToWaitBetweenShoot;
             _timeToReload = gunConfig.TimeToReload;
-            if (Object.HasInputAuthority)
+            if (HasStateAuthority)
+            {
+                _gunEvent += RPC_RemoteShoot;
+            }
+            else if (Object.HasInputAuthority)
             {
                 _gunEvent += RPC_GunShoot;
             }
-
-            _gunEvent += RPC_RemoteShoot;
         }
 
         #region Only for InputAuthority
@@ -122,6 +139,7 @@ namespace VitaliyNULL.NetworkWeapon
             if (HasInputAuthority && HasStateAuthority)
             {
                 SpawnBullet();
+                // RPC_TakeShootRPC();
             }
         }
     }

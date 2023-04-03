@@ -1,4 +1,3 @@
-using System;
 using Fusion;
 using UnityEngine;
 
@@ -8,23 +7,42 @@ namespace VitaliyNULL.NetworkWeapon
     {
         private Vector2 _direction;
         private bool _hasDirection = false;
+        private float _speed;
+        private Rigidbody2D _rigidbody2D;
 
-        public void SetDirection(Vector2 direction)
+        private void Awake()
         {
+            _rigidbody2D ??= GetComponent<Rigidbody2D>();
+        }
+
+        public void SetDirectionAndSpeed(Vector2 direction, float speed)
+        {
+            Debug.Log("Setting direction");
             // TODO: Implement code here
             _direction = direction;
             _hasDirection = true;
+            _speed = speed;
         }
 
+        public override void Spawned()
+        {
+            _rigidbody2D ??= GetComponent<Rigidbody2D>();
+        }
 
-        private void Update()
+        public override void FixedUpdateNetwork()
         {
             if (_hasDirection)
             {
-                transform.position = Vector3.MoveTowards(transform.position,
-                    new Vector3(transform.position.x + _direction.x, transform.position.y + _direction.y,
-                        transform.position.z),
-                    20 * Time.deltaTime);
+                Vector2 toMove = _rigidbody2D.transform.position;
+                toMove.x += _direction.x * _speed * Runner.DeltaTime;
+                toMove.y += _direction.y * _speed * Runner.DeltaTime;
+                _rigidbody2D.MovePosition(toMove);
+            }
+
+            if (_rigidbody2D.position.y < -20f || _rigidbody2D.position.y > 20f || _rigidbody2D.position.x > 25f ||
+                _rigidbody2D.position.x < -25f)
+            {
+                Destroy(gameObject);
             }
         }
 

@@ -30,14 +30,11 @@ namespace VitaliyNULL.NetworkWeapon
 
         public override void FixedUpdateNetwork()
         {
-            if (GetInput(out NetworkInputData data))
+            if (GetInput(out NetworkInputData data) && data.isShoot)
             {
-                if (data.isShoot)
+                if (HasInputAuthority)
                 {
-                    if (HasInputAuthority)
-                    {
-                        _currentGun.Shoot();
-                    }
+                    _currentGun.Shoot();
                 }
             }
         }

@@ -16,7 +16,7 @@ MonoBehaviour:
   damage: 50
   storageCapacity: 10
   ammoCapacity: 90
-  bulletSpeed: 70
+  bulletSpeed: 30
   timeToWaitBetweenShoot: 1
   timeToReload: 5
   gunBullet: {fileID: 8875077371203724633, guid: db5ed98ff5025fd4a8bf89a9123850b2, type: 3}
