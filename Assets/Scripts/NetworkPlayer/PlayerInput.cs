@@ -3,39 +3,67 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using VitaliyNULL.Fusion;
 
 namespace VitaliyNULL.NetworkPlayer
 {
-    public class PlayerInput : MonoBehaviour, INetworkRunnerCallbacks
+    public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
     {
         #region Private Fields
 
         private NetworkRunner _runner;
         private bool _touchedJoystick = false;
-        [SerializeField] private VariableJoystick movementJoystick;
-        [SerializeField] private VariableJoystick weaponJoystick;
+        private VariableJoystick movementJoystick;
+        private VariableJoystick weaponJoystick;
 
         #endregion
 
         #region MonoBehaviour Callbacks
 
-        private void Start()
+        public override void Spawned()
         {
+            var joysticks = FindObjectsOfType<VariableJoystick>();
+            foreach (var joystick in joysticks)
+            {
+                if (joystick.name == "MoveJoystick")
+                {
+                    movementJoystick = joystick;
+                    break;
+                }
+
+                if (joystick.name == "WeaponJoystick")
+                {
+                    weaponJoystick = joystick;
+                    var trigger = weaponJoystick.GetComponent<EventTrigger>();
+                    EventTrigger.Entry entry1 = new EventTrigger.Entry();
+                    EventTrigger.Entry entry2 = new EventTrigger.Entry();
+
+                    entry1.eventID = EventTriggerType.PointerDown;
+                    entry1.callback.AddListener((arg0 => { EventPointerDown(); }));
+                    entry2.eventID = EventTriggerType.PointerUp;
+                    entry2.callback.AddListener((arg0 => { EventPointerUp(); }));
+                    trigger.triggers.Add(entry1);
+                    trigger.triggers.Add(entry2);
+                }
+            }
+            Debug.Log(_runner);
             _runner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
+            Debug.Log(_runner);
             _runner.AddCallbacks(this);
+            Debug.Log(_runner);
         }
 
         #endregion
 
-        public void EventPointerDown()
+        private void EventPointerDown()
         {
             Debug.Log("Can Shoot");
             _touchedJoystick = true;
         }
 
-        public void EventPointerUp()
+        private void EventPointerUp()
         {
             Debug.Log("Cannot shoot");
             _touchedJoystick = false;
@@ -53,15 +81,7 @@ namespace VitaliyNULL.NetworkPlayer
         {
             var data = new NetworkInputData();
 
-            if (_touchedJoystick)
-            {
-                data.isShoot = true;
-            }
-            else
-            {
-                data.isShoot = false;
-            }
-
+            data.isShoot = _touchedJoystick;
             Debug.Log("Data is shoot: " + data.isShoot);
             data.directionToMove = movementJoystick.Direction;
             data.directionToShoot = weaponJoystick.Direction;

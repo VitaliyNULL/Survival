@@ -26,13 +26,15 @@ namespace VitaliyNULL.NetworkWeapon
         protected Quaternion _gunRotation;
         public GunType GunType;
         protected bool _canShoot = true;
+        private float lastShootTime = 0;
 
         public void Shoot()
         {
-            if (_canShoot && HasInputAuthority)
+            if (_canShoot)
             {
                 _canShoot = false;
-                StartCoroutine(WaitBetweenShoot());
+                lastShootTime = _timeToWaitBetweenShoot;
+                _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
             }
         }
 
@@ -44,6 +46,19 @@ namespace VitaliyNULL.NetworkWeapon
                 Vector3 rotation = data.directionToShoot - transform.position;
                 float rotateZ = Mathf.Atan2(rotation.y, rotation.z) * Mathf.Rad2Deg;
                 _gunRotation = Quaternion.Euler(0, 0, rotateZ);
+            }
+        }
+
+        private void Update()
+        {
+            if (lastShootTime > 0)
+            {
+                _canShoot = false;
+                lastShootTime -= Time.deltaTime;
+            }
+            else
+            {
+                _canShoot = true;
             }
         }
 
@@ -65,13 +80,14 @@ namespace VitaliyNULL.NetworkWeapon
             Debug.Log("Reload");
         }
 
+
         private IEnumerator WaitBetweenShoot()
         {
             Debug.LogError("Start Shoot");
-            _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
-            _gunEvent -= RPC_GunShoot;
+            // _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
+            RPC_GunShoot(_gunDirection, _bulletSpeed, _gunRotation);
             yield return new WaitForSeconds(_timeToWaitBetweenShoot);
-            _gunEvent += RPC_GunShoot;
+            // _gunEvent += RPC_GunShoot;
             Debug.LogError("Stop Shoot");
             _canShoot = true;
         }
