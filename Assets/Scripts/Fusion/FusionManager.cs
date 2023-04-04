@@ -175,7 +175,7 @@ namespace VitaliyNULL.Fusion
             if (spawnedCharacters.TryGetValue(player, out NetworkObject playerController))
             {
                 // runner.Despawn(playerController);
-                // spawnedCharacters.Remove(player);
+                spawnedCharacters.Remove(player);
             }
         }
 

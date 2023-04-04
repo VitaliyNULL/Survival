@@ -25,10 +25,15 @@ namespace VitaliyNULL.NetworkWeapon
         protected Vector2 _gunDirection;
         protected Quaternion _gunRotation;
         public GunType GunType;
+        protected bool _canShoot = true;
 
         public void Shoot()
         {
-            _waitBetweenShoot ??= StartCoroutine(WaitBetweenShoot());
+            if (_canShoot && HasInputAuthority)
+            {
+                _canShoot = false;
+                StartCoroutine(WaitBetweenShoot());
+            }
         }
 
         public override void FixedUpdateNetwork()
@@ -44,8 +49,14 @@ namespace VitaliyNULL.NetworkWeapon
 
         protected virtual void SpawnBullet(Vector2 direction, float speed, Quaternion rotation)
         {
-            if (!HasStateAuthority) return;
+            if (!HasStateAuthority)
+            {
+                Debug.Log("Has no state authority");
+                return;
+            }
+
             GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation, Runner.LocalPlayer);
+            Debug.LogError("Spawned Bullet");
             bullet.SetDirectionAndSpeed(direction, speed, rotation);
         }
 
@@ -56,12 +67,13 @@ namespace VitaliyNULL.NetworkWeapon
 
         private IEnumerator WaitBetweenShoot()
         {
-            _gunEvent?.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
+            Debug.LogError("Start Shoot");
+            _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
             _gunEvent -= RPC_GunShoot;
             yield return new WaitForSeconds(_timeToWaitBetweenShoot);
-            _waitBetweenShoot = null;
             _gunEvent += RPC_GunShoot;
-      
+            Debug.LogError("Stop Shoot");
+            _canShoot = true;
         }
 
         private IEnumerator WaitForReload()
@@ -97,6 +109,5 @@ namespace VitaliyNULL.NetworkWeapon
         }
 
         #endregion
-
     }
 }
