@@ -1,4 +1,5 @@
 using UnityEngine;
+using VitaliyNULL.Core;
 
 namespace VitaliyNULL.NetworkWeapon
 {
@@ -20,6 +21,7 @@ namespace VitaliyNULL.NetworkWeapon
 
         [SerializeField] private AudioClip gunShootSound;
         [SerializeField] private Sprite gunImageUI;
+        [SerializeField] private GunType gunType;
 
 
         public AudioClip GunShootSound => gunShootSound;
@@ -32,5 +34,7 @@ namespace VitaliyNULL.NetworkWeapon
         public GunBullet GunBullet => gunBullet;
         public float TimeToWaitBetweenShoot => timeToWaitBetweenShoot;
         public float TimeToReload => timeToReload;
+
+        public GunType GunType => gunType;
     }
 }

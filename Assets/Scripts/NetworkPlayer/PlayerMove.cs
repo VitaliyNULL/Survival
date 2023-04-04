@@ -1,4 +1,3 @@
-using System;
 using Fusion;
 using UnityEngine;
 
@@ -7,16 +6,16 @@ namespace VitaliyNULL.NetworkPlayer
     public class PlayerMove : NetworkBehaviour
     {
         private float _speed = 5f;
-        private Rigidbody2D _rigidbody2D;
+        private NetworkRigidbody2D _networkRigidbody2D;
 
         private void Awake()
         {
-            _rigidbody2D ??= GetComponent<Rigidbody2D>();
+            _networkRigidbody2D ??= GetComponent<NetworkRigidbody2D>();
         }
 
         public override void Spawned()
         {
-            _rigidbody2D ??= GetComponent<Rigidbody2D>();
+            _networkRigidbody2D ??= GetComponent<NetworkRigidbody2D>();
         }
 
         #region NetworkBehaviour Callbacks
@@ -26,11 +25,11 @@ namespace VitaliyNULL.NetworkPlayer
             if (GetInput(out NetworkInputData data))
             {
                 data.directionToMove.Normalize();
-                Vector2 toMove = _rigidbody2D.position;
+                Vector2 toMove = _networkRigidbody2D.Rigidbody.position;
                 toMove.x += _speed * data.directionToMove.x * Runner.DeltaTime;
                 toMove.y += _speed * data.directionToMove.y * Runner.DeltaTime;
 
-                _rigidbody2D.MovePosition(toMove);
+                _networkRigidbody2D.Rigidbody.MovePosition(toMove);
                 float flip = 0;
                 if (data.directionToMove.x < 0 || data.directionToShoot.x < 0)
                 {

@@ -15,11 +15,11 @@ namespace VitaliyNULL.NetworkWeapon
             _rigidbody2D ??= GetComponent<Rigidbody2D>();
         }
 
-        public void SetDirectionAndSpeed(Vector2 direction, float speed)
+        public void SetDirectionAndSpeed(Vector2 direction, float speed,Quaternion quaternion)
         {
             Debug.Log("Setting direction");
-            // TODO: Implement code here
             _direction = direction;
+            transform.rotation = quaternion;
             _hasDirection = true;
             _speed = speed;
         }
@@ -34,6 +34,11 @@ namespace VitaliyNULL.NetworkWeapon
             if (_hasDirection)
             {
                 Vector2 toMove = _rigidbody2D.transform.position;
+                if (_speed <= 0)
+                {
+                    Destroy(gameObject);
+                }
+                _speed -= 1f;
                 toMove.x += _direction.x * _speed * Runner.DeltaTime;
                 toMove.y += _direction.y * _speed * Runner.DeltaTime;
                 _rigidbody2D.MovePosition(toMove);

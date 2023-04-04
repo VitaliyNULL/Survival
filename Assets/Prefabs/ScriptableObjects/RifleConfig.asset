@@ -22,3 +22,4 @@ MonoBehaviour:
   gunBullet: {fileID: 8875077371203724633, guid: db5ed98ff5025fd4a8bf89a9123850b2, type: 3}
   gunShootSound: {fileID: 8300000, guid: d1bef3102d08ba944ac7bcac65733a26, type: 3}
   gunImageUI: {fileID: -205726582, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  gunType: 2

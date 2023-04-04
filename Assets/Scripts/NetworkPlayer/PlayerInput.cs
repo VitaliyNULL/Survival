@@ -31,11 +31,13 @@ namespace VitaliyNULL.NetworkPlayer
 
         public void EventPointerDown()
         {
+            Debug.Log("Can Shoot");
             _touchedJoystick = true;
         }
 
         public void EventPointerUp()
         {
+            Debug.Log("Cannot shoot");
             _touchedJoystick = false;
         }
 
@@ -60,6 +62,7 @@ namespace VitaliyNULL.NetworkPlayer
                 data.isShoot = false;
             }
 
+            Debug.Log("Data is shoot: " + data.isShoot);
             data.directionToMove = movementJoystick.Direction;
             data.directionToShoot = weaponJoystick.Direction;
             input.Set(data);
@@ -142,8 +145,8 @@ namespace VitaliyNULL.NetworkPlayer
         {
             Debug.Log("HostMigrationResume");
             runner.AddCallbacks(this);
-
         }
+
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
         {
         }
