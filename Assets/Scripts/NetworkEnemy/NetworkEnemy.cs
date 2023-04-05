@@ -26,6 +26,7 @@ namespace VitaliyNULL.NetworkEnemy
         private bool _isTakedDamage = false;
         private bool _isDead = false;
         private Vector2 _deathPos;
+
         private int Health
         {
             get => _currentHealth;
@@ -34,11 +35,16 @@ namespace VitaliyNULL.NetworkEnemy
                 _currentHealth = Mathf.Clamp(value, 0, _maxHealth);
                 if (_currentHealth == 0)
                 {
-                    _isDead = true;
-                    _deathPos = transform.position;
-                    StartCoroutine(WaitForDespawnDeadEnemy());
+                    RPC_Death();
                 }
             }
+        }
+
+        private void Death()
+        {
+            _isDead = true;
+            _deathPos = transform.position;
+            StartCoroutine(WaitForDespawnDeadEnemy());
         }
 
         IEnumerator WaitForDespawnDeadEnemy()
@@ -51,10 +57,11 @@ namespace VitaliyNULL.NetworkEnemy
             {
                 collider.isTrigger = true;
             }
+
             yield return new WaitForSeconds(5f);
             Runner.Despawn(Object);
         }
- 
+
 
         private void Awake()
         {
@@ -71,7 +78,7 @@ namespace VitaliyNULL.NetworkEnemy
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if(_isDead) return;
+            if (_isDead) return;
             if (other.CompareTag("Player"))
             {
                 _player = other;
@@ -81,7 +88,7 @@ namespace VitaliyNULL.NetworkEnemy
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            if(_isDead) return;
+            if (_isDead) return;
 
             if (other.CompareTag("Player"))
             {
@@ -92,7 +99,7 @@ namespace VitaliyNULL.NetworkEnemy
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if(_isDead) return;
+            if (_isDead) return;
 
             if (other.CompareTag("Player"))
             {
@@ -103,7 +110,7 @@ namespace VitaliyNULL.NetworkEnemy
 
         private void OnCollisionEnter2D(Collision2D col)
         {
-            if(_isDead) return;
+            if (_isDead) return;
 
             if (!_isAttacked)
             {
@@ -116,7 +123,7 @@ namespace VitaliyNULL.NetworkEnemy
 
         private void OnCollisionStay2D(Collision2D collision)
         {
-            if(_isDead) return;
+            if (_isDead) return;
 
             if (!_isAttacked)
             {
@@ -143,12 +150,16 @@ namespace VitaliyNULL.NetworkEnemy
 
         public override void FixedUpdateNetwork()
         {
+            //Test 
+            transform.position = _deathPos;
+            return;
             if (_isDead)
             {
                 transform.position = _deathPos;
                 return;
             }
-            if(_isTakedDamage) return;
+
+            if (_isTakedDamage) return;
             Vector2 direction = Vector2.zero;
             if (_hasPlayer)
             {
@@ -173,10 +184,7 @@ namespace VitaliyNULL.NetworkEnemy
 
         public void TakeDamage(int damage)
         {
-            StartCoroutine(WaitForTakeDamage());
-            stateMachine.SwitchState<HitState>();
-            Health -= damage;
-            Debug.Log($"Enemy health is {Health}");
+            RPC_TakeDamage(damage);
         }
 
         IEnumerator WaitForTakeDamage()
@@ -188,6 +196,22 @@ namespace VitaliyNULL.NetworkEnemy
             {
                 stateMachine.SwitchState<RunState>();
             }
+        }
+
+        [Rpc]
+        private void RPC_TakeDamage(int damage)
+        {
+            _deathPos = transform.position;
+            StartCoroutine(WaitForTakeDamage());
+            stateMachine.SwitchState<HitState>();
+            Health -= damage;
+            Debug.Log($"Enemy health is {Health}");
+        }
+
+        [Rpc]
+        private void RPC_Death()
+        {
+            Death();
         }
     }
 }

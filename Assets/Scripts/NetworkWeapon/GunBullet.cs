@@ -17,7 +17,7 @@ namespace VitaliyNULL.NetworkWeapon
             _rigidbody2D ??= GetComponent<Rigidbody2D>();
         }
 
-        public void SetDirectionAndSpeed(Vector2 direction, float speed,Quaternion quaternion, int damage)
+        public void SetDirectionAndSpeed(Vector2 direction, float speed, Quaternion quaternion, int damage)
         {
             _direction = direction;
             _damage = damage;
@@ -31,7 +31,7 @@ namespace VitaliyNULL.NetworkWeapon
             if (col.gameObject.CompareTag("Enemy"))
             {
                 col.gameObject.GetComponent<IDamageable>().TakeDamage(_damage);
-                // Debug.LogError($"{Object.Runner.LocalPlayer} shot");
+                RPC_Debug($"{Object.Runner.LocalPlayer} shot");
                 Runner?.Despawn(Object);
             }
         }
@@ -50,6 +50,7 @@ namespace VitaliyNULL.NetworkWeapon
                 {
                     Destroy(gameObject);
                 }
+
                 _speed -= 1f;
                 toMove.x += _direction.x * _speed * Runner.DeltaTime;
                 toMove.y += _direction.y * _speed * Runner.DeltaTime;
@@ -67,6 +68,12 @@ namespace VitaliyNULL.NetworkWeapon
         {
             _hasDirection = false;
             _direction = Vector2.zero;
+        }
+
+        [Rpc]
+        private void RPC_Debug(string message)
+        {
+            Debug.LogError(message);
         }
     }
 }
