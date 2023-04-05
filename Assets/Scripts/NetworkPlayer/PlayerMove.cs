@@ -31,10 +31,15 @@ namespace VitaliyNULL.NetworkPlayer
 
                 _networkRigidbody2D.Rigidbody.MovePosition(toMove);
                 float flip = 0;
-                if (data.directionToMove.x < 0 || data.directionToShoot.x < 0)
+                if (data.directionToMove.x < 0 && data.directionToShoot.x > 0)
+                {
+                    flip = 0;
+                }
+                else if (data.directionToMove.x < 0 || data.directionToShoot.x < 0)
                 {
                     flip = 180;
                 }
+                
 
                 transform.rotation =
                     new Quaternion(transform.rotation.x, flip, transform.rotation.z, transform.rotation.w);

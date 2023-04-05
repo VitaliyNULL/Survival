@@ -1,5 +1,6 @@
 using Fusion;
 using UnityEngine;
+using VitaliyNULL.Core;
 
 namespace VitaliyNULL.NetworkWeapon
 {
@@ -8,6 +9,7 @@ namespace VitaliyNULL.NetworkWeapon
         private Vector2 _direction;
         private bool _hasDirection = false;
         private float _speed;
+        private int _damage;
         private Rigidbody2D _rigidbody2D;
 
         private void Awake()
@@ -15,13 +17,23 @@ namespace VitaliyNULL.NetworkWeapon
             _rigidbody2D ??= GetComponent<Rigidbody2D>();
         }
 
-        public void SetDirectionAndSpeed(Vector2 direction, float speed,Quaternion quaternion)
+        public void SetDirectionAndSpeed(Vector2 direction, float speed,Quaternion quaternion, int damage)
         {
-            Debug.Log("Setting direction");
             _direction = direction;
+            _damage = damage;
             transform.rotation = quaternion;
             _hasDirection = true;
             _speed = speed;
+        }
+
+        private void OnCollisionEnter2D(Collision2D col)
+        {
+            if (col.gameObject.CompareTag("Enemy"))
+            {
+                col.gameObject.GetComponent<IDamageable>().TakeDamage(_damage);
+                // Debug.LogError($"{Object.Runner.LocalPlayer} shot");
+                Runner?.Despawn(Object);
+            }
         }
 
         public override void Spawned()

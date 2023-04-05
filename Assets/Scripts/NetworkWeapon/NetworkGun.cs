@@ -71,13 +71,11 @@ namespace VitaliyNULL.NetworkWeapon
         {
             if (!HasStateAuthority)
             {
-                Debug.Log("Has no state authority");
                 return;
             }
 
             GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation, Runner.LocalPlayer);
-            Debug.LogError("Spawned Bullet");
-            bullet.SetDirectionAndSpeed(direction, speed, rotation);
+            bullet.SetDirectionAndSpeed(direction, speed, rotation, _damage);
         }
 
         public void Reload()
@@ -88,12 +86,10 @@ namespace VitaliyNULL.NetworkWeapon
 
         private IEnumerator WaitBetweenShoot()
         {
-            Debug.LogError("Start Shoot");
             _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
             // RPC_GunShoot(_gunDirection, _bulletSpeed, _gunRotation);
             yield return new WaitForSeconds(_timeToWaitBetweenShoot);
             // _gunEvent += RPC_GunShoot;
-            Debug.LogError("Stop Shoot");
             _canShoot = true;
         }
 
@@ -127,7 +123,6 @@ namespace VitaliyNULL.NetworkWeapon
         {
             if (HasStateAuthority)
             {
-                Debug.LogError("RPC_GunShoot");
                 SpawnBullet(direction, speed, rotation);
             }
         }

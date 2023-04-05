@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: ShootgunConfig
   m_EditorClassIdentifier: 
   gunName: Shootgun
-  damage: 10
+  damage: 2
   storageCapacity: 5
   ammoCapacity: 60
   bulletSpeed: 40
   timeToWaitBetweenShoot: 2
   timeToReload: 5
   gunBullet: {fileID: 8512406641450245065, guid: e335243d6e0184649b83abd05b3febb8, type: 3}
-  gunShootSound: {fileID: 8300000, guid: 14f24de2a9a70154e96297de25e2184c, type: 3}
+  gunShootSound: {fileID: 8300000, guid: 6f0c572d865b4664db7a460972bc4768, type: 3}
   gunImageUI: {fileID: -762074860, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   gunType: 0

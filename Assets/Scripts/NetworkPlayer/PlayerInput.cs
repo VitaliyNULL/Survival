@@ -65,13 +65,11 @@ namespace VitaliyNULL.NetworkPlayer
 
         private void EventPointerDown()
         {
-            Debug.Log("Can Shoot");
             _touchedJoystick = true;
         }
 
         private void EventPointerUp()
         {
-            Debug.Log("Cannot shoot");
             _touchedJoystick = false;
         }
 

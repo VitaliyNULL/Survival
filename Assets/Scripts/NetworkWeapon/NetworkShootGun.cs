@@ -9,6 +9,7 @@ namespace VitaliyNULL.NetworkWeapon
 
         protected override void SpawnBullet(Vector2 direction, float speed, Quaternion rotation)
         {
+            
             if (!HasStateAuthority) return;
             float step = _range / 10;
             for (int i = 0; i < _countOfBullets; i++)
@@ -17,7 +18,7 @@ namespace VitaliyNULL.NetworkWeapon
                 directionNormalized.x += Random.Range(-step, step);
                 directionNormalized.y -= Random.Range(-step, step);
                 GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation);
-                bullet.SetDirectionAndSpeed(directionNormalized, speed, rotation);
+                bullet.SetDirectionAndSpeed(directionNormalized, speed, rotation, _damage);
                 Debug.Log("Shoot");
             }
         }
