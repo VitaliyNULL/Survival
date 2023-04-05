@@ -1,21 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace VitaliyNULL
+namespace VitaliyNULL.NetworkEnemy
 {
     public class EnemyConfig : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        [SerializeField] private float speed;
+        [SerializeField] private int damage;
+        [SerializeField] private float radiusOfAttack;
+        [SerializeField] private float attackRate;
+            
     }
 }
