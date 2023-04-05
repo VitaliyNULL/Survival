@@ -30,11 +30,16 @@ namespace VitaliyNULL.NetworkWeapon
 
         public void Shoot()
         {
+            // if (_canShoot)
+            // {
+            //     _canShoot = false;
+            //     lastShootTime = _timeToWaitBetweenShoot;
+            //     _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
+            // }
             if (_canShoot)
             {
                 _canShoot = false;
-                lastShootTime = _timeToWaitBetweenShoot;
-                _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
+                StartCoroutine(WaitBetweenShoot());
             }
         }
 
@@ -49,18 +54,18 @@ namespace VitaliyNULL.NetworkWeapon
             }
         }
 
-        private void Update()
-        {
-            if (lastShootTime > 0)
-            {
-                _canShoot = false;
-                lastShootTime -= Time.deltaTime;
-            }
-            else
-            {
-                _canShoot = true;
-            }
-        }
+        // private void Update()
+        // {
+        //     if (lastShootTime > 0)
+        //     {
+        //         _canShoot = false;
+        //         lastShootTime -= Time.deltaTime;
+        //     }
+        //     else
+        //     {
+        //         _canShoot = true;
+        //     }
+        // }
 
         protected virtual void SpawnBullet(Vector2 direction, float speed, Quaternion rotation)
         {
@@ -84,8 +89,8 @@ namespace VitaliyNULL.NetworkWeapon
         private IEnumerator WaitBetweenShoot()
         {
             Debug.LogError("Start Shoot");
-            // _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
-            RPC_GunShoot(_gunDirection, _bulletSpeed, _gunRotation);
+            _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
+            // RPC_GunShoot(_gunDirection, _bulletSpeed, _gunRotation);
             yield return new WaitForSeconds(_timeToWaitBetweenShoot);
             // _gunEvent += RPC_GunShoot;
             Debug.LogError("Stop Shoot");
@@ -117,11 +122,14 @@ namespace VitaliyNULL.NetworkWeapon
 
         #region Only for InputAuthority
 
-        [Rpc(RpcSources.All, RpcTargets.All)]
+        [Rpc]
         private void RPC_GunShoot(Vector2 direction, float speed, Quaternion rotation)
         {
-            Debug.LogError("RPC_GunShoot");
-            SpawnBullet(direction, speed, rotation);
+            if (HasStateAuthority)
+            {
+                Debug.LogError("RPC_GunShoot");
+                SpawnBullet(direction, speed, rotation);
+            }
         }
 
         #endregion

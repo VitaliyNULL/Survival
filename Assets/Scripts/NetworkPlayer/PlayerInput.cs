@@ -17,6 +17,7 @@ namespace VitaliyNULL.NetworkPlayer
         private bool _touchedJoystick = false;
         private VariableJoystick movementJoystick;
         private VariableJoystick weaponJoystick;
+        private bool _migrated = false;
 
         #endregion
 
@@ -24,35 +25,40 @@ namespace VitaliyNULL.NetworkPlayer
 
         public override void Spawned()
         {
-            var joysticks = FindObjectsOfType<VariableJoystick>();
-            foreach (var joystick in joysticks)
-            {
-                if (joystick.name == "MoveJoystick")
+           
+                Debug.Log("Spawned");
+                var joysticks = FindObjectsOfType<VariableJoystick>();
+                foreach (var joystick in joysticks)
                 {
-                    movementJoystick = joystick;
-                    break;
+                    if (joystick.name == "MoveJoystick")
+                    {
+                        movementJoystick = joystick;
+                        break;
+                    }
+
+                    if (joystick.name == "WeaponJoystick")
+                    {
+                        weaponJoystick = joystick;
+                        var trigger = weaponJoystick.GetComponent<EventTrigger>();
+                        EventTrigger.Entry entry1 = new EventTrigger.Entry();
+                        EventTrigger.Entry entry2 = new EventTrigger.Entry();
+
+                        trigger.triggers.Clear();
+                        entry1.eventID = EventTriggerType.PointerDown;
+                        entry1.callback.AddListener((arg0 => { EventPointerDown(); }));
+                        entry2.eventID = EventTriggerType.PointerUp;
+                        entry2.callback.AddListener((arg0 => { EventPointerUp(); }));
+                        trigger.triggers.Add(entry1);
+                        trigger.triggers.Add(entry2);
+                    }
                 }
 
-                if (joystick.name == "WeaponJoystick")
-                {
-                    weaponJoystick = joystick;
-                    var trigger = weaponJoystick.GetComponent<EventTrigger>();
-                    EventTrigger.Entry entry1 = new EventTrigger.Entry();
-                    EventTrigger.Entry entry2 = new EventTrigger.Entry();
-
-                    entry1.eventID = EventTriggerType.PointerDown;
-                    entry1.callback.AddListener((arg0 => { EventPointerDown(); }));
-                    entry2.eventID = EventTriggerType.PointerUp;
-                    entry2.callback.AddListener((arg0 => { EventPointerUp(); }));
-                    trigger.triggers.Add(entry1);
-                    trigger.triggers.Add(entry2);
-                }
-            }
-            Debug.Log(_runner);
-            _runner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
-            Debug.Log(_runner);
-            _runner.AddCallbacks(this);
-            Debug.Log(_runner);
+                Debug.Log(_runner);
+                _runner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
+                Debug.Log(_runner);
+                _runner.AddCallbacks(this);
+                Debug.Log(_runner);
+            
         }
 
         #endregion
@@ -80,10 +86,13 @@ namespace VitaliyNULL.NetworkPlayer
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
             var data = new NetworkInputData();
-
             data.isShoot = _touchedJoystick;
-            Debug.Log("Data is shoot: " + data.isShoot);
-            data.directionToMove = movementJoystick.Direction;
+            // Debug.Log("Data is shoot: " + data.isShoot);
+            #if UNITY_EDITOR
+            data.directionToMove = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            #endif
+            //Android
+            // data.directionToMove = movementJoystick.Direction;
             data.directionToShoot = weaponJoystick.Direction;
             input.Set(data);
         }
@@ -128,8 +137,7 @@ namespace VitaliyNULL.NetworkPlayer
         public async void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
         {
             Debug.Log("OnHostMigration");
-            _runner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
-            _runner.AddCallbacks(this);
+            
             await runner.Shutdown(shutdownReason: ShutdownReason.HostMigration);
             // Step 2.2
             // Create a new Runner.
@@ -164,7 +172,32 @@ namespace VitaliyNULL.NetworkPlayer
         void HostMigrationResume(NetworkRunner runner)
         {
             Debug.Log("HostMigrationResume");
+            var joysticks = FindObjectsOfType<VariableJoystick>();
+            foreach (var joystick in joysticks)
+            {
+                if (joystick.name == "MoveJoystick")
+                {
+                    movementJoystick = joystick;
+                    break;
+                }
+                if (joystick.name == "WeaponJoystick")
+                {
+                    weaponJoystick = joystick;
+                    var trigger = weaponJoystick.GetComponent<EventTrigger>();
+                    EventTrigger.Entry entry1 = new EventTrigger.Entry();
+                    EventTrigger.Entry entry2 = new EventTrigger.Entry();
+            
+                    trigger.triggers.Clear();
+                    entry1.eventID = EventTriggerType.PointerDown;
+                    entry1.callback.AddListener((arg0 => { EventPointerDown(); }));
+                    entry2.eventID = EventTriggerType.PointerUp;
+                    entry2.callback.AddListener((arg0 => { EventPointerUp(); }));
+                    trigger.triggers.Add(entry1);
+                    trigger.triggers.Add(entry2);
+                }
+            }
             runner.AddCallbacks(this);
+
         }
 
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
