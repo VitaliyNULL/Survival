@@ -50,7 +50,7 @@ namespace VitaliyNULL.NetworkEnemy
         IEnumerator WaitForDespawnDeadEnemy()
         {
             stateMachine.SwitchState<DeadState>();
-            tag = String.Empty;
+            tag = "Untagged";
             gameObject.layer = 0;
             var colliders = GetComponents<Collider2D>();
             foreach (var collider in colliders)

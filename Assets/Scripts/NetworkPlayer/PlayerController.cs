@@ -27,7 +27,7 @@ namespace VitaliyNULL.NetworkPlayer
                 {
                     isDead = true;
                     gameObject.layer = 0;
-                    tag = String.Empty;
+                    tag = "Untagged";
                     stateMachine.SwitchState<DeadState>();
                     weaponController.gameObject.SetActive(false);
                     GetComponentInChildren<Collider2D>().isTrigger = true;

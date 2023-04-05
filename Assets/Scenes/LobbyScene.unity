@@ -13862,7 +13862,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Disconnect
+  m_text: 'Close
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2802131fafe180f4391f0c4bd21254dd, type: 2}
   m_sharedMaterial: {fileID: -5496149536215125740, guid: 2802131fafe180f4391f0c4bd21254dd, type: 2}
@@ -13952,7 +13954,7 @@ GameObject:
   - component: {fileID: 1918190030}
   - component: {fileID: 1918190029}
   m_Layer: 5
-  m_Name: Disconnect
+  m_Name: Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

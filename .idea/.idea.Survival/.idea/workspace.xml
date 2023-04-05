@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ac3a7e1-3b96-4ad8-9296-96be1b38113b" name="Changes" comment="" />
+    <list default="true" id="4ac3a7e1-3b96-4ad8-9296-96be1b38113b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/LobbyScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/LobbyScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/NetworkEnemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/NetworkEnemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,7 +128,7 @@
       <workItem from="1680504942499" duration="17025000" />
       <workItem from="1680542652015" duration="484000" />
       <workItem from="1680592857446" duration="23499000" />
-      <workItem from="1680678963767" duration="23032000" />
+      <workItem from="1680678963767" duration="23364000" />
     </task>
     <servers />
   </component>
