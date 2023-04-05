@@ -1,30 +1,19 @@
+using System;
 using System.Collections;
 using Fusion;
 using UnityEngine;
 using VitaliyNULL.Core;
+using VitaliyNULL.StateMachine;
 
 namespace VitaliyNULL.NetworkEnemy
 {
     public class NetworkEnemy : NetworkBehaviour, IDamageable
     {
         [SerializeField] private EnemyConfig enemyConfig;
+        [SerializeField] private StateMachine.StateMachine stateMachine;
         private float _speed;
         private int _currentHealth;
         private int _maxHealth;
-
-        private int Health
-        {
-            get => _currentHealth;
-            set
-            {
-                _currentHealth = Mathf.Clamp(value, 0, _maxHealth);
-                if (_currentHealth == 0)
-                {
-                    Runner?.Despawn(Object);
-                }
-            }
-        }
-
         private int _damage;
         private float _radiusOfAttack;
         private float _attackRate;
@@ -34,6 +23,38 @@ namespace VitaliyNULL.NetworkEnemy
         private NetworkRigidbody2D _networkRigidbody2D;
         private bool _hasPlayer = false;
         private bool _isAttacked = false;
+        private bool _isTakedDamage = false;
+        private bool _isDead = false;
+        private Vector2 _deathPos;
+        private int Health
+        {
+            get => _currentHealth;
+            set
+            {
+                _currentHealth = Mathf.Clamp(value, 0, _maxHealth);
+                if (_currentHealth == 0)
+                {
+                    _isDead = true;
+                    _deathPos = transform.position;
+                    StartCoroutine(WaitForDespawnDeadEnemy());
+                }
+            }
+        }
+
+        IEnumerator WaitForDespawnDeadEnemy()
+        {
+            stateMachine.SwitchState<DeadState>();
+            tag = String.Empty;
+            gameObject.layer = 0;
+            var colliders = GetComponents<Collider2D>();
+            foreach (var collider in colliders)
+            {
+                collider.isTrigger = true;
+            }
+            yield return new WaitForSeconds(5f);
+            Runner.Despawn(Object);
+        }
+ 
 
         private void Awake()
         {
@@ -50,6 +71,7 @@ namespace VitaliyNULL.NetworkEnemy
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if(_isDead) return;
             if (other.CompareTag("Player"))
             {
                 _player = other;
@@ -59,6 +81,8 @@ namespace VitaliyNULL.NetworkEnemy
 
         private void OnTriggerStay2D(Collider2D other)
         {
+            if(_isDead) return;
+
             if (other.CompareTag("Player"))
             {
                 _player = other;
@@ -66,8 +90,21 @@ namespace VitaliyNULL.NetworkEnemy
             }
         }
 
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if(_isDead) return;
+
+            if (other.CompareTag("Player"))
+            {
+                _hasPlayer = false;
+                _player = null;
+            }
+        }
+
         private void OnCollisionEnter2D(Collision2D col)
         {
+            if(_isDead) return;
+
             if (!_isAttacked)
             {
                 if (col.gameObject.CompareTag("Player"))
@@ -79,6 +116,8 @@ namespace VitaliyNULL.NetworkEnemy
 
         private void OnCollisionStay2D(Collision2D collision)
         {
+            if(_isDead) return;
+
             if (!_isAttacked)
             {
                 if (collision.gameObject.CompareTag("Player"))
@@ -104,6 +143,12 @@ namespace VitaliyNULL.NetworkEnemy
 
         public override void FixedUpdateNetwork()
         {
+            if (_isDead)
+            {
+                transform.position = _deathPos;
+                return;
+            }
+            if(_isTakedDamage) return;
             Vector2 direction = Vector2.zero;
             if (_hasPlayer)
             {
@@ -128,8 +173,21 @@ namespace VitaliyNULL.NetworkEnemy
 
         public void TakeDamage(int damage)
         {
+            StartCoroutine(WaitForTakeDamage());
+            stateMachine.SwitchState<HitState>();
             Health -= damage;
             Debug.Log($"Enemy health is {Health}");
+        }
+
+        IEnumerator WaitForTakeDamage()
+        {
+            _isTakedDamage = true;
+            yield return new WaitForSeconds(0.2f);
+            _isTakedDamage = false;
+            if (!_isDead)
+            {
+                stateMachine.SwitchState<RunState>();
+            }
         }
     }
 }

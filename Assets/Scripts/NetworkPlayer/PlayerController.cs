@@ -1,13 +1,19 @@
+using System;
 using Cinemachine;
 using Fusion;
 using UnityEngine;
 using VitaliyNULL.Core;
+using VitaliyNULL.NetworkWeapon;
+using VitaliyNULL.StateMachine;
 
 namespace VitaliyNULL.NetworkPlayer
 {
     public class PlayerController : NetworkBehaviour, IPlayerLeft, IDamageable
     {
+        [SerializeField] private StateMachine.StateMachine stateMachine;
+        [SerializeField] private GameObject weaponController;
         private CinemachineVirtualCamera _camera;
+        [HideInInspector] public bool isDead = false;
         private readonly int _maxHealth = 15;
         private int _currentHealth;
 
@@ -17,9 +23,14 @@ namespace VitaliyNULL.NetworkPlayer
             set
             {
                 _currentHealth = Mathf.Clamp(value, 0, _maxHealth);
-                if (_maxHealth == 0)
+                if (_currentHealth == 0)
                 {
-                    Runner.Despawn(Object);
+                    isDead = true;
+                    gameObject.layer = 0;
+                    tag = String.Empty;
+                    stateMachine.SwitchState<DeadState>();
+                    weaponController.gameObject.SetActive(false);
+                    GetComponentInChildren<Collider2D>().isTrigger = true;
                     Debug.Log("Game Over");
                 }
             }

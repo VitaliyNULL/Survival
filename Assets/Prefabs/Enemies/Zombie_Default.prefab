@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7925183411135842244}
   - component: {fileID: 7035765481757797009}
   - component: {fileID: 2503836116300629028}
+  - component: {fileID: 8761847262431812770}
   m_Layer: 8
   m_Name: Zombie
   m_TagString: Untagged
@@ -106,6 +107,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8761847262431812770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4530974910275551578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f118d6e5afc4d3db5d19e1e08912ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  isEnemy: 1
 --- !u!1 &6581125164618605862
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   enemyConfig: {fileID: 11400000, guid: e32332250419ed04f8e2abe261e2c943, type: 2}
+  stateMachine: {fileID: 8761847262431812770}
 --- !u!114 &1664793569812208394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +282,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: -1877748870849729553}
   - {fileID: 1448427603046713864}
+  - {fileID: 8761847262431812770}
   SimulationBehaviours: []
 --- !u!50 &2819523339668142774
 Rigidbody2D:

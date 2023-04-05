@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 3300499891276165008}
   - component: {fileID: 1573007861446606726}
   - component: {fileID: 2537743321198453646}
+  - component: {fileID: 1001641157061708629}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -285,8 +286,23 @@ MonoBehaviour:
   - {fileID: 7148002074370414432}
   - {fileID: 5041245482665432094}
   - {fileID: 7206461934982403203}
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 1001641157061708629}
   SimulationBehaviours: []
+--- !u!114 &1001641157061708629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821314768718377929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f118d6e5afc4d3db5d19e1e08912ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  isEnemy: 0
 --- !u!1 &3960777092037984787
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,6 +472,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  stateMachine: {fileID: 1001641157061708629}
+  weaponController: {fileID: 1637133555}
+  isDead: 0
 --- !u!114 &2892001179636806175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,6 +488,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  stateMachine: {fileID: 1001641157061708629}
+  playerController: {fileID: 7686193783638235911}
 --- !u!50 &7264899916727340851
 Rigidbody2D:
   serializedVersion: 4

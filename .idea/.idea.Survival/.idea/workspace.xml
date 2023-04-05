@@ -2,55 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac3a7e1-3b96-4ad8-9296-96be1b38113b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/IDamageable.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/IDamageable.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/SkeletonEnemy.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/SkeletonEnemy.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/ZombieEnemy.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/ZombieEnemy.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/HashAnimationsName.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/HashAnimationsName.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/IStateSwitcher.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/IStateSwitcher.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/DeadState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/DeadState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/HitState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/HitState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/RunState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/RunState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StandState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StandState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/State.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/State.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StateMachine.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StateMachine.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators/Farmer0.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators/Farmer0.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators/farmer0.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators/farmer0.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators/farmer1.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators/farmer1.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators/farmer2.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators/farmer2.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators/farmer3.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MenuAnimators/farmer3.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/Skeleton.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/Skeleton.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/Zombie_Default.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/Zombie_Default.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/Zombie_Stronger.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/Zombie_Stronger.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/PlayerController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/PlayerController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/RifleConfig.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/RifleConfig.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/ShootgunConfig.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/ShootgunConfig.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/TompsonConfig.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/TompsonConfig.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/EnemyConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/EnemyConfig.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/NetworkEnemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/NetworkEnemy.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerInput.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerMove.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/GunBullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/GunBullet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkGun.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkGun.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkShootGun.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkShootGun.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/AcEnemy 0.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/AcEnemy 0.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/DeadEnemy 0.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/DeadEnemy 0.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/DeadEnemy 1.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/DeadEnemy 1.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/DeadEnemy 2.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/DeadEnemy 2.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/HitEnemy 0.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/HitEnemy 0.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/HitEnemy 1.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/HitEnemy 1.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/HitEnemy 2.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/HitEnemy 2.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/RunEnemy 0.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/RunEnemy 0.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/RunEnemy 1.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Animations/Enemy/RunEnemy 1.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Sprites/Enemy 0.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Sprites/Enemy 0.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Sprites/Enemy 1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Sprites/Enemy 1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Undead Survivor/Sprites/Enemy 2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Undead Survivor/Sprites/Enemy 2.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +59,11 @@
     <setting file="file://$PROJECT_DIR$/../../../My shit/Programming Projects/Unity/StrikeOnline/Assets/Scripts/Weapon/StandartGun.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Runner/Assets/Scripts/Managers/ObjectPoolManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Runner/Assets/Scripts/Managers/SpawnManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Runner/Assets/Scripts/StateMachine/HashAnimationsName.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Runner/Assets/Scripts/StateMachine/IStateSwitcher.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Runner/Assets/Scripts/StateMachine/JumpState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Runner/Assets/Scripts/StateMachine/State.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Runner/Assets/Scripts/StateMachine/StateMachine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Editor/JoystickEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Photon/Fusion/Scripts/Editor/Fusion.Editor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameSceneUI/GameUIManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -168,7 +151,7 @@
       <workItem from="1680504942499" duration="17025000" />
       <workItem from="1680542652015" duration="484000" />
       <workItem from="1680592857446" duration="23499000" />
-      <workItem from="1680678963767" duration="16539000" />
+      <workItem from="1680678963767" duration="20489000" />
     </task>
     <servers />
   </component>

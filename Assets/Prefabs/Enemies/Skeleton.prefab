@@ -136,6 +136,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   enemyConfig: {fileID: 11400000, guid: bad2dd73e5e324a4ebb0f40c5a0cc1a5, type: 2}
+  stateMachine: {fileID: 861608443493738277}
+  collider2D: {fileID: 7292827559400021985}
 --- !u!114 &653200443876950780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +162,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: -4096892688188305490}
   - {fileID: 866235293845324035}
+  - {fileID: 861608443493738277}
   SimulationBehaviours: []
 --- !u!50 &41603590373686577
 Rigidbody2D:
@@ -253,6 +256,7 @@ GameObject:
   - component: {fileID: 2940014598062469418}
   - component: {fileID: 90208581079253407}
   - component: {fileID: 4529408939583039294}
+  - component: {fileID: 861608443493738277}
   m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
@@ -348,3 +352,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &861608443493738277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5777208375680680439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f118d6e5afc4d3db5d19e1e08912ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  isEnemy: 1
