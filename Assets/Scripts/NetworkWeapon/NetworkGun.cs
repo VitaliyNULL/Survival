@@ -3,6 +3,7 @@ using System.Collections;
 using Fusion;
 using UnityEngine;
 using VitaliyNULL.Core;
+using VitaliyNULL.GameSceneUI;
 using VitaliyNULL.NetworkPlayer;
 
 namespace VitaliyNULL.NetworkWeapon
@@ -10,6 +11,7 @@ namespace VitaliyNULL.NetworkWeapon
     public class NetworkGun : NetworkBehaviour, INetworkGun
     {
         [SerializeField] protected GunConfig gunConfig;
+        private GameUI _gameUI;
         protected string _gunName;
         protected int _damage;
         protected int _storageCapacity;
@@ -27,6 +29,68 @@ namespace VitaliyNULL.NetworkWeapon
         public GunType GunType;
         protected bool _canShoot = true;
         private float lastShootTime = 0;
+        private bool _canReload = true;
+
+        private int _currentAmmo;
+        private int _allAmmo;
+
+        public int AllAmmo
+        {
+            get => _allAmmo;
+            set
+            {
+                _allAmmo = Mathf.Clamp(value, 0, _ammoCapacity);
+                if (_allAmmo < _storageCapacity)
+                {
+                    _canReload = false;
+                }
+            }
+        }
+
+        public int CurrentAmmo
+        {
+            get => _currentAmmo;
+            set
+            {
+                _currentAmmo = Mathf.Clamp(value, 0, _storageCapacity);
+                if (_currentAmmo != _storageCapacity && AllAmmo != 0)
+                {
+                    _canReload = true;
+                }
+            }
+        }
+        // private int AllAmmo
+        // {
+        //     get => _allAmmo;
+        //     set
+        //     {
+        //         _allAmmo = Mathf.Clamp(value, 0, reloadingWeapon.AmmoCapacity);
+        //         if (_allAmmo < reloadingWeapon.StorageCapacity)
+        //         {
+        //             _canReload = false;
+        //             print("FUCK");
+        //         }
+        //     }
+        // }
+        //
+        // private int CurrentAmmo
+        // {
+        //     get => _currentAmmoStore;
+        //     set
+        //     {
+        //         if (_canShoot)
+        //         {
+        //             _currentAmmoStore = Mathf.Clamp(value, 0, reloadingWeapon.StorageCapacity);
+        //         }
+        //
+        //         if (_currentAmmoStore != reloadingWeapon.StorageCapacity && AllAmmo != 0)
+        //         {
+        //             _canReload = true;
+        //         }
+        //
+        //         if (photonView.IsMine) _playerUIManager.UpdateAmmoBar(_currentAmmoStore, _allAmmo);
+        //     }
+        // }
 
         public void Shoot()
         {
@@ -81,7 +145,12 @@ namespace VitaliyNULL.NetworkWeapon
         public void Reload()
         {
             Debug.Log("Reload");
+            if (_canReload)
+            {
+                StartCoroutine(WaitForReload());
+            }
         }
+
 
 
         private IEnumerator WaitBetweenShoot()
@@ -96,7 +165,20 @@ namespace VitaliyNULL.NetworkWeapon
         private IEnumerator WaitForReload()
         {
             _gunEvent -= RPC_GunShoot;
+            _canReload = false;
+            _canShoot = false;
             yield return new WaitForSeconds(_timeToReload);
+            _canShoot = true;
+            if (AllAmmo <= _storageCapacity)
+            {
+                CurrentAmmo = AllAmmo;
+                AllAmmo = 0;
+            }
+            else
+            {
+                AllAmmo -= _storageCapacity - CurrentAmmo;
+                CurrentAmmo = _storageCapacity;
+            }
             _gunEvent += RPC_GunShoot;
         }
 
@@ -106,6 +188,8 @@ namespace VitaliyNULL.NetworkWeapon
             _damage = gunConfig.Damage;
             _storageCapacity = gunConfig.StorageCapacity;
             _ammoCapacity = gunConfig.AmmoCapacity;
+            _allAmmo = _ammoCapacity;
+            _currentAmmo = _storageCapacity;
             _bulletSpeed = gunConfig.BulletSpeed;
             _gunBullet = gunConfig.GunBullet;
             _gunShootSound = gunConfig.GunShootSound;
@@ -114,6 +198,8 @@ namespace VitaliyNULL.NetworkWeapon
             _timeToReload = gunConfig.TimeToReload;
             GunType = gunConfig.GunType;
             _gunEvent += RPC_GunShoot;
+            _gameUI = GetComponentInParent<GameUI>();
+            _gameUI.SetAmmoUI(CurrentAmmo, AllAmmo);
         }
 
         #region Only for InputAuthority

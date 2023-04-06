@@ -3,6 +3,7 @@ using Cinemachine;
 using Fusion;
 using UnityEngine;
 using VitaliyNULL.Core;
+using VitaliyNULL.GameSceneUI;
 using VitaliyNULL.NetworkWeapon;
 using VitaliyNULL.StateMachine;
 
@@ -11,10 +12,12 @@ namespace VitaliyNULL.NetworkPlayer
     public class PlayerController : NetworkBehaviour, IPlayerLeft, IDamageable
     {
         [SerializeField] private StateMachine.StateMachine stateMachine;
-        [SerializeField] private GameObject weaponController;
+        [SerializeField] private WeaponController weaponController;
         private CinemachineVirtualCamera _camera;
+        private GameUI _gameUI;
         [HideInInspector] public bool isDead = false;
         private readonly int _maxHealth = 15;
+        private int _kills = 0;
         private int _currentHealth;
 
         private int Health
@@ -43,8 +46,14 @@ namespace VitaliyNULL.NetworkPlayer
             {
                 _camera = FindObjectOfType<CinemachineVirtualCamera>();
                 _camera.Follow = transform;
+                _gameUI = FindObjectOfType<GameUI>();
+                _gameUI.SetHpUI(_currentHealth,_maxHealth);
+                _gameUI.SetKillsUI(_kills);
+                // _gameUI.SetAmmoUI(weaponController.currentGun.CurrentAmmo, weaponController.currentGun.AllAmmo);
             }
         }
+
+        public GameUI GameUI => _gameUI;
 
         #region IPlayerLeft
 

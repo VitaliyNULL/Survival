@@ -12,7 +12,7 @@ namespace VitaliyNULL.NetworkWeapon
 
         [SerializeField] private List<NetworkGun> guns = new List<NetworkGun>();
         private bool _isGunChose;
-        private NetworkGun _currentGun;
+        [HideInInspector]public NetworkGun currentGun;
 
         #endregion
 
@@ -32,7 +32,7 @@ namespace VitaliyNULL.NetworkWeapon
         {
             if (GetInput(out NetworkInputData data) && data.isShoot)
             {
-                _currentGun.Shoot();
+                currentGun.Shoot();
             }
         }
 
@@ -54,7 +54,7 @@ namespace VitaliyNULL.NetworkWeapon
             {
                 // Runner.Spawn(ChooseRandomGun(), transform.position, Quaternion.identity, Runner.LocalPlayer);
                 gun.gameObject.SetActive(true);
-                _currentGun = gun;
+                currentGun = gun;
                 _isGunChose = true;
                 Debug.Log("gun is not chose");
             }
@@ -65,7 +65,7 @@ namespace VitaliyNULL.NetworkWeapon
         {
             if (HasInputAuthority && HasStateAuthority)
             {
-                RPC_TakeChangeGunRPC(_currentGun);
+                RPC_TakeChangeGunRPC(currentGun);
             }
         }
 
@@ -80,7 +80,7 @@ namespace VitaliyNULL.NetworkWeapon
             if (!HasInputAuthority && !HasStateAuthority)
             {
                 gun.gameObject.SetActive(true);
-                _currentGun = gun;
+                currentGun = gun;
             }
         }
 
@@ -94,9 +94,9 @@ namespace VitaliyNULL.NetworkWeapon
         {
             //TODO: Choose random gun 
             int index = Random.Range(0, guns.Count);
-            _currentGun = guns[index];
-            guns.Remove(_currentGun);
-            return _currentGun;
+            currentGun = guns[index];
+            guns.Remove(currentGun);
+            return currentGun;
         }
 
         #endregion
