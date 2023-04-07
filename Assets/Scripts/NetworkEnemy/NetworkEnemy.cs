@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using System.Linq;
 using Fusion;
 using UnityEngine;
 using VitaliyNULL.Core;
+using VitaliyNULL.NetworkPlayer;
 using VitaliyNULL.StateMachine;
 
 namespace VitaliyNULL.NetworkEnemy
@@ -26,6 +28,7 @@ namespace VitaliyNULL.NetworkEnemy
         private bool _isTakedDamage = false;
         private bool _isDead = false;
         private Vector2 _deathPos;
+        private RpcInfo _rpcInfo;
 
         private int Health
         {
@@ -199,12 +202,16 @@ namespace VitaliyNULL.NetworkEnemy
         }
 
         [Rpc]
-        private void RPC_TakeDamage(int damage)
+        private void RPC_TakeDamage(int damage, RpcInfo info = default)
         {
             _deathPos = transform.position;
             StartCoroutine(WaitForTakeDamage());
             stateMachine.SwitchState<HitState>();
             Health -= damage;
+            // if (Health == 0)
+            // {
+            //     PlayerController.FindKiller(info.Source).SetKill();
+            // }
             Debug.Log($"Enemy health is {Health}");
         }
 

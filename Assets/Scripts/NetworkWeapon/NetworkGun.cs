@@ -14,6 +14,8 @@ namespace VitaliyNULL.NetworkWeapon
         private GameUI _gameUI;
         protected string _gunName;
         protected int _damage;
+        public int Damage => _damage;
+
         protected int _storageCapacity;
         protected int _ammoCapacity;
         protected float _bulletSpeed;
@@ -40,10 +42,16 @@ namespace VitaliyNULL.NetworkWeapon
             set
             {
                 _allAmmo = Mathf.Clamp(value, 0, _ammoCapacity);
-                RPC_TakeUpdate(_currentAmmo,_allAmmo);
+                RPC_TakeUpdate(_currentAmmo, _allAmmo);
                 if (_allAmmo < _storageCapacity)
                 {
                     _canReload = false;
+                }
+
+                if (_allAmmo == 0)
+                {
+                    _canReload = false;
+                    _canShoot = false;
                 }
             }
         }
@@ -54,7 +62,14 @@ namespace VitaliyNULL.NetworkWeapon
             set
             {
                 _currentAmmo = Mathf.Clamp(value, 0, _storageCapacity);
-                RPC_TakeUpdate(_currentAmmo,_allAmmo);
+                RPC_TakeUpdate(_currentAmmo, _allAmmo);
+                if (_currentAmmo == 0 && _allAmmo == 0)
+                {
+                    _canReload = false;
+                    _canShoot = false;
+                    return;
+                }
+
                 if (value == 0 && _currentAmmo == 0)
                 {
                     Reload();
@@ -115,7 +130,15 @@ namespace VitaliyNULL.NetworkWeapon
         {
             CurrentAmmo -= 1;
             yield return new WaitForSeconds(_timeToWaitBetweenShoot);
-            _canShoot = true;
+            // if (CurrentAmmo == 0 && AllAmmo == 0)
+            // {
+            //     _canShoot = false;
+            // }
+            // else
+            // {
+            //     _canShoot = true;
+            // }
+            _canShoot = !(CurrentAmmo == 0 && AllAmmo == 0);
         }
 
         private IEnumerator WaitForReload()
@@ -145,7 +168,7 @@ namespace VitaliyNULL.NetworkWeapon
             _damage = gunConfig.Damage;
             _storageCapacity = gunConfig.StorageCapacity;
             _ammoCapacity = gunConfig.AmmoCapacity;
-            _allAmmo = _ammoCapacity;
+            _allAmmo = 10;
             _currentAmmo = _storageCapacity;
             _bulletSpeed = gunConfig.BulletSpeed;
             _gunBullet = gunConfig.GunBullet;
@@ -160,6 +183,7 @@ namespace VitaliyNULL.NetworkWeapon
                 _gameUI = FindObjectOfType<GameUI>();
                 _gameUI.SetAmmoUI(CurrentAmmo, AllAmmo);
             }
+
             if (HasStateAuthority) _canShoot = true;
         }
 
@@ -173,6 +197,7 @@ namespace VitaliyNULL.NetworkWeapon
                 _gameUI.SetAmmoUI(currentAmmo, allAmmo);
             }
         }
+
         [Rpc]
         private void RPC_GunShoot(Vector2 direction, float speed, Quaternion rotation)
         {

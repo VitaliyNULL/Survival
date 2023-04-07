@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 using Cinemachine;
 using Fusion;
 using UnityEngine;
@@ -17,15 +17,23 @@ namespace VitaliyNULL.NetworkPlayer
         private GameUI _gameUI;
         [HideInInspector] public bool isDead = false;
         private readonly int _maxHealth = 15;
-        private int _kills = 0;
         private int _currentHealth;
 
+        private int _damageCount = 0;
+        private int _kills = 0;
+
+        public static PlayerController FindKiller(PlayerRef playerRef)
+        {
+            return FindObjectsOfType<PlayerController>()
+                .SingleOrDefault(x => x.Object.StateAuthority.Equals(playerRef));
+        }
         private int Health
         {
             get => _currentHealth;
             set
             {
                 _currentHealth = Mathf.Clamp(value, 0, _maxHealth);
+                RPC_TakeHealthUpdate(_currentHealth, _maxHealth);
                 if (_currentHealth == 0)
                 {
                     isDead = true;
@@ -47,10 +55,20 @@ namespace VitaliyNULL.NetworkPlayer
                 _camera = FindObjectOfType<CinemachineVirtualCamera>();
                 _camera.Follow = transform;
                 _gameUI = FindObjectOfType<GameUI>();
-                _gameUI.SetHpUI(_currentHealth,_maxHealth);
+                _gameUI.SetHpUI(_currentHealth, _maxHealth);
                 _gameUI.SetKillsUI(_kills);
                 // _gameUI.SetAmmoUI(weaponController.currentGun.CurrentAmmo, weaponController.currentGun.AllAmmo);
             }
+        }
+
+        public void SetDamage()
+        {
+            _damageCount += weaponController.currentGun.Damage;
+        }
+
+        public void SetKill()
+        {
+            _kills++;
         }
 
         public GameUI GameUI => _gameUI;
@@ -59,7 +77,7 @@ namespace VitaliyNULL.NetworkPlayer
 
         public void PlayerLeft(PlayerRef player)
         {
-            if(HasInputAuthority) return;
+            if (HasInputAuthority) return;
             Runner.Despawn(Object);
             Debug.Log("Despawn Object");
         }
@@ -70,6 +88,15 @@ namespace VitaliyNULL.NetworkPlayer
         {
             Health -= damage;
             Debug.Log($"Player health is {Health}");
+        }
+
+        [Rpc]
+        private void RPC_TakeHealthUpdate(int currentHealth, int maxHealth)
+        {
+            if (HasInputAuthority)
+            {
+                _gameUI.SetHpUI(currentHealth, maxHealth);
+            }
         }
     }
 }

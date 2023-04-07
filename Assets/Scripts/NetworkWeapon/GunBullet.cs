@@ -11,7 +11,6 @@ namespace VitaliyNULL.NetworkWeapon
         private float _speed;
         private int _damage;
         private Rigidbody2D _rigidbody2D;
-
         private void Awake()
         {
             _rigidbody2D ??= GetComponent<Rigidbody2D>();
@@ -31,7 +30,7 @@ namespace VitaliyNULL.NetworkWeapon
             if (col.gameObject.CompareTag("Enemy"))
             {
                 col.gameObject.GetComponent<IDamageable>().TakeDamage(_damage);
-                RPC_Debug($"{Object.Runner.LocalPlayer} shot");
+                // PlayerController.FindKiller(Object.Runner.LocalPlayer).SetDamage();
                 Runner?.Despawn(Object);
             }
         }
