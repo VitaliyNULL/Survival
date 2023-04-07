@@ -23,23 +23,24 @@ namespace VitaliyNULL.NetworkWeapon
         protected float _timeToWaitBetweenShoot;
         protected float _timeToReload;
         protected Coroutine _waitBetweenShoot;
-        protected Action<Vector2, float, Quaternion> _gunEvent;
+        protected event Action<Vector2, float, Quaternion> _gunEvent;
         protected Vector2 _gunDirection;
         protected Quaternion _gunRotation;
         public GunType GunType;
-        protected bool _canShoot = true;
+        protected bool _canShoot;
         private float lastShootTime = 0;
         private bool _canReload = true;
 
         private int _currentAmmo;
         private int _allAmmo;
 
-        public int AllAmmo
+        private int AllAmmo
         {
             get => _allAmmo;
             set
             {
                 _allAmmo = Mathf.Clamp(value, 0, _ammoCapacity);
+                RPC_TakeUpdate(_currentAmmo,_allAmmo);
                 if (_allAmmo < _storageCapacity)
                 {
                     _canReload = false;
@@ -47,63 +48,33 @@ namespace VitaliyNULL.NetworkWeapon
             }
         }
 
-        public int CurrentAmmo
+        private int CurrentAmmo
         {
             get => _currentAmmo;
             set
             {
                 _currentAmmo = Mathf.Clamp(value, 0, _storageCapacity);
+                RPC_TakeUpdate(_currentAmmo,_allAmmo);
+                if (value == 0 && _currentAmmo == 0)
+                {
+                    Reload();
+                    return;
+                }
+
                 if (_currentAmmo != _storageCapacity && AllAmmo != 0)
                 {
                     _canReload = true;
                 }
             }
         }
-        // private int AllAmmo
-        // {
-        //     get => _allAmmo;
-        //     set
-        //     {
-        //         _allAmmo = Mathf.Clamp(value, 0, reloadingWeapon.AmmoCapacity);
-        //         if (_allAmmo < reloadingWeapon.StorageCapacity)
-        //         {
-        //             _canReload = false;
-        //             print("FUCK");
-        //         }
-        //     }
-        // }
-        //
-        // private int CurrentAmmo
-        // {
-        //     get => _currentAmmoStore;
-        //     set
-        //     {
-        //         if (_canShoot)
-        //         {
-        //             _currentAmmoStore = Mathf.Clamp(value, 0, reloadingWeapon.StorageCapacity);
-        //         }
-        //
-        //         if (_currentAmmoStore != reloadingWeapon.StorageCapacity && AllAmmo != 0)
-        //         {
-        //             _canReload = true;
-        //         }
-        //
-        //         if (photonView.IsMine) _playerUIManager.UpdateAmmoBar(_currentAmmoStore, _allAmmo);
-        //     }
-        // }
+
 
         public void Shoot()
         {
-            // if (_canShoot)
-            // {
-            //     _canShoot = false;
-            //     lastShootTime = _timeToWaitBetweenShoot;
-            //     _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
-            // }
             if (_canShoot)
             {
                 _canShoot = false;
-                StartCoroutine(WaitBetweenShoot());
+                _gunEvent?.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
             }
         }
 
@@ -118,19 +89,6 @@ namespace VitaliyNULL.NetworkWeapon
             }
         }
 
-        // private void Update()
-        // {
-        //     if (lastShootTime > 0)
-        //     {
-        //         _canShoot = false;
-        //         lastShootTime -= Time.deltaTime;
-        //     }
-        //     else
-        //     {
-        //         _canShoot = true;
-        //     }
-        // }
-
         protected virtual void SpawnBullet(Vector2 direction, float speed, Quaternion rotation)
         {
             if (!HasStateAuthority)
@@ -138,37 +96,34 @@ namespace VitaliyNULL.NetworkWeapon
                 return;
             }
 
+            StartCoroutine(WaitBetweenShoot());
             GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation, Runner.LocalPlayer);
             bullet.SetDirectionAndSpeed(direction, speed, rotation, _damage);
         }
 
         public void Reload()
         {
-            Debug.Log("Reload");
             if (_canReload)
             {
+                Debug.Log("Reload");
                 StartCoroutine(WaitForReload());
             }
         }
 
 
-
-        private IEnumerator WaitBetweenShoot()
+        protected IEnumerator WaitBetweenShoot()
         {
-            _gunEvent.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
-            // RPC_GunShoot(_gunDirection, _bulletSpeed, _gunRotation);
+            CurrentAmmo -= 1;
             yield return new WaitForSeconds(_timeToWaitBetweenShoot);
-            // _gunEvent += RPC_GunShoot;
             _canShoot = true;
         }
 
         private IEnumerator WaitForReload()
         {
-            _gunEvent -= RPC_GunShoot;
             _canReload = false;
             _canShoot = false;
+            _gunEvent -= RPC_GunShoot;
             yield return new WaitForSeconds(_timeToReload);
-            _canShoot = true;
             if (AllAmmo <= _storageCapacity)
             {
                 CurrentAmmo = AllAmmo;
@@ -179,7 +134,9 @@ namespace VitaliyNULL.NetworkWeapon
                 AllAmmo -= _storageCapacity - CurrentAmmo;
                 CurrentAmmo = _storageCapacity;
             }
+
             _gunEvent += RPC_GunShoot;
+            _canShoot = true;
         }
 
         private void Awake()
@@ -198,12 +155,24 @@ namespace VitaliyNULL.NetworkWeapon
             _timeToReload = gunConfig.TimeToReload;
             GunType = gunConfig.GunType;
             _gunEvent += RPC_GunShoot;
-            _gameUI = GetComponentInParent<GameUI>();
-            _gameUI.SetAmmoUI(CurrentAmmo, AllAmmo);
+            if (HasInputAuthority)
+            {
+                _gameUI = FindObjectOfType<GameUI>();
+                _gameUI.SetAmmoUI(CurrentAmmo, AllAmmo);
+            }
+            if (HasStateAuthority) _canShoot = true;
         }
 
         #region Only for InputAuthority
 
+        [Rpc]
+        private void RPC_TakeUpdate(int currentAmmo, int allAmmo)
+        {
+            if (HasInputAuthority)
+            {
+                _gameUI.SetAmmoUI(currentAmmo, allAmmo);
+            }
+        }
         [Rpc]
         private void RPC_GunShoot(Vector2 direction, float speed, Quaternion rotation)
         {

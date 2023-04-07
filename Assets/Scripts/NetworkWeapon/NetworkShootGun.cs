@@ -11,6 +11,7 @@ namespace VitaliyNULL.NetworkWeapon
         {
             
             if (!HasStateAuthority) return;
+            StartCoroutine(WaitBetweenShoot());
             float step = _range / 10;
             for (int i = 0; i < _countOfBullets; i++)
             {
