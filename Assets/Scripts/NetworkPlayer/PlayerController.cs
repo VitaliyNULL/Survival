@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Cinemachine;
 using Fusion;
@@ -24,9 +25,24 @@ namespace VitaliyNULL.NetworkPlayer
 
         public static PlayerController FindKiller(PlayerRef playerRef)
         {
-            return FindObjectsOfType<PlayerController>()
-                .SingleOrDefault(x => x.Object.StateAuthority.Equals(playerRef));
+            Debug.Log(playerRef.PlayerId);
+
+            var playerController = FindObjectsOfType<PlayerController>();
+            foreach (var controller in playerController)
+            {
+                Debug.Log($"Player controller with id: {controller.Object.InputAuthority.PlayerId} and playerRef with id:{Mathf.Abs(playerRef.PlayerId)}");
+                if (controller.Object.InputAuthority.PlayerId.Equals(Mathf.Abs(playerRef.PlayerId)))
+                {
+                    return controller;
+                }
+                else
+                {
+                    Debug.LogWarning("Something not good with equals if id is equal");
+                }
+            }
+            return null;
         }
+
         private int Health
         {
             get => _currentHealth;
@@ -47,6 +63,17 @@ namespace VitaliyNULL.NetworkPlayer
             }
         }
 
+        private int Kills
+        {
+            get => _kills;
+            set
+            {
+                _kills = value;
+                if (HasInputAuthority)
+                    _gameUI.SetKillsUI(_kills);
+            }
+        }
+
         public override void Spawned()
         {
             _currentHealth = _maxHealth;
@@ -63,12 +90,19 @@ namespace VitaliyNULL.NetworkPlayer
 
         public void SetDamage()
         {
-            _damageCount += weaponController.currentGun.Damage;
+            if (HasInputAuthority)
+            {
+                Debug.Log($"Damage {_damageCount}");
+                Debug.Log(weaponController);
+                Debug.Log(weaponController.currentGun);
+                Debug.Log(weaponController.currentGun.Damage);
+                _damageCount += weaponController.currentGun.Damage;
+            }
         }
 
         public void SetKill()
         {
-            _kills++;
+            Kills++;
         }
 
         public GameUI GameUI => _gameUI;
@@ -84,7 +118,7 @@ namespace VitaliyNULL.NetworkPlayer
 
         #endregion
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, RpcInfo info)
         {
             Health -= damage;
             Debug.Log($"Player health is {Health}");

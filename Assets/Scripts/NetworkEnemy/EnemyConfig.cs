@@ -1,4 +1,5 @@
 using UnityEngine;
+using VitaliyNULL.Core;
 
 namespace VitaliyNULL.NetworkEnemy
 {
@@ -12,8 +13,12 @@ namespace VitaliyNULL.NetworkEnemy
         [SerializeField] private float attackRate;
         [SerializeField] private AudioClip meleeSound;
         [SerializeField] private AudioClip hitSound;
+        [SerializeField] private EnemyType enemyType;
         public float Speed => speed;
         public int Damage => damage;
+
+        public EnemyType EnemyType => enemyType;
+
         public int Health => health;
 
         public float RadiusOfAttack => radiusOfAttack;

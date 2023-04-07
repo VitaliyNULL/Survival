@@ -123,6 +123,7 @@ MonoBehaviour:
   - {fileID: 504006509645841987}
   - {fileID: 5911072180414758347}
   - {fileID: 560840426272183476}
+  currentGun: {fileID: 0}
 --- !u!114 &5977436162961939938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,7 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   stateMachine: {fileID: 1001641157061708629}
-  weaponController: {fileID: 1637133555}
+  weaponController: {fileID: 1298529720280943033}
   isDead: 0
 --- !u!114 &2892001179636806175
 MonoBehaviour:

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Linq;
 using Fusion;
 using UnityEngine;
 using VitaliyNULL.Core;
@@ -48,6 +47,9 @@ namespace VitaliyNULL.NetworkEnemy
             _isDead = true;
             _deathPos = transform.position;
             StartCoroutine(WaitForDespawnDeadEnemy());
+            Debug.Log($"Dead by {_rpcInfo.Source}");
+            PlayerController.FindKiller(_rpcInfo.Source.PlayerId).SetKill();
+            Debug.Log(_rpcInfo.Source.PlayerId + " player killed this mob");
         }
 
         IEnumerator WaitForDespawnDeadEnemy()
@@ -60,9 +62,8 @@ namespace VitaliyNULL.NetworkEnemy
             {
                 collider.isTrigger = true;
             }
-
             yield return new WaitForSeconds(5f);
-            Runner.Despawn(Object);
+            Runner?.Despawn(Object);
         }
 
 
@@ -119,7 +120,7 @@ namespace VitaliyNULL.NetworkEnemy
             {
                 if (col.gameObject.CompareTag("Player"))
                 {
-                    Damage(col.gameObject.GetComponent<IDamageable>());
+                    Damage(col.gameObject.GetComponent<IDamageable>(), default);
                 }
             }
         }
@@ -132,20 +133,20 @@ namespace VitaliyNULL.NetworkEnemy
             {
                 if (collision.gameObject.CompareTag("Player"))
                 {
-                    Damage(collision.gameObject.GetComponent<IDamageable>());
+                    Damage(collision.gameObject.GetComponent<IDamageable>(), _rpcInfo);
                 }
             }
         }
 
-        void Damage(IDamageable damageable)
+        void Damage(IDamageable damageable, RpcInfo info)
         {
-            StartCoroutine(WaitForAttackRate(damageable));
+            StartCoroutine(WaitForAttackRate(damageable, info));
         }
 
-        IEnumerator WaitForAttackRate(IDamageable damageable)
+        IEnumerator WaitForAttackRate(IDamageable damageable, RpcInfo info)
         {
             _isAttacked = true;
-            damageable.TakeDamage(_damage);
+            damageable.TakeDamage(_damage, info);
             yield return new WaitForSeconds(_attackRate);
             _isAttacked = false;
         }
@@ -185,9 +186,9 @@ namespace VitaliyNULL.NetworkEnemy
                 new Quaternion(transform.rotation.x, flip, transform.rotation.z, transform.rotation.w);
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, RpcInfo info)
         {
-            RPC_TakeDamage(damage);
+            RPC_TakeDamage(damage, info);
         }
 
         IEnumerator WaitForTakeDamage()
@@ -202,17 +203,24 @@ namespace VitaliyNULL.NetworkEnemy
         }
 
         [Rpc]
-        private void RPC_TakeDamage(int damage, RpcInfo info = default)
+        private void RPC_TakeDamage(int damage, RpcInfo info)
         {
+            _rpcInfo = info;
             _deathPos = transform.position;
             StartCoroutine(WaitForTakeDamage());
             stateMachine.SwitchState<HitState>();
             Health -= damage;
-            // if (Health == 0)
-            // {
-            //     PlayerController.FindKiller(info.Source).SetKill();
-            // }
-            Debug.Log($"Enemy health is {Health}");
+            Debug.Log($"Enemy was damaged by {info.Source.PlayerId}");
+            try
+            {
+                var obj = PlayerController.FindKiller(info.Source.PlayerId);
+                Debug.Log(obj);
+                PlayerController.FindKiller(info.Source.PlayerId).SetDamage();
+            }
+            catch (NullReferenceException e)
+            {
+                Debug.LogError($"NullReference Exception {info.Source.PlayerId} was shot in enemy");
+            }
         }
 
         [Rpc]
@@ -220,5 +228,6 @@ namespace VitaliyNULL.NetworkEnemy
         {
             Death();
         }
+        
     }
 }

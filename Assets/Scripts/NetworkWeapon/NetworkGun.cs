@@ -25,7 +25,7 @@ namespace VitaliyNULL.NetworkWeapon
         protected float _timeToWaitBetweenShoot;
         protected float _timeToReload;
         protected Coroutine _waitBetweenShoot;
-        protected event Action<Vector2, float, Quaternion> _gunEvent;
+        protected event Action<Vector2, float, Quaternion, PlayerRef> _gunEvent;
         protected Vector2 _gunDirection;
         protected Quaternion _gunRotation;
         public GunType GunType;
@@ -89,7 +89,7 @@ namespace VitaliyNULL.NetworkWeapon
             if (_canShoot)
             {
                 _canShoot = false;
-                _gunEvent?.Invoke(_gunDirection, _bulletSpeed, _gunRotation);
+                _gunEvent?.Invoke(_gunDirection, _bulletSpeed, _gunRotation, Runner.LocalPlayer);
             }
         }
 
@@ -168,7 +168,7 @@ namespace VitaliyNULL.NetworkWeapon
             _damage = gunConfig.Damage;
             _storageCapacity = gunConfig.StorageCapacity;
             _ammoCapacity = gunConfig.AmmoCapacity;
-            _allAmmo = 10;
+            _allAmmo = _ammoCapacity;
             _currentAmmo = _storageCapacity;
             _bulletSpeed = gunConfig.BulletSpeed;
             _gunBullet = gunConfig.GunBullet;
@@ -199,9 +199,10 @@ namespace VitaliyNULL.NetworkWeapon
         }
 
         [Rpc]
-        private void RPC_GunShoot(Vector2 direction, float speed, Quaternion rotation)
+        private void RPC_GunShoot(Vector2 direction, float speed, Quaternion rotation, PlayerRef playerRef)
         {
-            if (HasStateAuthority)
+            Debug.LogError($"{playerRef.PlayerId} is player that do this RPC, {Runner.LocalPlayer.PlayerId} ");
+            if (HasStateAuthority && playerRef.PlayerId.Equals(Runner.LocalPlayer.PlayerId))
             {
                 SpawnBullet(direction, speed, rotation);
             }
