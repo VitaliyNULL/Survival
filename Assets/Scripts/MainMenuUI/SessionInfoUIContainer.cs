@@ -8,11 +8,23 @@ namespace VitaliyNULL.MainMenuUI
 {
     public class SessionInfoUIContainer : MonoBehaviour
     {
+        #region Private Fields
+
         [SerializeField] private TMP_Text lobbyName;
         [SerializeField] private TMP_Text playerCount;
         private Button _joinRoom;
         private SessionInfo _sessionInfo;
+
+        #endregion
+
+        #region Public Fields
+
         public event Action<SessionInfo> OnJoinSession;
+
+        #endregion
+
+        #region Public Methods
+
         public void SetInfo(SessionInfo info)
         {
             _sessionInfo = info;
@@ -27,5 +39,6 @@ namespace VitaliyNULL.MainMenuUI
             OnJoinSession?.Invoke(_sessionInfo);
         }
 
+        #endregion
     }
 }

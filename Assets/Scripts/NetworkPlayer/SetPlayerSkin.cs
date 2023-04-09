@@ -6,6 +6,8 @@ namespace VitaliyNULL.NetworkPlayer
 {
     public class SetPlayerSkin : NetworkBehaviour
     {
+        #region Private Fields
+
         private Animator _animator;
         [SerializeField] private RuntimeAnimatorController farmer0;
         [SerializeField] private RuntimeAnimatorController farmer1;
@@ -13,10 +15,18 @@ namespace VitaliyNULL.NetworkPlayer
         [SerializeField] private RuntimeAnimatorController farmer3;
         private readonly string _mySkin = "MY_SKIN";
 
+        #endregion
+
+        #region MonoBehaviour Callbacks
+
         private void Awake()
         {
             _animator ??= GetComponentInParent<Animator>();
         }
+
+        #endregion
+
+        #region NetworkBehaviour Callbacks
 
         public override void Spawned()
         {
@@ -28,6 +38,10 @@ namespace VitaliyNULL.NetworkPlayer
 
             RPC_ChangeSkinRemotePlayer();
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void SetAnimator(PlayerSkin playerSkin)
         {
@@ -48,6 +62,8 @@ namespace VitaliyNULL.NetworkPlayer
                     break;
             }
         }
+
+        #endregion
 
         #region RPC
 

@@ -21,51 +21,83 @@ namespace VitaliyNULL.NetworkPlayer
 
         #endregion
 
-        #region MonoBehaviour Callbacks
+        #region NetworkBehaviour Callbacks
 
         public override void Spawned()
         {
-           
-                Debug.Log("Spawned");
-                var joysticks = FindObjectsOfType<VariableJoystick>();
-                foreach (var joystick in joysticks)
+            Debug.Log("Spawned");
+            var joysticks = FindObjectsOfType<VariableJoystick>();
+            foreach (var joystick in joysticks)
+            {
+                if (joystick.name == "MoveJoystick")
                 {
-                    if (joystick.name == "MoveJoystick")
-                    {
-                        movementJoystick = joystick;
-                        break;
-                    }
-
-                    if (joystick.name == "WeaponJoystick")
-                    {
-                        weaponJoystick = joystick;
-                        var trigger = weaponJoystick.GetComponent<EventTrigger>();
-                        EventTrigger.Entry entry1 = new EventTrigger.Entry();
-                        EventTrigger.Entry entry2 = new EventTrigger.Entry();
-
-                        trigger.triggers.Clear();
-                        entry1.eventID = EventTriggerType.PointerDown;
-                        entry1.callback.AddListener((arg0 => { EventPointerDown(); }));
-                        entry2.eventID = EventTriggerType.PointerUp;
-                        entry2.callback.AddListener((arg0 => { EventPointerUp(); }));
-                        trigger.triggers.Add(entry1);
-                        trigger.triggers.Add(entry2);
-                    }
+                    movementJoystick = joystick;
+                    break;
                 }
 
-                Debug.Log(_runner);
-                _runner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
-                Debug.Log(_runner);
-                _runner.AddCallbacks(this);
-                Debug.Log(_runner);
-            
+                if (joystick.name == "WeaponJoystick")
+                {
+                    weaponJoystick = joystick;
+                    var trigger = weaponJoystick.GetComponent<EventTrigger>();
+                    EventTrigger.Entry entry1 = new EventTrigger.Entry();
+                    EventTrigger.Entry entry2 = new EventTrigger.Entry();
+
+                    trigger.triggers.Clear();
+                    entry1.eventID = EventTriggerType.PointerDown;
+                    entry1.callback.AddListener((arg0 => { EventPointerDown(); }));
+                    entry2.eventID = EventTriggerType.PointerUp;
+                    entry2.callback.AddListener((arg0 => { EventPointerUp(); }));
+                    trigger.triggers.Add(entry1);
+                    trigger.triggers.Add(entry2);
+                }
+            }
+
+            Debug.Log(_runner);
+            _runner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
+            Debug.Log(_runner);
+            _runner.AddCallbacks(this);
+            Debug.Log(_runner);
         }
 
         #endregion
 
+        #region Private Methods
+
         private void EventPointerDown()
         {
             _touchedJoystick = true;
+        }
+
+        private void HostMigrationResume(NetworkRunner runner)
+        {
+            Debug.Log("HostMigrationResume");
+            var joysticks = FindObjectsOfType<VariableJoystick>();
+            foreach (var joystick in joysticks)
+            {
+                if (joystick.name == "MoveJoystick")
+                {
+                    movementJoystick = joystick;
+                    break;
+                }
+
+                if (joystick.name == "WeaponJoystick")
+                {
+                    weaponJoystick = joystick;
+                    var trigger = weaponJoystick.GetComponent<EventTrigger>();
+                    EventTrigger.Entry entry1 = new EventTrigger.Entry();
+                    EventTrigger.Entry entry2 = new EventTrigger.Entry();
+
+                    trigger.triggers.Clear();
+                    entry1.eventID = EventTriggerType.PointerDown;
+                    entry1.callback.AddListener((arg0 => { EventPointerDown(); }));
+                    entry2.eventID = EventTriggerType.PointerUp;
+                    entry2.callback.AddListener((arg0 => { EventPointerUp(); }));
+                    trigger.triggers.Add(entry1);
+                    trigger.triggers.Add(entry2);
+                }
+            }
+
+            runner.AddCallbacks(this);
         }
 
         private void EventPointerUp()
@@ -73,11 +105,15 @@ namespace VitaliyNULL.NetworkPlayer
             _touchedJoystick = false;
         }
 
-        public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+        #endregion
+
+        #region INetworkRunnerCallbacks
+
+        public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
         }
 
-        public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+        public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
         }
 
@@ -135,7 +171,7 @@ namespace VitaliyNULL.NetworkPlayer
         public async void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
         {
             Debug.Log("OnHostMigration");
-            
+
             await runner.Shutdown(shutdownReason: ShutdownReason.HostMigration);
             // Step 2.2
             // Create a new Runner.
@@ -167,37 +203,6 @@ namespace VitaliyNULL.NetworkPlayer
             }
         }
 
-        void HostMigrationResume(NetworkRunner runner)
-        {
-            Debug.Log("HostMigrationResume");
-            var joysticks = FindObjectsOfType<VariableJoystick>();
-            foreach (var joystick in joysticks)
-            {
-                if (joystick.name == "MoveJoystick")
-                {
-                    movementJoystick = joystick;
-                    break;
-                }
-                if (joystick.name == "WeaponJoystick")
-                {
-                    weaponJoystick = joystick;
-                    var trigger = weaponJoystick.GetComponent<EventTrigger>();
-                    EventTrigger.Entry entry1 = new EventTrigger.Entry();
-                    EventTrigger.Entry entry2 = new EventTrigger.Entry();
-            
-                    trigger.triggers.Clear();
-                    entry1.eventID = EventTriggerType.PointerDown;
-                    entry1.callback.AddListener((arg0 => { EventPointerDown(); }));
-                    entry2.eventID = EventTriggerType.PointerUp;
-                    entry2.callback.AddListener((arg0 => { EventPointerUp(); }));
-                    trigger.triggers.Add(entry1);
-                    trigger.triggers.Add(entry2);
-                }
-            }
-            runner.AddCallbacks(this);
-
-        }
-
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
         {
         }
@@ -209,5 +214,7 @@ namespace VitaliyNULL.NetworkPlayer
         public void OnSceneLoadStart(NetworkRunner runner)
         {
         }
+
+        #endregion
     }
 }

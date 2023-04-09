@@ -7,7 +7,6 @@ using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VitaliyNULL.MainMenuUI;
-using VitaliyNULL.NetworkPlayer;
 
 namespace VitaliyNULL.Fusion
 {

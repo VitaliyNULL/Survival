@@ -4,9 +4,15 @@ namespace VitaliyNULL.StateMachine
 {
     public class DeadState: State
     {
+        #region Constructor
+
         public DeadState(Animator animator) : base(animator)
         {
         }
+
+        #endregion
+
+        #region State Methods
 
         public override void Start()
         {
@@ -17,5 +23,7 @@ namespace VitaliyNULL.StateMachine
         {
             Animator.StopPlayback();
         }
+
+        #endregion
     }
 }

@@ -10,6 +10,8 @@ namespace VitaliyNULL.NetworkEnemy
 {
     public class NetworkEnemy : NetworkBehaviour, IDamageable
     {
+        #region Private Fields
+
         [SerializeField] private EnemyConfig enemyConfig;
         [SerializeField] private StateMachine.StateMachine stateMachine;
         private float _speed;
@@ -29,6 +31,10 @@ namespace VitaliyNULL.NetworkEnemy
         private Vector2 _deathPos;
         private RpcInfo _rpcInfo;
 
+        #endregion
+
+        #region Private Properties
+
         private int Health
         {
             get => _currentHealth;
@@ -41,6 +47,10 @@ namespace VitaliyNULL.NetworkEnemy
                 }
             }
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void Death()
         {
@@ -66,6 +76,33 @@ namespace VitaliyNULL.NetworkEnemy
             Runner?.Despawn(Object);
         }
 
+        void Damage(IDamageable damageable, RpcInfo info)
+        {
+            StartCoroutine(WaitForAttackRate(damageable, info));
+        }
+
+        IEnumerator WaitForAttackRate(IDamageable damageable, RpcInfo info)
+        {
+            _isAttacked = true;
+            damageable.TakeDamage(_damage, info);
+            yield return new WaitForSeconds(_attackRate);
+            _isAttacked = false;
+        }
+
+        IEnumerator WaitForTakeDamage()
+        {
+            _isTakedDamage = true;
+            yield return new WaitForSeconds(0.2f);
+            _isTakedDamage = false;
+            if (!_isDead)
+            {
+                stateMachine.SwitchState<RunState>();
+            }
+        }
+
+        #endregion
+
+        #region MonoBehaviour Callbacks
 
         private void Awake()
         {
@@ -138,19 +175,10 @@ namespace VitaliyNULL.NetworkEnemy
             }
         }
 
-        void Damage(IDamageable damageable, RpcInfo info)
-        {
-            StartCoroutine(WaitForAttackRate(damageable, info));
-        }
+        #endregion
 
-        IEnumerator WaitForAttackRate(IDamageable damageable, RpcInfo info)
-        {
-            _isAttacked = true;
-            damageable.TakeDamage(_damage, info);
-            yield return new WaitForSeconds(_attackRate);
-            _isAttacked = false;
-        }
 
+        #region NetworkBehaviour Callbacks
 
         public override void FixedUpdateNetwork()
         {
@@ -186,21 +214,18 @@ namespace VitaliyNULL.NetworkEnemy
                 new Quaternion(transform.rotation.x, flip, transform.rotation.z, transform.rotation.w);
         }
 
+        #endregion
+
+        #region IDamageable
+
         public void TakeDamage(int damage, RpcInfo info)
         {
             RPC_TakeDamage(damage, info);
         }
 
-        IEnumerator WaitForTakeDamage()
-        {
-            _isTakedDamage = true;
-            yield return new WaitForSeconds(0.2f);
-            _isTakedDamage = false;
-            if (!_isDead)
-            {
-                stateMachine.SwitchState<RunState>();
-            }
-        }
+        #endregion
+
+        #region RPC
 
         [Rpc]
         private void RPC_TakeDamage(int damage, RpcInfo info)
@@ -228,6 +253,7 @@ namespace VitaliyNULL.NetworkEnemy
         {
             Death();
         }
-        
+
+        #endregion
     }
 }

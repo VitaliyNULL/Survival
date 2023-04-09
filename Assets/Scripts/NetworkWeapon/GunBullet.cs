@@ -6,12 +6,18 @@ namespace VitaliyNULL.NetworkWeapon
 {
     public class GunBullet : NetworkBehaviour
     {
+        #region Private Fields
+
         private Vector2 _direction;
         private bool _hasDirection = false;
         private float _speed;
         private int _damage;
         private Rigidbody2D _rigidbody2D;
         private IDamageable _damageable;
+
+        #endregion
+
+        #region MonoBehaviour Callbacks
 
         private void Awake()
         {
@@ -28,9 +34,20 @@ namespace VitaliyNULL.NetworkWeapon
             }
         }
 
+        private void OnDisable()
+        {
+            _hasDirection = false;
+            _direction = Vector2.zero;
+        }
+
+        #endregion
+
+        #region NetworkBehaviour Callbacks
+
         public override void Spawned()
         {
             _rigidbody2D ??= GetComponent<Rigidbody2D>();
+            Debug.LogError("Spawned bullet by: " + Runner.LocalPlayer.PlayerId);
         }
 
         public override void FixedUpdateNetwork()
@@ -56,11 +73,9 @@ namespace VitaliyNULL.NetworkWeapon
             }
         }
 
-        private void OnDisable()
-        {
-            _hasDirection = false;
-            _direction = Vector2.zero;
-        }
+        #endregion
+
+        #region Public Methods
 
         public void SetDirectionAndSpeed(Vector2 direction, float speed, Quaternion quaternion, int damage)
         {
@@ -71,10 +86,16 @@ namespace VitaliyNULL.NetworkWeapon
             _speed = speed;
         }
 
+        #endregion
+
+        #region RPC
+
         [Rpc]
         private void RPC_ForTarget(RpcInfo info = default)
         {
             _damageable.TakeDamage(_damage, info);
         }
+
+        #endregion
     }
 }

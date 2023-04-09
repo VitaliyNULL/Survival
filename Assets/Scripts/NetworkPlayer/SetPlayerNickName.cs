@@ -7,10 +7,15 @@ namespace VitaliyNULL.NetworkPlayer
 {
     public class SetPlayerNickName : NetworkBehaviour
     {
+        #region Private Fields
+
         private string _username = String.Empty;
         [SerializeField] private TMP_Text text;
         private readonly string _nameKey = "USERNAME";
 
+        #endregion
+
+        #region NetworkBehaviour Callbacks
 
         public override void Spawned()
         {
@@ -22,13 +27,21 @@ namespace VitaliyNULL.NetworkPlayer
 
             RPC_ChangeNickNameRemotePlayer();
         }
-        #region RPC
+
+        #endregion
+
+        #region Private Methods
 
         private void SetUserNickname(string username)
         {
             _username = username;
             text.text = _username;
         }
+
+        #endregion
+
+        #region RPC
+
         [Rpc(RpcSources.All, RpcTargets.All)]
         private void RPC_ChangeNickName(string username,RpcInfo info = default)
         {

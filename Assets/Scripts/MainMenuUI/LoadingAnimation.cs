@@ -6,10 +6,16 @@ namespace VitaliyNULL.MainMenuUI
 {
     public class LoadingAnimation : MonoBehaviour
     {
+        #region Private Fields
+
         [SerializeField] private TMP_Text text;
         private string _startText;
         private Coroutine _animCoroutine;
         short _count = 0;
+
+        #endregion
+
+        #region MonoBehaviour Callbacks
 
         private void OnEnable()
         {
@@ -24,6 +30,10 @@ namespace VitaliyNULL.MainMenuUI
             _count = 0;
             text.text = _startText;
         }
+
+        #endregion
+
+        #region Private Methods
 
         private IEnumerator AnimationText()
         {
@@ -40,5 +50,7 @@ namespace VitaliyNULL.MainMenuUI
                 _count++;
             }
         }
+
+        #endregion
     }
 }

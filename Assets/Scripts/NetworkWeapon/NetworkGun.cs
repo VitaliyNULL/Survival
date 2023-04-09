@@ -10,11 +10,11 @@ namespace VitaliyNULL.NetworkWeapon
 {
     public class NetworkGun : NetworkBehaviour, INetworkGun
     {
+        #region Protected Fields
+
         [SerializeField] protected GunConfig gunConfig;
-        private GameUI _gameUI;
         protected string _gunName;
         protected int _damage;
-        public int Damage => _damage;
 
         protected int _storageCapacity;
         protected int _ammoCapacity;
@@ -28,13 +28,34 @@ namespace VitaliyNULL.NetworkWeapon
         protected event Action<Vector2, float, Quaternion, PlayerRef> _gunEvent;
         protected Vector2 _gunDirection;
         protected Quaternion _gunRotation;
-        public GunType GunType;
         protected bool _canShoot;
+
+        #endregion
+
+        #region Private Fields
+
+        private GameUI _gameUI;
         private float lastShootTime = 0;
         private bool _canReload = true;
 
         private int _currentAmmo;
         private int _allAmmo;
+
+        #endregion
+
+        #region Public Fields
+
+        public GunType GunType;
+
+        #endregion
+
+        #region Public Properties
+
+        public int Damage => _damage;
+
+        #endregion
+
+        #region Private Properties
 
         private int AllAmmo
         {
@@ -83,6 +104,9 @@ namespace VitaliyNULL.NetworkWeapon
             }
         }
 
+        #endregion
+
+        #region Public Methods
 
         public void Shoot()
         {
@@ -92,6 +116,10 @@ namespace VitaliyNULL.NetworkWeapon
                 _gunEvent?.Invoke(_gunDirection, _bulletSpeed, _gunRotation, Runner.LocalPlayer);
             }
         }
+
+        #endregion
+
+        #region NetworkBehaviour Callbacks
 
         public override void FixedUpdateNetwork()
         {
@@ -104,6 +132,10 @@ namespace VitaliyNULL.NetworkWeapon
             }
         }
 
+        #endregion
+
+        #region Protected Methods
+
         protected virtual void SpawnBullet(Vector2 direction, float speed, Quaternion rotation)
         {
             if (!HasStateAuthority)
@@ -115,16 +147,6 @@ namespace VitaliyNULL.NetworkWeapon
             GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation, Runner.LocalPlayer);
             bullet.SetDirectionAndSpeed(direction, speed, rotation, _damage);
         }
-
-        public void Reload()
-        {
-            if (_canReload)
-            {
-                Debug.Log("Reload");
-                StartCoroutine(WaitForReload());
-            }
-        }
-
 
         protected IEnumerator WaitBetweenShoot()
         {
@@ -140,6 +162,23 @@ namespace VitaliyNULL.NetworkWeapon
             // }
             _canShoot = !(CurrentAmmo == 0 && AllAmmo == 0);
         }
+
+        #endregion
+
+        #region INetworkGun
+
+        public void Reload()
+        {
+            if (_canReload)
+            {
+                Debug.Log("Reload");
+                StartCoroutine(WaitForReload());
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private IEnumerator WaitForReload()
         {
@@ -161,6 +200,10 @@ namespace VitaliyNULL.NetworkWeapon
             _gunEvent += RPC_GunShoot;
             _canShoot = true;
         }
+
+        #endregion
+
+        #region MonoBehaviour Callbacks
 
         private void Awake()
         {
@@ -186,6 +229,8 @@ namespace VitaliyNULL.NetworkWeapon
 
             if (HasStateAuthority) _canShoot = true;
         }
+
+        #endregion
 
         #region Only for InputAuthority
 

@@ -5,9 +5,15 @@ namespace VitaliyNULL.MainMenuUI
 {
     public class InputUserName : MonoBehaviour
     {
+        #region Private Fields
+
         private string _username = "";
         private TMP_InputField _inputField;
         private readonly string _nameKey = "USERNAME";
+
+        #endregion
+
+        #region MonoBehaviour Callbacks
 
         private void Start()
         {
@@ -19,6 +25,15 @@ namespace VitaliyNULL.MainMenuUI
                 _inputField.text = _username;
             }
         }
+
+        private void OnDisable()
+        {
+            UIMainMenuManager.Instance?.CleanWarningText();
+        }
+
+        #endregion
+
+        #region Private Fields
 
         private void OnChangeInput(string val)
         {
@@ -36,9 +51,6 @@ namespace VitaliyNULL.MainMenuUI
             PlayerPrefs.SetString(_nameKey, _username);
         }
 
-        private void OnDisable()
-        {
-            UIMainMenuManager.Instance?.CleanWarningText();
-        }
+        #endregion
     }
 }

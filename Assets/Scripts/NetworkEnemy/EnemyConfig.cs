@@ -6,6 +6,8 @@ namespace VitaliyNULL.NetworkEnemy
     [CreateAssetMenu(menuName = "NetworkEnemyConfig", fileName = "EnemyConfig")]
     public class EnemyConfig : ScriptableObject
     {
+        #region Private Fields
+
         [SerializeField] private float speed;
         [SerializeField] private int health;
         [SerializeField] private int damage;
@@ -14,6 +16,11 @@ namespace VitaliyNULL.NetworkEnemy
         [SerializeField] private AudioClip meleeSound;
         [SerializeField] private AudioClip hitSound;
         [SerializeField] private EnemyType enemyType;
+
+        #endregion
+
+        #region Public Properties
+
         public float Speed => speed;
         public int Damage => damage;
 
@@ -25,5 +32,7 @@ namespace VitaliyNULL.NetworkEnemy
         public float AttackRate => attackRate;
         public AudioClip MeleeSound => meleeSound;
         public AudioClip HitSound => hitSound;
+
+        #endregion
     }
 }

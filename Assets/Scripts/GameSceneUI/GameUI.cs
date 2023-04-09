@@ -6,10 +6,16 @@ namespace VitaliyNULL.GameSceneUI
 {
     public class GameUI: MonoBehaviour
     {
+        #region Private Fields
+
         [SerializeField] private TMP_Text killsText;
         [SerializeField] private TMP_Text hpText;
         [SerializeField] private TMP_Text ammoText;
 
+        #endregion
+
+
+        #region Public Methods
 
         public void SetKillsUI(int val)
         {
@@ -25,5 +31,7 @@ namespace VitaliyNULL.GameSceneUI
         {
             ammoText.text = String.Format($"Ammo {currentAmmo}/{allAmmo}");
         }
+
+        #endregion
     }
 }

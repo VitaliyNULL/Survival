@@ -8,10 +8,21 @@ namespace VitaliyNULL.StateMachine
 {
     public class StateMachine : NetworkBehaviour, IStateSwitcher
     {
+        #region Public Fields
+
         public Dictionary<Type, State> dictionary = new Dictionary<Type, State>();
         public State CurrentState;
+
+        #endregion
+
+        #region Private Fields
+
         private Animator _animator;
         [SerializeField] private bool isEnemy;
+
+        #endregion
+
+        #region MonoBehaviour Callbacks
 
         private void Awake()
         {
@@ -28,11 +39,17 @@ namespace VitaliyNULL.StateMachine
             }
         }
 
+        #endregion
+
+        #region IStateSwitcher
+
         public void SwitchState<T>() where T : State
         {
             CurrentState?.Stop();
             CurrentState = dictionary[typeof(T)];
             CurrentState.Start();
         }
+
+        #endregion
     }
 }

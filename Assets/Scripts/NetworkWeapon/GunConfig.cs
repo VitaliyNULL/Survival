@@ -6,6 +6,8 @@ namespace VitaliyNULL.NetworkWeapon
     [CreateAssetMenu(menuName = "NetworkGunConfig", fileName = "GunConfig")]
     public class GunConfig : ScriptableObject
     {
+        #region Private Fields
+
         [Header("Info about gun")] [SerializeField]
         private string gunName;
 
@@ -23,6 +25,9 @@ namespace VitaliyNULL.NetworkWeapon
         [SerializeField] private Sprite gunImageUI;
         [SerializeField] private GunType gunType;
 
+        #endregion
+
+        #region Public Properties
 
         public AudioClip GunShootSound => gunShootSound;
         public int Damage => damage;
@@ -36,5 +41,7 @@ namespace VitaliyNULL.NetworkWeapon
         public float TimeToReload => timeToReload;
 
         public GunType GunType => gunType;
+
+        #endregion
     }
 }

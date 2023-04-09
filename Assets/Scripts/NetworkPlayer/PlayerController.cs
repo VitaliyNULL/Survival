@@ -12,16 +12,27 @@ namespace VitaliyNULL.NetworkPlayer
 {
     public class PlayerController : NetworkBehaviour, IPlayerLeft, IDamageable
     {
+        #region Private Fields
+
         [SerializeField] private StateMachine.StateMachine stateMachine;
         [SerializeField] private WeaponController weaponController;
         private CinemachineVirtualCamera _camera;
         private GameUI _gameUI;
-        [HideInInspector] public bool isDead = false;
         private readonly int _maxHealth = 15;
         private int _currentHealth;
 
         private int _damageCount = 0;
         private int _kills = 0;
+
+        #endregion
+
+        #region Public Fields
+
+        [HideInInspector] public bool isDead = false;
+
+        #endregion
+
+        #region Public Methods
 
         public static PlayerController FindKiller(PlayerRef playerRef)
         {
@@ -30,7 +41,8 @@ namespace VitaliyNULL.NetworkPlayer
             var playerController = FindObjectsOfType<PlayerController>();
             foreach (var controller in playerController)
             {
-                Debug.Log($"Player controller with id: {controller.Object.InputAuthority.PlayerId} and playerRef with id:{Mathf.Abs(playerRef.PlayerId)}");
+                Debug.Log(
+                    $"Player controller with id: {controller.Object.InputAuthority.PlayerId} and playerRef with id:{Mathf.Abs(playerRef.PlayerId)}");
                 if (controller.Object.InputAuthority.PlayerId.Equals(Mathf.Abs(playerRef.PlayerId)))
                 {
                     return controller;
@@ -40,8 +52,13 @@ namespace VitaliyNULL.NetworkPlayer
                     Debug.LogWarning("Something not good with equals if id is equal");
                 }
             }
+
             return null;
         }
+
+        #endregion
+
+        #region Private Properties
 
         private int Health
         {
@@ -74,6 +91,16 @@ namespace VitaliyNULL.NetworkPlayer
             }
         }
 
+        #endregion
+
+        #region Public Properties
+
+        public GameUI GameUI => _gameUI;
+
+        #endregion
+
+        #region NetworkBehaviour Callbacks
+
         public override void Spawned()
         {
             _currentHealth = _maxHealth;
@@ -87,6 +114,10 @@ namespace VitaliyNULL.NetworkPlayer
                 // _gameUI.SetAmmoUI(weaponController.currentGun.CurrentAmmo, weaponController.currentGun.AllAmmo);
             }
         }
+
+        #endregion
+
+        #region Public Methods
 
         public void SetDamage()
         {
@@ -105,7 +136,7 @@ namespace VitaliyNULL.NetworkPlayer
             Kills++;
         }
 
-        public GameUI GameUI => _gameUI;
+        #endregion
 
         #region IPlayerLeft
 
@@ -118,11 +149,17 @@ namespace VitaliyNULL.NetworkPlayer
 
         #endregion
 
+        #region IDamageable
+
         public void TakeDamage(int damage, RpcInfo info)
         {
             Health -= damage;
             Debug.Log($"Player health is {Health}");
         }
+
+        #endregion
+
+        #region RPC
 
         [Rpc]
         private void RPC_TakeHealthUpdate(int currentHealth, int maxHealth)
@@ -132,5 +169,7 @@ namespace VitaliyNULL.NetworkPlayer
                 _gameUI.SetHpUI(currentHealth, maxHealth);
             }
         }
+
+        #endregion
     }
 }

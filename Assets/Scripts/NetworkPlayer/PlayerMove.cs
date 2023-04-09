@@ -6,11 +6,16 @@ namespace VitaliyNULL.NetworkPlayer
 {
     public class PlayerMove : NetworkBehaviour
     {
+        #region Private Fields
+
         [SerializeField] private StateMachine.StateMachine stateMachine;
         private float _speed = 5f;
         private NetworkRigidbody2D _networkRigidbody2D;
         [SerializeField] private PlayerController playerController;
 
+        #endregion
+
+        #region MonoBehaviour Callbacks
 
         private void Awake()
         {
@@ -18,13 +23,15 @@ namespace VitaliyNULL.NetworkPlayer
             playerController ??= GetComponentInParent<PlayerController>();
         }
 
+        #endregion
+
+        #region NetworkBehaviour Callbacks
+
         public override void Spawned()
         {
             _networkRigidbody2D ??= GetComponent<NetworkRigidbody2D>();
             playerController ??= GetComponentInParent<PlayerController>();
         }
-
-        #region NetworkBehaviour Callbacks
 
         public override void FixedUpdateNetwork()
         {

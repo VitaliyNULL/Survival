@@ -5,8 +5,15 @@ namespace VitaliyNULL.NetworkWeapon
     public class NetworkShootGun : NetworkGun
     {
 
+        #region Private Fields
+
         private int _countOfBullets = 10;
         private float _range = 3f;
+
+        #endregion
+
+        #region Protected Methods
+
         protected override void SpawnBullet(Vector2 direction, float speed, Quaternion rotation)
         {
             if (!HasStateAuthority) return;
@@ -23,5 +30,7 @@ namespace VitaliyNULL.NetworkWeapon
                 Debug.Log("Shoot");
             }
         }
+
+        #endregion
     }
 }

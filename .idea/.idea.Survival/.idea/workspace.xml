@@ -2,22 +2,39 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac3a7e1-3b96-4ad8-9296-96be1b38113b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/EnemyType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/EnemyType.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Factory/SpawnPoint.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Factory/SpawnPoint.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/PlayerController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/PlayerController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Enemy/SkeletonConfig.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Enemy/SkeletonConfig.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Enemy/ZombieStrongerConfig.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Enemy/ZombieStrongerConfig.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/IDamageable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/IDamageable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Factory/NetworkEnemyFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Factory/NetworkEnemyFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Factory/SpawnPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Factory/SpawnPoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Factory/SpawnPoints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Factory/SpawnPoints.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Fusion/FusionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Fusion/FusionManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameSceneUI/DisconnectButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameSceneUI/DisconnectButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameSceneUI/GameUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameSceneUI/GameUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/ChoosePlayerSkin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/ChoosePlayerSkin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/ConfirmPlayerSkin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/ConfirmPlayerSkin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/InputSessionName.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/InputSessionName.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/InputUserName.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/InputUserName.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/JoinLobbyButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/JoinLobbyButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/LoadingAnimation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/LoadingAnimation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/MainMenuCharacterAnim.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/MainMenuCharacterAnim.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/SessionInfoUIContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuUI/SessionInfoUIContainer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/EnemyConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/EnemyConfig.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/NetworkEnemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/NetworkEnemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/NetworkInputData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/NetworkInputData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerInput.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerMove.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/SetPlayerNickName.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/SetPlayerNickName.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/SetPlayerSkin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/SetPlayerSkin.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/GunBullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/GunBullet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/GunConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/GunConfig.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkGun.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkGun.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkShootGun.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkShootGun.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/DeadState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/DeadState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/HitState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/HitState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/RunState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/RunState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StandState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StandState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/State.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StateMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StateMachine.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +74,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/Photon/Fusion/Scripts/Editor/Fusion.Editor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainMenuUI/LoadingAnimation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainMenuUI/MainMenuCharacterAnim.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/Work files/Trainee/Survival/Assets/Scripts/NetworkPlayer/PlayerController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventTrigger.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs" root0="SKIP_HIGHLIGHTING" />
@@ -72,17 +88,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Discover.Launch.Via.Unity": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RiderProblemsViewState">
     <option name="showPreview" value="true" />
   </component>
@@ -143,7 +159,8 @@
       <workItem from="1680592857446" duration="23499000" />
       <workItem from="1680678963767" duration="23364000" />
       <workItem from="1680765287415" duration="10422000" />
-      <workItem from="1680851771116" duration="21711000" />
+      <workItem from="1680851771116" duration="22364000" />
+      <workItem from="1681049304797" duration="4826000" />
     </task>
     <servers />
   </component>
@@ -178,24 +195,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/NetworkEnemy.cs</url>
-          <line>199</line>
-          <properties documentPath="D:\Work files\Trainee\Survival\Assets\Scripts\NetworkEnemy\NetworkEnemy.cs" initialLine="199" containingFunctionPresentation="method 'WaitForTakeDamage'">
-            <startOffsets>
-              <option value="5912" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5925" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
