@@ -56,9 +56,7 @@ namespace VitaliyNULL.NetworkEnemy
             _isDead = true;
             _deathPos = transform.position;
             StartCoroutine(WaitForDespawnDeadEnemy());
-            Debug.LogError($"Dead by player with id: {_killer.PlayerId}");
             PlayerController.FindKiller(_killer.PlayerId).SetKill();
-            Debug.LogError(_killer.PlayerId + " player killed this mob");
         }
 
         IEnumerator WaitForDespawnDeadEnemy()
@@ -181,9 +179,7 @@ namespace VitaliyNULL.NetworkEnemy
 
         public override void FixedUpdateNetwork()
         {
-            //Test 
-            transform.position = _deathPos;
-            return;
+            
             if (_isDead)
             {
                 transform.position = _deathPos;
@@ -192,7 +188,7 @@ namespace VitaliyNULL.NetworkEnemy
 
             if (_isTakedDamage) return;
             Vector2 direction = Vector2.zero;
-            if (_hasPlayer)
+            if (_hasPlayer && _player!=null)
             {
                 direction = _player.transform.position;
             }
@@ -234,11 +230,9 @@ namespace VitaliyNULL.NetworkEnemy
             StartCoroutine(WaitForTakeDamage());
             stateMachine.SwitchState<HitState>();
             Health -= damage;
-            Debug.Log($"Enemy was damaged by {playerRef.PlayerId}");
             try
             {
                 var obj = PlayerController.FindKiller(playerRef);
-                Debug.Log(obj);
                 PlayerController.FindKiller(playerRef).SetDamage();
             }
             catch (NullReferenceException e)

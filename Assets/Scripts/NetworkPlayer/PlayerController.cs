@@ -18,6 +18,7 @@ namespace VitaliyNULL.NetworkPlayer
         [SerializeField] private WeaponController weaponController;
         private CinemachineVirtualCamera _camera;
         private GameUI _gameUI;
+        private Vector3 _deathPosition;
         private readonly int _maxHealth = 15;
         private int _currentHealth;
 
@@ -36,22 +37,13 @@ namespace VitaliyNULL.NetworkPlayer
 
         public static PlayerController FindKiller(PlayerRef playerRef)
         {
-            Debug.Log(playerRef.PlayerId);
 
             var playerController = FindObjectsOfType<PlayerController>();
             foreach (var controller in playerController)
             {
-                Debug.Log(
-                    $"Player controller with id: {controller.Object.InputAuthority.PlayerId} and playerRef with id:{Mathf.Abs(playerRef.PlayerId)}");
                 if (controller.Object.InputAuthority.PlayerId.Equals(Mathf.Abs(playerRef.PlayerId)))
                 {
                     return controller;
-                }
-                else
-                {
-                    Debug.Log(
-                        $"Player controller with id: {controller.Object.InputAuthority.PlayerId} and playerRef with id:{Mathf.Abs(playerRef.PlayerId)}");
-                    Debug.LogWarning("Something not good with equals if id is equal");
                 }
             }
 
@@ -71,13 +63,7 @@ namespace VitaliyNULL.NetworkPlayer
                 RPC_TakeHealthUpdate(_currentHealth, _maxHealth);
                 if (_currentHealth == 0)
                 {
-                    isDead = true;
-                    gameObject.layer = 0;
-                    tag = "Untagged";
-                    stateMachine.SwitchState<DeadState>();
-                    weaponController.gameObject.SetActive(false);
-                    GetComponentInChildren<Collider2D>().isTrigger = true;
-                    Debug.Log("Game Over");
+                    RPC_Death();
                 }
             }
         }
@@ -114,6 +100,14 @@ namespace VitaliyNULL.NetworkPlayer
                 _gameUI.SetHpUI(_currentHealth, _maxHealth);
                 _gameUI.SetKillsUI(_kills);
                 // _gameUI.SetAmmoUI(weaponController.currentGun.CurrentAmmo, weaponController.currentGun.AllAmmo);
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (isDead)
+            {
+                transform.position = _deathPosition;
             }
         }
 
@@ -168,6 +162,20 @@ namespace VitaliyNULL.NetworkPlayer
             }
         }
 
+        [Rpc]
+        private void RPC_Death()
+        {
+            isDead = true;
+            _deathPosition = transform.position;
+            gameObject.layer = 0;
+            tag = "Untagged";
+            stateMachine.SwitchState<DeadState>();
+            weaponController.gameObject.SetActive(false);
+            Destroy(GetComponentInChildren<Collider2D>());
+            Destroy(GetComponent<NetworkRigidbody2D>());
+            Destroy(GetComponent<Rigidbody2D>());
+            Debug.Log("Game Over");
+        }
         #endregion
     }
 }

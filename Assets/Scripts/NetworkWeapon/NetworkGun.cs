@@ -246,10 +246,8 @@ namespace VitaliyNULL.NetworkWeapon
         [Rpc]
         private void RPC_GunShoot(Vector2 direction, float speed, Quaternion rotation, PlayerRef playerRef)
         {
-            Debug.LogError($"Player with id: {playerRef.PlayerId} do this RPC, Local player :{Runner.LocalPlayer.PlayerId} ");
             if (HasStateAuthority)
             {
-                Debug.LogError($"Player with id: {playerRef.PlayerId} in this RPC, Local player :{Runner.LocalPlayer.PlayerId} ");
                 SpawnBullet(direction, speed, rotation, playerRef);
             }
         }

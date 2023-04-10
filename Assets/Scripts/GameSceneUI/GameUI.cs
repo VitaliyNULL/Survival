@@ -11,6 +11,7 @@ namespace VitaliyNULL.GameSceneUI
         [SerializeField] private TMP_Text killsText;
         [SerializeField] private TMP_Text hpText;
         [SerializeField] private TMP_Text ammoText;
+        [SerializeField] private TMP_Text timeText;
 
         #endregion
 
@@ -30,6 +31,10 @@ namespace VitaliyNULL.GameSceneUI
         public void SetAmmoUI(int currentAmmo, int allAmmo)
         {
             ammoText.text = String.Format($"Ammo {currentAmmo}/{allAmmo}");
+        }
+
+        public void SetTimeUI(int time)
+        {
         }
 
         #endregion

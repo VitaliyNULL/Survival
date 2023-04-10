@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 using VitaliyNULL.Core;
@@ -30,7 +31,6 @@ namespace VitaliyNULL.NetworkWeapon
             {
                 _damageable = col.gameObject.GetComponent<IDamageable>();
                 RPC_ForTarget();
-                Runner?.Despawn(Object);
             }
         }
 
@@ -47,7 +47,6 @@ namespace VitaliyNULL.NetworkWeapon
         public override void Spawned()
         {
             _rigidbody2D ??= GetComponent<Rigidbody2D>();
-            Debug.LogError("Spawned bullet by: " + Object.InputAuthority.PlayerId);
         }
 
         public override void FixedUpdateNetwork()
@@ -91,9 +90,10 @@ namespace VitaliyNULL.NetworkWeapon
         #region RPC
 
         [Rpc]
-        private void RPC_ForTarget(RpcInfo info = default)
+        private void RPC_ForTarget()
         {
-            _damageable.TakeDamage(_damage, Object.InputAuthority);
+            _damageable?.TakeDamage(_damage, Object.InputAuthority);
+            Runner.Despawn(Object);
         }
 
         #endregion

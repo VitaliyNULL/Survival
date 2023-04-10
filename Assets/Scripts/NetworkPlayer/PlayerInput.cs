@@ -52,11 +52,8 @@ namespace VitaliyNULL.NetworkPlayer
                 }
             }
 
-            Debug.Log(_runner);
             _runner = NetworkRunner.GetRunnerForScene(SceneManager.GetActiveScene());
-            Debug.Log(_runner);
             _runner.AddCallbacks(this);
-            Debug.Log(_runner);
         }
 
         #endregion

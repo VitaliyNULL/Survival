@@ -9035,3 +9035,4 @@ MonoBehaviour:
   killsText: {fileID: 1877804883}
   hpText: {fileID: 1806319728}
   ammoText: {fileID: 349694761}
+  timeText: {fileID: 0}

@@ -163,6 +163,10 @@ namespace VitaliyNULL.Fusion
                     new Vector3((player.RawEncoded % runner.Config.Simulation.DefaultPlayers) * 3, 1, 0);
                 NetworkObject playerController =
                     runner.Spawn(this.playerController, spawnPosition, Quaternion.identity, player);
+                
+                runner.Spawn(Resources.Load<NetworkObject>("NetworkTimeManager"), transform.position,
+                    Quaternion.identity, player);
+
                 // Keep track of the player avatars so we can remove it when they disconnect
                 spawnedCharacters.Add(player, playerController);
             }

@@ -22,13 +22,11 @@ namespace VitaliyNULL.NetworkWeapon
             float step = _range / 10;
             for (int i = 0; i < _countOfBullets; i++)
             {
-
                 Vector2 directionNormalized = direction.normalized;
                 directionNormalized.x += Random.Range(-step, step);
                 directionNormalized.y -= Random.Range(-step, step);
                 GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation, playerRef);
                 bullet.SetDirectionAndSpeed(directionNormalized, speed, rotation, _damage);
-                Debug.Log("Shoot");
             }
         }
 
