@@ -49,6 +49,8 @@ namespace VitaliyNULL.NetworkPlayer
                 }
                 else
                 {
+                    Debug.Log(
+                        $"Player controller with id: {controller.Object.InputAuthority.PlayerId} and playerRef with id:{Mathf.Abs(playerRef.PlayerId)}");
                     Debug.LogWarning("Something not good with equals if id is equal");
                 }
             }
@@ -123,10 +125,6 @@ namespace VitaliyNULL.NetworkPlayer
         {
             if (HasInputAuthority)
             {
-                Debug.Log($"Damage {_damageCount}");
-                Debug.Log(weaponController);
-                Debug.Log(weaponController.currentGun);
-                Debug.Log(weaponController.currentGun.Damage);
                 _damageCount += weaponController.currentGun.Damage;
             }
         }
@@ -151,7 +149,7 @@ namespace VitaliyNULL.NetworkPlayer
 
         #region IDamageable
 
-        public void TakeDamage(int damage, RpcInfo info)
+        public void TakeDamage(int damage, PlayerRef playerRef)
         {
             Health -= damage;
             Debug.Log($"Player health is {Health}");

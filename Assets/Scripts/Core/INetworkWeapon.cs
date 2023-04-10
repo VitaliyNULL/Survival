@@ -1,8 +1,10 @@
 
+using Fusion;
+
 namespace VitaliyNULL.Core
 {
     public interface INetworkWeapon
     {
-        void Shoot();
+        void Shoot(PlayerRef playerRef);
     }
 }

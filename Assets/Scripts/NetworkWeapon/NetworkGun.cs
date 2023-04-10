@@ -108,12 +108,12 @@ namespace VitaliyNULL.NetworkWeapon
 
         #region Public Methods
 
-        public void Shoot()
+        public void Shoot(PlayerRef playerRef)
         {
             if (_canShoot)
             {
                 _canShoot = false;
-                _gunEvent?.Invoke(_gunDirection, _bulletSpeed, _gunRotation, Runner.LocalPlayer);
+                _gunEvent?.Invoke(_gunDirection, _bulletSpeed, _gunRotation, playerRef);
             }
         }
 
@@ -136,7 +136,7 @@ namespace VitaliyNULL.NetworkWeapon
 
         #region Protected Methods
 
-        protected virtual void SpawnBullet(Vector2 direction, float speed, Quaternion rotation)
+        protected virtual void SpawnBullet(Vector2 direction, float speed, Quaternion rotation, PlayerRef playerRef)
         {
             if (!HasStateAuthority)
             {
@@ -144,7 +144,7 @@ namespace VitaliyNULL.NetworkWeapon
             }
 
             StartCoroutine(WaitBetweenShoot());
-            GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation, Runner.LocalPlayer);
+            GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation, playerRef);
             bullet.SetDirectionAndSpeed(direction, speed, rotation, _damage);
         }
 
@@ -246,10 +246,11 @@ namespace VitaliyNULL.NetworkWeapon
         [Rpc]
         private void RPC_GunShoot(Vector2 direction, float speed, Quaternion rotation, PlayerRef playerRef)
         {
-            Debug.LogError($"{playerRef.PlayerId} is player that do this RPC, {Runner.LocalPlayer.PlayerId} ");
-            if (HasStateAuthority && playerRef.PlayerId.Equals(Runner.LocalPlayer.PlayerId))
+            Debug.LogError($"Player with id: {playerRef.PlayerId} do this RPC, Local player :{Runner.LocalPlayer.PlayerId} ");
+            if (HasStateAuthority)
             {
-                SpawnBullet(direction, speed, rotation);
+                Debug.LogError($"Player with id: {playerRef.PlayerId} in this RPC, Local player :{Runner.LocalPlayer.PlayerId} ");
+                SpawnBullet(direction, speed, rotation, playerRef);
             }
         }
 

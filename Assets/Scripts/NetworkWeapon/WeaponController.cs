@@ -32,7 +32,7 @@ namespace VitaliyNULL.NetworkWeapon
         {
             if (GetInput(out NetworkInputData data) && data.isShoot)
             {
-                currentGun.Shoot();
+                currentGun.Shoot(Object.InputAuthority);
             }
         }
 

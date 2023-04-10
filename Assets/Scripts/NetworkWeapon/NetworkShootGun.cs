@@ -1,3 +1,4 @@
+using Fusion;
 using UnityEngine;
 
 namespace VitaliyNULL.NetworkWeapon
@@ -14,7 +15,7 @@ namespace VitaliyNULL.NetworkWeapon
 
         #region Protected Methods
 
-        protected override void SpawnBullet(Vector2 direction, float speed, Quaternion rotation)
+        protected override void SpawnBullet(Vector2 direction, float speed, Quaternion rotation, PlayerRef playerRef)
         {
             if (!HasStateAuthority) return;
             StartCoroutine(WaitBetweenShoot());
@@ -25,7 +26,7 @@ namespace VitaliyNULL.NetworkWeapon
                 Vector2 directionNormalized = direction.normalized;
                 directionNormalized.x += Random.Range(-step, step);
                 directionNormalized.y -= Random.Range(-step, step);
-                GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation);
+                GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation, playerRef);
                 bullet.SetDirectionAndSpeed(directionNormalized, speed, rotation, _damage);
                 Debug.Log("Shoot");
             }

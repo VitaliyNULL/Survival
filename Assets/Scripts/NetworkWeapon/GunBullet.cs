@@ -47,7 +47,7 @@ namespace VitaliyNULL.NetworkWeapon
         public override void Spawned()
         {
             _rigidbody2D ??= GetComponent<Rigidbody2D>();
-            Debug.LogError("Spawned bullet by: " + Runner.LocalPlayer.PlayerId);
+            Debug.LogError("Spawned bullet by: " + Object.InputAuthority.PlayerId);
         }
 
         public override void FixedUpdateNetwork()
@@ -93,7 +93,7 @@ namespace VitaliyNULL.NetworkWeapon
         [Rpc]
         private void RPC_ForTarget(RpcInfo info = default)
         {
-            _damageable.TakeDamage(_damage, info);
+            _damageable.TakeDamage(_damage, Object.InputAuthority);
         }
 
         #endregion
