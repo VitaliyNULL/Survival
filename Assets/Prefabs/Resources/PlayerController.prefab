@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 837870734}
   - component: {fileID: 837870733}
   - component: {fileID: 837870732}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlayerInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 1637133556}
   - component: {fileID: 1298529720280943033}
   - component: {fileID: 5977436162961939938}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WeaponController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 1573007861446606726}
   - component: {fileID: 2537743321198453646}
   - component: {fileID: 1001641157061708629}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8900318386359482242}
   - component: {fileID: 1488127582225351163}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 7264899916727340851}
   - component: {fileID: 7621551844662912414}
   - component: {fileID: 7336719451985471761}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlayerController
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 8300305670184081957}
   - component: {fileID: 4664074541911711679}
   - component: {fileID: 7206461934982403203}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SetSkin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,6 +650,10 @@ PrefabInstance:
     - target: {fileID: 968849465243687095, guid: e915a9de941018345a10e531766a38fe, type: 3}
       propertyPath: m_Name
       value: Tompson
+      objectReference: {fileID: 0}
+    - target: {fileID: 968849465243687095, guid: e915a9de941018345a10e531766a38fe, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 968849465243687095, guid: e915a9de941018345a10e531766a38fe, type: 3}
       propertyPath: m_IsActive
@@ -852,6 +856,10 @@ PrefabInstance:
       value: Rifle
       objectReference: {fileID: 0}
     - target: {fileID: 6415094575089410481, guid: bc9747609778be74293409f02703d09a, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6415094575089410481, guid: bc9747609778be74293409f02703d09a, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -906,6 +914,10 @@ PrefabInstance:
     - target: {fileID: 3594309692037615313, guid: 2ad0e2ce11e035e4ea2686263026f7d5, type: 3}
       propertyPath: m_Name
       value: Shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594309692037615313, guid: 2ad0e2ce11e035e4ea2686263026f7d5, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3594309692037615313, guid: 2ad0e2ce11e035e4ea2686263026f7d5, type: 3}
       propertyPath: m_IsActive

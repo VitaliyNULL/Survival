@@ -14,6 +14,7 @@ namespace VitaliyNULL.NetworkEnemy
 
         [SerializeField] private EnemyConfig enemyConfig;
         [SerializeField] private StateMachine.StateMachine stateMachine;
+        [SerializeField] private LayerMask playerMask;
         private float _speed;
         private int _currentHealth;
         private int _maxHealth;
@@ -30,6 +31,7 @@ namespace VitaliyNULL.NetworkEnemy
         private bool _isDead = false;
         private Vector2 _deathPos;
         private PlayerRef _killer;
+
         #endregion
 
         #region Private Properties
@@ -69,6 +71,7 @@ namespace VitaliyNULL.NetworkEnemy
             {
                 collider.isTrigger = true;
             }
+
             yield return new WaitForSeconds(5f);
             Runner?.Despawn(Object);
         }
@@ -146,32 +149,6 @@ namespace VitaliyNULL.NetworkEnemy
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D col)
-        {
-            if (_isDead) return;
-
-            if (!_isAttacked)
-            {
-                if (col.gameObject.CompareTag("Player"))
-                {
-                    Damage(col.gameObject.GetComponent<IDamageable>(), default);
-                }
-            }
-        }
-
-        private void OnCollisionStay2D(Collision2D collision)
-        {
-            if (_isDead) return;
-
-            if (!_isAttacked)
-            {
-                if (collision.gameObject.CompareTag("Player"))
-                {
-                    Damage(collision.gameObject.GetComponent<IDamageable>(), _killer);
-                }
-            }
-        }
-
         #endregion
 
 
@@ -179,7 +156,6 @@ namespace VitaliyNULL.NetworkEnemy
 
         public override void FixedUpdateNetwork()
         {
-            
             if (_isDead)
             {
                 transform.position = _deathPos;
@@ -188,7 +164,7 @@ namespace VitaliyNULL.NetworkEnemy
 
             if (_isTakedDamage) return;
             Vector2 direction = Vector2.zero;
-            if (_hasPlayer && _player!=null)
+            if (_hasPlayer && _player != null)
             {
                 direction = _player.transform.position;
             }
@@ -207,6 +183,16 @@ namespace VitaliyNULL.NetworkEnemy
 
             transform.rotation =
                 new Quaternion(transform.rotation.x, flip, transform.rotation.z, transform.rotation.w);
+
+
+            if (!_isAttacked)
+            {
+                Collider2D collider2D = Physics2D.OverlapCircle(transform.position, _radiusOfAttack, playerMask);
+                if (collider2D)
+                {
+                    Damage(collider2D.gameObject.GetComponent<IDamageable>(), _killer);
+                }
+            }
         }
 
         #endregion

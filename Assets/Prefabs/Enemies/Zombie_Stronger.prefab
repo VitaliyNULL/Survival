@@ -258,7 +258,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   enemyConfig: {fileID: 11400000, guid: 8fe7e3e8bc8fbff4fb7b43f8eab5aa20, type: 2}
   stateMachine: {fileID: 8866478508368046847}
-  collider2D: {fileID: 4943429292114928718}
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &-3764230901571698618
 MonoBehaviour:
   m_ObjectHideFlags: 0

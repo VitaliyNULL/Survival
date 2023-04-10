@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0301795b4f215b4285552959e8c7b3a, type: 3}
   m_Name: ZombieStrongerConfig
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 2
   health: 40
-  damage: 3
-  radiusOfAttack: 0.5
+  damage: 5
+  radiusOfAttack: 0.6
   attackRate: 2
   meleeSound: {fileID: 8300000, guid: 14f24de2a9a70154e96297de25e2184c, type: 3}
   hitSound: {fileID: 8300000, guid: 6b7eaf4532a2f614595ad58d2b86efc4, type: 3}

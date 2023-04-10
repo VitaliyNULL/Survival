@@ -773,10 +773,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  enemies:
-  - {fileID: -4096892688188305490, guid: d0f6cab287cc3e643971177f4ca4326c, type: 3}
-  - {fileID: -1877748870849729553, guid: 8875e423b50c8df4d85b144ab22810ae, type: 3}
-  - {fileID: 1851814983842504667, guid: ad85c2178604e0b49a3d512a556d3f2b, type: 3}
+  zombieDefault: {fileID: -1877748870849729553, guid: 8875e423b50c8df4d85b144ab22810ae, type: 3}
+  zombieStrong: {fileID: 1851814983842504667, guid: ad85c2178604e0b49a3d512a556d3f2b, type: 3}
+  skeleton: {fileID: -4096892688188305490, guid: d0f6cab287cc3e643971177f4ca4326c, type: 3}
   spawnPoints: {fileID: 176654693}
 --- !u!4 &343833083
 Transform:

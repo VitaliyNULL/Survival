@@ -258,6 +258,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   enemyConfig: {fileID: 11400000, guid: e32332250419ed04f8e2abe261e2c943, type: 2}
   stateMachine: {fileID: 8761847262431812770}
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &1664793569812208394
 MonoBehaviour:
   m_ObjectHideFlags: 0
