@@ -51,6 +51,15 @@ namespace VitaliyNULL.NetworkEnemy
 
         #endregion
 
+        #region Public Methods
+
+        public void DeathImmediately()
+        {
+           RPC_ImmediatelyDeath();
+        }
+
+        #endregion
+
         #region Private Methods
 
         private void Death()
@@ -150,8 +159,7 @@ namespace VitaliyNULL.NetworkEnemy
         }
 
         #endregion
-
-
+        
         #region NetworkBehaviour Callbacks
 
         public override void FixedUpdateNetwork()
@@ -231,6 +239,14 @@ namespace VitaliyNULL.NetworkEnemy
         private void RPC_Death()
         {
             Death();
+        }
+
+        [Rpc]
+        private void RPC_ImmediatelyDeath()
+        {
+            _isDead = true;
+            _deathPos = transform.position;
+            StartCoroutine(WaitForDespawnDeadEnemy());
         }
 
         #endregion

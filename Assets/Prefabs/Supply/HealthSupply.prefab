@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1371294327859978378}
   m_Layer: 0
   m_Name: HealthSupply
-  m_TagString: Untagged
+  m_TagString: Supply
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  supplyType: 1
 --- !u!114 &3880314704012959516
 MonoBehaviour:
   m_ObjectHideFlags: 0

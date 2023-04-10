@@ -108,6 +108,10 @@ namespace VitaliyNULL.NetworkWeapon
 
         #region Public Methods
 
+        public void AddAmmo()
+        {
+            AllAmmo += _storageCapacity;
+        }
         public void Shoot(PlayerRef playerRef)
         {
             if (_canShoot)

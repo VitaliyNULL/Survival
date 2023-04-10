@@ -12,6 +12,7 @@ namespace VitaliyNULL.Fusion
 
         [SerializeField] private TMP_Text timeText;
         private NetworkEnemyFactory _networkEnemyFactory;
+        private NetworkSupplyFactory _networkSupplyFactory;
         private bool _isTimerWork;
         private GameTime _gameTime;
         private float _currentTime;
@@ -35,6 +36,7 @@ namespace VitaliyNULL.Fusion
             {
                 _canSpawn = value;
                 _networkEnemyFactory.SetSpawn(_canSpawn);
+                _networkSupplyFactory.SetSpawn(_canSpawn);
             }
         }
 
@@ -43,7 +45,7 @@ namespace VitaliyNULL.Fusion
             get => _currentWave;
             set
             {
-                _currentWave = Mathf.Clamp(value, 0, 3);
+                _currentWave = Mathf.Clamp(value, 0, 4);
                 switch (_currentWave)
                 {
                     case 1:
@@ -55,10 +57,14 @@ namespace VitaliyNULL.Fusion
                     case 3:
                         _waveTime = _thirdWaveTime;
                         break;
+                    case 4:
+                        Debug.Log("Winner");
+                        break;
                 }
                 _currentTime = _relaxTime;
                 _isRelaxing = true;
                 _networkEnemyFactory.SetWave(_currentWave);
+                _networkSupplyFactory.SetWave(_currentWave);
                 CanSpawn = false;
             }
         }
@@ -75,6 +81,7 @@ namespace VitaliyNULL.Fusion
             }
 
             _networkEnemyFactory = FindObjectOfType<NetworkEnemyFactory>();
+            _networkSupplyFactory = FindObjectOfType<NetworkSupplyFactory>();
             _gameTime = new GameTime();
             CurrentWave = 1;
             _currentTime = _firstWaveTime;
@@ -83,6 +90,8 @@ namespace VitaliyNULL.Fusion
             _isRelaxing = false;
             CanSpawn = true;
             _networkEnemyFactory.StartSpawning();
+            _networkSupplyFactory.StartSpawning();
+            
         }
 
         public override void FixedUpdateNetwork()

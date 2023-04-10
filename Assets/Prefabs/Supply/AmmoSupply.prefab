@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4995568184299829300}
   m_Layer: 0
   m_Name: AmmoSupply
-  m_TagString: Untagged
+  m_TagString: Supply
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  supplyType: 0
 --- !u!114 &3516577495163338673
 MonoBehaviour:
   m_ObjectHideFlags: 0
