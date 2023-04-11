@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 51220731847320101}
   - component: {fileID: 3880314704012959516}
   - component: {fileID: 1371294327859978378}
+  - component: {fileID: 5798432143334458635}
   m_Layer: 0
   m_Name: HealthSupply
   m_TagString: Supply
@@ -124,6 +125,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 51220731847320101}
+  - {fileID: 5798432143334458635}
   SimulationBehaviours: []
 --- !u!61 &1371294327859978378
 BoxCollider2D:
@@ -151,3 +153,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5555556, y: 0.6111111}
   m_EdgeRadius: 0
+--- !u!114 &5798432143334458635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614422936904653939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 0}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
+  UseLegacySharedModeInterpolation: 0
+  TargetInterpolationDelay: 0.03

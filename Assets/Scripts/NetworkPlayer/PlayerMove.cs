@@ -35,17 +35,21 @@ namespace VitaliyNULL.NetworkPlayer
 
         public override void FixedUpdateNetwork()
         {
-            if (playerController.isDead) return;
+            if (playerController.isDead)
+            {
+                return;
+            }
+
             if (GetInput(out NetworkInputData data))
             {
                 data.directionToMove.Normalize();
                 if (data.directionToMove == Vector3.zero)
                 {
-                    stateMachine.SwitchState<StandState>();
+                    RPC_StandState();
                 }
                 else
                 {
-                    stateMachine.SwitchState<RunState>();
+                    RPC_RunState();
                 }
 
                 Vector2 toMove = _networkRigidbody2D.Rigidbody.position;
@@ -68,5 +72,24 @@ namespace VitaliyNULL.NetworkPlayer
         }
 
         #endregion
+
+        [Rpc]
+        private void RPC_StandState()
+        {
+            if (!playerController.isDead)
+                stateMachine.SwitchState<StandState>();
+        }
+
+        [Rpc]
+        private void RPC_RunState()
+        {
+            if (!playerController.isDead)
+                stateMachine.SwitchState<RunState>();
+        }
+
+        [Rpc]
+        private void RPC_DeadState()
+        {
+        }
     }
 }

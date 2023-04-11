@@ -125,13 +125,15 @@ namespace VitaliyNULL.Fusion
 
         #region Public Methods
 
-        public void SpawnLeaderBoard()
-        {
-            foreach (var player in spawnedCharacters)
-            {
-                // player.Value.GetComponent<PlayerController>().RPC_SpawnLeaderboardContainer();
-            }
-        }
+        // public void SpawnLeaderBoard()
+        // {
+        //     Debug.Log("In SpawnLeaderBoard player with id: " +runner.LocalPlayer.PlayerId);
+        //     foreach (var player in spawnedCharacters)
+        //     {
+        //         Debug.Log("Player id is "+ player.Value.Runner.LocalPlayer.PlayerId);
+        //         player.Value.GetComponent<PlayerController>().SpawnLeaderboardContainer();
+        //     }
+        // }
         public void OnJoinLobby()
         {
             if (PlayerPrefs.GetString(_nameKey).Length > 0)

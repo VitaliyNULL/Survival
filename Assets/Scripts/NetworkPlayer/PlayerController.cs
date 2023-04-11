@@ -36,10 +36,8 @@ namespace VitaliyNULL.NetworkPlayer
 
         #region Public Methods
 
-
-        public static PlayerController FindKiller(PlayerRef playerRef)
+        public static PlayerController FindPlayer(PlayerRef playerRef)
         {
-
             var playerController = FindObjectsOfType<PlayerController>();
             foreach (var controller in playerController)
             {
@@ -77,7 +75,12 @@ namespace VitaliyNULL.NetworkPlayer
             {
                 _kills = value;
                 if (HasInputAuthority)
+                {
                     _gameUI.SetKillsUI(_kills);
+                    RPC_ChangeKills(_kills);
+                }
+
+                RPC_ChangeKillsRemotePlayer();
             }
         }
 
@@ -106,7 +109,7 @@ namespace VitaliyNULL.NetworkPlayer
         public override void Spawned()
         {
             _currentHealth = _maxHealth;
-            if (Object.HasInputAuthority)
+            if (HasInputAuthority)
             {
                 _camera = FindObjectOfType<CinemachineVirtualCamera>();
                 _camera.Follow = transform;
@@ -114,9 +117,12 @@ namespace VitaliyNULL.NetworkPlayer
                 _gameUI.SetHpUI(_currentHealth, _maxHealth);
                 _gameUI.SetKillsUI(_kills);
                 _username = PlayerPrefs.GetString(_nameKey);
-                _leaderBoard = FindObjectOfType<LeaderBoard>();
+                RPC_ChangeNickName(PlayerPrefs.GetString(_nameKey));
+                Debug.Log("spawned local player");
                 // _gameUI.SetAmmoUI(weaponController.currentGun.CurrentAmmo, weaponController.currentGun.AllAmmo);
             }
+            _leaderBoard = FindObjectOfType<LeaderBoard>();
+            RPC_ChangeNickNameRemotePlayer();
         }
 
         private void FixedUpdate()
@@ -130,13 +136,16 @@ namespace VitaliyNULL.NetworkPlayer
         #endregion
 
         #region Public Methods
-        
+
         public void SetDamage()
         {
             if (HasInputAuthority)
             {
                 _damageCount += weaponController.currentGun.Damage;
+                RPC_ChangeDamage(_damageCount);
             }
+
+            RPC_ChangeDamageRemotePlayer();
         }
 
         public void SetKill()
@@ -189,25 +198,129 @@ namespace VitaliyNULL.NetworkPlayer
         }
 
         [Rpc]
+        void RPC_TakeDeathRemote()
+        {
+            if (!HasInputAuthority && !HasStateAuthority)
+            {
+                stateMachine.SwitchState<DeadState>();
+            }
+        }
+        [Rpc]
         private void RPC_Death()
         {
+            if (HasStateAuthority && HasInputAuthority)
+            {
+                RPC_TakeDeathRemote();
+            }
+            stateMachine.SwitchState<DeadState>();
             isDead = true;
             _deathPosition = transform.position;
             gameObject.layer = 0;
             tag = "Untagged";
-            stateMachine.SwitchState<DeadState>();
             weaponController.gameObject.SetActive(false);
             Destroy(GetComponentInChildren<Collider2D>());
             Destroy(GetComponent<NetworkRigidbody2D>());
             Destroy(GetComponent<Rigidbody2D>());
+
+            var players = Runner.ActivePlayers;
+            foreach (var player in players)
+            {
+                if (player != Runner.LocalPlayer)
+                {
+                    _camera.Follow = FindPlayer(player).transform;
+                    break;
+                }
+            }
             Debug.Log("Game Over");
+            
         }
 
         // [Rpc]
-        // public void RPC_SpawnLeaderboardContainer()
-        // {
-        //     _leaderBoard.SpawnContainer(_username,_damageCount,_kills);
-        // }
+        public void SpawnLeaderboardContainer()
+        {
+            Debug.LogError("SpawnLeaderboardContainer in player with id: " + Runner.LocalPlayer.PlayerId);
+            _leaderBoard.SpawnContainer(_username, _damageCount, _kills);
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        private void RPC_ChangeNickName(string username, RpcInfo info = default)
+        {
+            Debug.Log($"[RPC_ChangeSkin] {info.Source.PlayerId} called RPC");
+            _username = username;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        private void RPC_ChangeNickNameRemotePlayer(RpcInfo info = default)
+        {
+            if (HasInputAuthority && HasStateAuthority)
+            {
+                Debug.Log($"[RPC_ChangeSkinRemotePlayer] {info.Source.PlayerId} called RPC");
+                _username = PlayerPrefs.GetString(_nameKey);
+                RPC_TakeChangeNickNameRpc(PlayerPrefs.GetString(_nameKey));
+            }
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.Proxies)]
+        private void RPC_TakeChangeNickNameRpc(string username, RpcInfo info = default)
+        {
+            if (!HasInputAuthority && !HasStateAuthority)
+            {
+                _username = username;
+            }
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        private void RPC_ChangeDamage(int damage, RpcInfo info = default)
+        {
+            Debug.Log($"[RPC_ChangeSkin] {info.Source.PlayerId} called RPC");
+            _damageCount = damage;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        private void RPC_ChangeDamageRemotePlayer(RpcInfo info = default)
+        {
+            if (HasInputAuthority && HasStateAuthority)
+            {
+                Debug.Log($"[RPC_ChangeSkinRemotePlayer] {info.Source.PlayerId} called RPC");
+                RPC_TakeChangeDamageRPC(_damageCount);
+            }
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.Proxies)]
+        private void RPC_TakeChangeDamageRPC(int damage, RpcInfo info = default)
+        {
+            if (!HasInputAuthority && !HasStateAuthority)
+            {
+                _damageCount = damage;
+            }
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        private void RPC_ChangeKills(int kills, RpcInfo info = default)
+        {
+            Debug.Log($"[RPC_ChangeSkin] {info.Source.PlayerId} called RPC");
+            _kills = kills;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        private void RPC_ChangeKillsRemotePlayer(RpcInfo info = default)
+        {
+            if (HasInputAuthority && HasStateAuthority)
+            {
+                Debug.Log($"[RPC_ChangeSkinRemotePlayer] {info.Source.PlayerId} called RPC");
+                RPC_TakeChangeKillsRPC(_kills);
+            }
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.Proxies)]
+        private void RPC_TakeChangeKillsRPC(int kills, RpcInfo info = default)
+        {
+            if (!HasInputAuthority && !HasStateAuthority)
+            {
+                _kills = kills;
+            }
+        }
+
         #endregion
     }
 }

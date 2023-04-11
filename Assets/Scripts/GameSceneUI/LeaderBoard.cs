@@ -13,6 +13,7 @@ namespace VitaliyNULL.GameSceneUI
         
         public void SpawnContainer(string name, int damage, int kills)
         {
+            Debug.LogError("Spawning Container");
             background.SetActive(true);
             LeaderBoardUIContainer container = Instantiate(leaderBoardUIContainer, leaderBoardContent);
             container.Initialize(name,damage,kills);

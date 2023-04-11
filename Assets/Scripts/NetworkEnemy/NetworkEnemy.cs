@@ -67,7 +67,7 @@ namespace VitaliyNULL.NetworkEnemy
             _isDead = true;
             _deathPos = transform.position;
             StartCoroutine(WaitForDespawnDeadEnemy());
-            PlayerController.FindKiller(_killer.PlayerId).SetKill();
+            PlayerController.FindPlayer(_killer.PlayerId).SetKill();
         }
 
         IEnumerator WaitForDespawnDeadEnemy()
@@ -226,8 +226,8 @@ namespace VitaliyNULL.NetworkEnemy
             Health -= damage;
             try
             {
-                var obj = PlayerController.FindKiller(playerRef);
-                PlayerController.FindKiller(playerRef).SetDamage();
+                var obj = PlayerController.FindPlayer(playerRef);
+                PlayerController.FindPlayer(playerRef).SetDamage();
             }
             catch (NullReferenceException e)
             {

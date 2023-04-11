@@ -41,39 +41,42 @@ namespace VitaliyNULL.Factory
 
         private void Spawn(int wave)
         {
-            int countOfSpawners = 0;
-            switch (wave)
+            if (HasStateAuthority)
             {
-                case 1:
-                    countOfSpawners = 1;
-                    for (int i = 0; i < countOfSpawners; i++)
-                    {
-                        Runner.Spawn(_networkEnemies[EnemyType.Zombie], spawnPoints.GetRandomPoint().position,
-                            Quaternion.identity);
-                    }
+                int countOfSpawners = 0;
+                switch (wave)
+                {
+                    case 1:
+                        countOfSpawners = 1;
+                        for (int i = 0; i < countOfSpawners; i++)
+                        {
+                            Runner.Spawn(_networkEnemies[EnemyType.Zombie], spawnPoints.GetRandomPoint().position,
+                                Quaternion.identity);
+                        }
 
-                    break;
-                case 2:
-                    countOfSpawners = Random.Range(1, 3);
-                    for (int i = 0; i < countOfSpawners; i++)
-                    {
-                        Runner.Spawn(_networkEnemies[(EnemyType)Random.Range(0, 2)],
-                            spawnPoints.GetRandomPoint().position, Quaternion.identity);
-                    }
+                        break;
+                    case 2:
+                        countOfSpawners = Random.Range(1, 3);
+                        for (int i = 0; i < countOfSpawners; i++)
+                        {
+                            Runner.Spawn(_networkEnemies[(EnemyType)Random.Range(0, 2)],
+                                spawnPoints.GetRandomPoint().position, Quaternion.identity);
+                        }
 
-                    break;
-                case 3:
-                    countOfSpawners = Random.Range(1, 4);
-                    for (int i = 0; i < countOfSpawners; i++)
-                    {
-                        Runner.Spawn(_networkEnemies[(EnemyType)Random.Range(0, 3)],
-                            spawnPoints.GetRandomPoint().position, Quaternion.identity);
-                    }
+                        break;
+                    case 3:
+                        countOfSpawners = Random.Range(1, 4);
+                        for (int i = 0; i < countOfSpawners; i++)
+                        {
+                            Runner.Spawn(_networkEnemies[(EnemyType)Random.Range(0, 3)],
+                                spawnPoints.GetRandomPoint().position, Quaternion.identity);
+                        }
 
-                    break;
-                default:
-                    Debug.LogError("Not set wave");
-                    break;
+                        break;
+                    default:
+                        Debug.LogError("Not set wave");
+                        break;
+                }
             }
         }
 

@@ -63,7 +63,6 @@ namespace VitaliyNULL.Fusion
                         Debug.Log("Winner");
                         _isGameOver = true;
                         RPC_GameOver();
-                        
                         break;
                 }
 
@@ -132,8 +131,11 @@ namespace VitaliyNULL.Fusion
         [Rpc]
         private void RPC_GameOver()
         {
-            PlayerController playerController = PlayerController.FindKiller(Runner.LocalPlayer);
-            // playerController.RPC_SpawnLeaderboardContainer();
+            Debug.LogError($"Current player is {Runner.LocalPlayer.PlayerId}");
+            foreach (var playerRef in Runner.ActivePlayers)
+            {
+                PlayerController.FindPlayer(playerRef).SpawnLeaderboardContainer();
+            }
         }
 
         #endregion
