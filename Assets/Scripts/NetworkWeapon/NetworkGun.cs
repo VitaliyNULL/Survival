@@ -131,9 +131,9 @@ namespace VitaliyNULL.NetworkWeapon
         {
             if (GetInput(out NetworkInputData data))
             {
-                _gunDirection = data.directionToShoot.normalized;
                 Vector3 rotation = data.directionToShoot - transform.position;
-                float rotateZ = Mathf.Atan2(rotation.y, rotation.z) * Mathf.Rad2Deg;
+                _gunDirection = data.directionToShoot.normalized;
+                float rotateZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
                 _gunRotation = Quaternion.Euler(0, 0, rotateZ);
             }
         }
