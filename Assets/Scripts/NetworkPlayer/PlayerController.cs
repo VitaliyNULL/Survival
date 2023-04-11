@@ -16,11 +16,13 @@ namespace VitaliyNULL.NetworkPlayer
         [SerializeField] private StateMachine.StateMachine stateMachine;
         [SerializeField] private WeaponController weaponController;
         private CinemachineVirtualCamera _camera;
+        private LeaderBoard _leaderBoard;
+        private readonly string _nameKey = "USERNAME";
+        private string _username;
         private GameUI _gameUI;
         private Vector3 _deathPosition;
         private readonly int _maxHealth = 15;
         private int _currentHealth;
-
         private int _damageCount = 0;
         private int _kills = 0;
 
@@ -33,6 +35,7 @@ namespace VitaliyNULL.NetworkPlayer
         #endregion
 
         #region Public Methods
+
 
         public static PlayerController FindKiller(PlayerRef playerRef)
         {
@@ -110,6 +113,8 @@ namespace VitaliyNULL.NetworkPlayer
                 _gameUI = FindObjectOfType<GameUI>();
                 _gameUI.SetHpUI(_currentHealth, _maxHealth);
                 _gameUI.SetKillsUI(_kills);
+                _username = PlayerPrefs.GetString(_nameKey);
+                _leaderBoard = FindObjectOfType<LeaderBoard>();
                 // _gameUI.SetAmmoUI(weaponController.currentGun.CurrentAmmo, weaponController.currentGun.AllAmmo);
             }
         }
@@ -125,7 +130,7 @@ namespace VitaliyNULL.NetworkPlayer
         #endregion
 
         #region Public Methods
-
+        
         public void SetDamage()
         {
             if (HasInputAuthority)
@@ -197,6 +202,12 @@ namespace VitaliyNULL.NetworkPlayer
             Destroy(GetComponent<Rigidbody2D>());
             Debug.Log("Game Over");
         }
+
+        // [Rpc]
+        // public void RPC_SpawnLeaderboardContainer()
+        // {
+        //     _leaderBoard.SpawnContainer(_username,_damageCount,_kills);
+        // }
         #endregion
     }
 }

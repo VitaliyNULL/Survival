@@ -7,6 +7,7 @@ using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VitaliyNULL.MainMenuUI;
+using VitaliyNULL.NetworkPlayer;
 
 namespace VitaliyNULL.Fusion
 {
@@ -124,6 +125,13 @@ namespace VitaliyNULL.Fusion
 
         #region Public Methods
 
+        public void SpawnLeaderBoard()
+        {
+            foreach (var player in spawnedCharacters)
+            {
+                // player.Value.GetComponent<PlayerController>().RPC_SpawnLeaderboardContainer();
+            }
+        }
         public void OnJoinLobby()
         {
             if (PlayerPrefs.GetString(_nameKey).Length > 0)

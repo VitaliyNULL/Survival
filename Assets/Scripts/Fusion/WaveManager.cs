@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using VitaliyNULL.Core;
 using VitaliyNULL.Factory;
+using VitaliyNULL.NetworkPlayer;
 
 namespace VitaliyNULL.Fusion
 {
@@ -17,6 +18,7 @@ namespace VitaliyNULL.Fusion
         private GameTime _gameTime;
         private float _currentTime;
         private int _currentWave = 0;
+        private bool _isGameOver = false;
         private readonly float _firstWaveTime = 10;
         private readonly float _secondWaveTime = 3 * 5;
         private readonly float _thirdWaveTime = 5 * 5;
@@ -26,7 +28,7 @@ namespace VitaliyNULL.Fusion
         private float _waveTime = 0;
 
         #endregion
-
+        
         #region Private Properties
 
         private bool CanSpawn
@@ -59,8 +61,12 @@ namespace VitaliyNULL.Fusion
                         break;
                     case 4:
                         Debug.Log("Winner");
+                        _isGameOver = true;
+                        RPC_GameOver();
+                        
                         break;
                 }
+
                 _currentTime = _relaxTime;
                 _isRelaxing = true;
                 _networkEnemyFactory.SetWave(_currentWave);
@@ -91,7 +97,6 @@ namespace VitaliyNULL.Fusion
             CanSpawn = true;
             _networkEnemyFactory.StartSpawning();
             _networkSupplyFactory.StartSpawning();
-            
         }
 
         public override void FixedUpdateNetwork()
@@ -123,7 +128,13 @@ namespace VitaliyNULL.Fusion
             _gameTime.SetTime(seconds);
             timeText.text = _gameTime.ToString();
         }
-        
+
+        [Rpc]
+        private void RPC_GameOver()
+        {
+            PlayerController playerController = PlayerController.FindKiller(Runner.LocalPlayer);
+            // playerController.RPC_SpawnLeaderboardContainer();
+        }
 
         #endregion
     }
