@@ -18,6 +18,7 @@ namespace VitaliyNULL.Factory
         [SerializeField] private SpawnPoints spawnPoints;
         private float _spawnRate;
         private int _currentWave;
+        private bool _isGameOver = false;
 
         private Dictionary<SupplyType, NetworkSupply> _networkSupplies =
             new Dictionary<SupplyType, NetworkSupply>();
@@ -96,20 +97,23 @@ namespace VitaliyNULL.Factory
             StartCoroutine(WaitForSpawn());
         }
 
+        public void SetGameOver()
+        {
+            _isGameOver = true;
+        }
+
         #endregion
 
         #region Private Methods
 
         private IEnumerator WaitForSpawn()
         {
-            while (true)
+            while (!_isGameOver)
             {
-                Debug.Log("Spawn");
                 if (_canSpawn)
                 {
                     Spawn(_currentWave);
                 }
-
                 yield return new WaitForSeconds(_spawnRate);
             }
         }

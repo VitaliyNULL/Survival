@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6561851819641041685}
   - component: {fileID: 6990987571776525818}
   m_Layer: 0
-  m_Name: NetworkTimeManager
+  m_Name: WaveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   timeText: {fileID: 3404935378709936968}
+  disconnectButton: {fileID: 0}
 --- !u!114 &6990987571776525818
 MonoBehaviour:
   m_ObjectHideFlags: 0

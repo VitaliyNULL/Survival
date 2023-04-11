@@ -124,16 +124,7 @@ namespace VitaliyNULL.Fusion
         #endregion
 
         #region Public Methods
-
-        // public void SpawnLeaderBoard()
-        // {
-        //     Debug.Log("In SpawnLeaderBoard player with id: " +runner.LocalPlayer.PlayerId);
-        //     foreach (var player in spawnedCharacters)
-        //     {
-        //         Debug.Log("Player id is "+ player.Value.Runner.LocalPlayer.PlayerId);
-        //         player.Value.GetComponent<PlayerController>().SpawnLeaderboardContainer();
-        //     }
-        // }
+        
         public void OnJoinLobby()
         {
             if (PlayerPrefs.GetString(_nameKey).Length > 0)
@@ -154,7 +145,7 @@ namespace VitaliyNULL.Fusion
 
         public void OnDisconnect()
         {
-            runner.Disconnect(runner.LocalPlayer);
+            runner.Shutdown();
             SceneManager.LoadScene(0);
             Debug.Log("Disconnected");
         }
@@ -174,7 +165,7 @@ namespace VitaliyNULL.Fusion
                 NetworkObject playerController =
                     runner.Spawn(this.playerController, spawnPosition, Quaternion.identity, player);
                 
-                runner.Spawn(Resources.Load<NetworkObject>("NetworkTimeManager"), transform.position,
+                runner.Spawn(Resources.Load<NetworkObject>("WaveManager"), transform.position,
                     Quaternion.identity, player);
 
                 // Keep track of the player avatars so we can remove it when they disconnect

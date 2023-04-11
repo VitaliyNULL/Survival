@@ -13,6 +13,7 @@ namespace VitaliyNULL.NetworkWeapon
         [SerializeField] private List<NetworkGun> guns = new List<NetworkGun>();
         private bool _isGunChose;
         [HideInInspector]public NetworkGun currentGun;
+        private bool _isGameOver = false;
 
         #endregion
 
@@ -30,6 +31,7 @@ namespace VitaliyNULL.NetworkWeapon
 
         public override void FixedUpdateNetwork()
         {
+            if(_isGameOver) return;
             if (GetInput(out NetworkInputData data) && data.isShoot)
             {
                 currentGun.Shoot(Object.InputAuthority);
@@ -38,6 +40,14 @@ namespace VitaliyNULL.NetworkWeapon
 
         #endregion
 
+        #region Public Methods
+
+        public void SetGameOver()
+        {
+            _isGameOver = true;
+        }
+
+        #endregion
         #region RPC
 
         #region Rpc for All

@@ -35,6 +35,7 @@ namespace VitaliyNULL.NetworkPlayer
 
         public override void FixedUpdateNetwork()
         {
+            if(playerController.GetGameOver()) return;
             if (playerController.isDead)
             {
                 return;

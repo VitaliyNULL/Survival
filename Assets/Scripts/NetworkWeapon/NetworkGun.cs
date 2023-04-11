@@ -34,7 +34,7 @@ namespace VitaliyNULL.NetworkWeapon
 
         #region Private Fields
 
-        private GameUI _gameUI;
+        private GameUIManager _gameUIManager;
         private float lastShootTime = 0;
         private bool _canReload = true;
 
@@ -227,8 +227,8 @@ namespace VitaliyNULL.NetworkWeapon
             _gunEvent += RPC_GunShoot;
             if (HasInputAuthority)
             {
-                _gameUI = FindObjectOfType<GameUI>();
-                _gameUI.SetAmmoUI(CurrentAmmo, AllAmmo);
+                _gameUIManager = FindObjectOfType<GameUIManager>();
+                _gameUIManager.SetAmmoUI(CurrentAmmo, AllAmmo);
             }
 
             if (HasStateAuthority) _canShoot = true;
@@ -243,7 +243,7 @@ namespace VitaliyNULL.NetworkWeapon
         {
             if (HasInputAuthority)
             {
-                _gameUI.SetAmmoUI(currentAmmo, allAmmo);
+                _gameUIManager.SetAmmoUI(currentAmmo, allAmmo);
             }
         }
 

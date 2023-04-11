@@ -28,7 +28,7 @@ namespace VitaliyNULL.Fusion
         private float _waveTime = 0;
 
         #endregion
-        
+
         #region Private Properties
 
         private bool CanSpawn
@@ -60,8 +60,6 @@ namespace VitaliyNULL.Fusion
                         _waveTime = _thirdWaveTime;
                         break;
                     case 4:
-                        Debug.Log("Winner");
-                        _isGameOver = true;
                         RPC_GameOver();
                         break;
                 }
@@ -100,6 +98,7 @@ namespace VitaliyNULL.Fusion
 
         public override void FixedUpdateNetwork()
         {
+            if (_isGameOver) return;
             if (!HasStateAuthority) return;
             if (_isTimerWork)
             {
@@ -131,10 +130,20 @@ namespace VitaliyNULL.Fusion
         [Rpc]
         private void RPC_GameOver()
         {
+            Debug.Log("Winner");
+            _isGameOver = true;
+            _isTimerWork = false;
+            _networkEnemyFactory.SetSpawn(false);
+            _networkSupplyFactory.SetSpawn(false);
+            timeText.gameObject.SetActive(false);
             Debug.LogError($"Current player is {Runner.LocalPlayer.PlayerId}");
             foreach (var playerRef in Runner.ActivePlayers)
             {
-                PlayerController.FindPlayer(playerRef).SpawnLeaderboardContainer();
+                PlayerController playerController = PlayerController.FindPlayer(playerRef);
+
+                playerController.SpawnLeaderboardContainer(out GameObject disconnectButton);
+                disconnectButton.SetActive(true);
+                playerController.GameOver();
             }
         }
 
