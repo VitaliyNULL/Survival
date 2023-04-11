@@ -6,7 +6,6 @@ namespace VitaliyNULL.Factory
     public class SpawnPoints : MonoBehaviour
     {
         #region Public Fields
-
         public List<Transform> spawnPoints;
 
         #endregion

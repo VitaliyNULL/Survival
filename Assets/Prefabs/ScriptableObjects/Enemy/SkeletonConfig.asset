@@ -15,7 +15,7 @@ MonoBehaviour:
   speed: 4
   health: 20
   damage: 1
-  radiusOfAttack: 1.5
+  radiusOfAttack: 2
   attackRate: 0.5
   meleeSound: {fileID: 8300000, guid: d1bef3102d08ba944ac7bcac65733a26, type: 3}
   hitSound: {fileID: 8300000, guid: 6b7eaf4532a2f614595ad58d2b86efc4, type: 3}

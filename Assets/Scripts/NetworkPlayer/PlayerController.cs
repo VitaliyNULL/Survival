@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Cinemachine;
 using Fusion;
 using UnityEngine;
@@ -7,6 +5,7 @@ using VitaliyNULL.Core;
 using VitaliyNULL.GameSceneUI;
 using VitaliyNULL.NetworkWeapon;
 using VitaliyNULL.StateMachine;
+using VitaliyNULL.Supply;
 
 namespace VitaliyNULL.NetworkPlayer
 {
@@ -87,6 +86,18 @@ namespace VitaliyNULL.NetworkPlayer
 
         #endregion
 
+        #region MonoBehaviour Callbacks
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.CompareTag("Supply"))
+            {
+                col.GetComponent<NetworkSupply>().PickUp(this);
+            }
+        }
+
+        #endregion
+
         #region NetworkBehaviour Callbacks
 
         public override void Spawned()
@@ -126,6 +137,16 @@ namespace VitaliyNULL.NetworkPlayer
         public void SetKill()
         {
             Kills++;
+        }
+
+        public void AddHealth()
+        {
+            Health += 4;
+        }
+
+        public void AddAmmo()
+        {
+            weaponController.currentGun.AddAmmo();
         }
 
         #endregion

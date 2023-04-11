@@ -18,7 +18,7 @@ MonoBehaviour:
   ammoCapacity: 90
   bulletSpeed: 30
   timeToWaitBetweenShoot: 1
-  timeToReload: 5
+  timeToReload: 3
   gunBullet: {fileID: 8875077371203724633, guid: db5ed98ff5025fd4a8bf89a9123850b2, type: 3}
   gunShootSound: {fileID: 8300000, guid: 6f0c572d865b4664db7a460972bc4768, type: 3}
   gunImageUI: {fileID: -205726582, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
