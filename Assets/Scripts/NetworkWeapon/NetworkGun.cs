@@ -13,6 +13,7 @@ namespace VitaliyNULL.NetworkWeapon
         #region Protected Fields
 
         [SerializeField] protected GunConfig gunConfig;
+        protected AudioSource _audioSource;
         protected string _gunName;
         protected int _damage;
 
@@ -88,6 +89,7 @@ namespace VitaliyNULL.NetworkWeapon
                 {
                     _canReload = false;
                     _canShoot = false;
+
                     return;
                 }
 
@@ -148,6 +150,7 @@ namespace VitaliyNULL.NetworkWeapon
             }
 
             StartCoroutine(WaitBetweenShoot());
+            _audioSource.PlayOneShot(_gunShootSound);
             GunBullet bullet = Runner.Spawn(_gunBullet, transform.position, rotation, playerRef);
             bullet.SetDirectionAndSpeed(direction, speed, rotation, _damage);
         }
@@ -224,6 +227,7 @@ namespace VitaliyNULL.NetworkWeapon
             _timeToWaitBetweenShoot = gunConfig.TimeToWaitBetweenShoot;
             _timeToReload = gunConfig.TimeToReload;
             GunType = gunConfig.GunType;
+            _audioSource = GetComponent<AudioSource>();
             _gunEvent += RPC_GunShoot;
             if (HasInputAuthority)
             {
@@ -236,7 +240,7 @@ namespace VitaliyNULL.NetworkWeapon
 
         #endregion
 
-        #region Only for InputAuthority
+        #region RPC
 
         [Rpc]
         private void RPC_TakeUpdate(int currentAmmo, int allAmmo)

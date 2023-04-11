@@ -19,10 +19,10 @@ namespace VitaliyNULL.Fusion
         private float _currentTime;
         private int _currentWave = 0;
         private bool _isGameOver = false;
-        private readonly float _firstWaveTime = 10;
-        private readonly float _secondWaveTime = 3 * 5;
-        private readonly float _thirdWaveTime = 5 * 5;
-        private readonly float _relaxTime = 5f;
+        private readonly float _firstWaveTime = 60;
+        private readonly float _secondWaveTime = 60 * 3;
+        private readonly float _thirdWaveTime = 60 * 5;
+        private readonly float _relaxTime = 30f;
         private bool _isRelaxing;
         private bool _canSpawn;
         private float _waveTime = 0;
@@ -86,7 +86,7 @@ namespace VitaliyNULL.Fusion
             _networkEnemyFactory = FindObjectOfType<NetworkEnemyFactory>();
             _networkSupplyFactory = FindObjectOfType<NetworkSupplyFactory>();
             _gameTime = new GameTime();
-            CurrentWave = 3;
+            CurrentWave = 1;
             _currentTime = _firstWaveTime;
             _gameTime.SetTime(Mathf.FloorToInt(_currentTime));
             _isTimerWork = true;
@@ -102,7 +102,7 @@ namespace VitaliyNULL.Fusion
             if (!HasStateAuthority) return;
             if (_isTimerWork)
             {
-                RPC_ChangeTime(Mathf.FloorToInt(_currentTime -= Time.deltaTime));
+                RPC_ChangeTime(Mathf.FloorToInt(_currentTime -= Runner.DeltaTime));
                 if (_currentTime <= 0 && _isRelaxing)
                 {
                     CanSpawn = true;
@@ -136,6 +136,8 @@ namespace VitaliyNULL.Fusion
             _networkEnemyFactory.SetSpawn(false);
             _networkSupplyFactory.SetSpawn(false);
             timeText.gameObject.SetActive(false);
+            _networkEnemyFactory.SetGameOver();
+            _networkSupplyFactory.SetGameOver();
             Debug.LogError($"Current player is {Runner.LocalPlayer.PlayerId}");
             foreach (var playerRef in Runner.ActivePlayers)
             {
@@ -146,7 +148,6 @@ namespace VitaliyNULL.Fusion
                 playerController.GameOver();
             }
         }
-
         #endregion
     }
 }

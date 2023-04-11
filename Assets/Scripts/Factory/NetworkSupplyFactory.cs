@@ -34,11 +34,11 @@ namespace VitaliyNULL.Factory
             _networkSupplies[SupplyType.AmmoSupply] = ammoSupply;
             _networkSupplies[SupplyType.HealthSupply] = healSupply;
             _networkSupplies[SupplyType.BombSupply] = bombSupply;
-            _spawnRate = 3f;
+            _spawnRate = 15f;
         }
 
         #endregion
-        
+
         #region Public Methods
 
         private void Spawn(int wave)
@@ -58,7 +58,7 @@ namespace VitaliyNULL.Factory
 
                         break;
                     case 2:
-                        countOfSpawners = Random.Range(1, 3);
+                        countOfSpawners = 2;
                         for (int i = 0; i < countOfSpawners; i++)
                         {
                             Runner.Spawn(_networkSupplies[(SupplyType)Random.Range(0, 2)],
@@ -67,7 +67,7 @@ namespace VitaliyNULL.Factory
 
                         break;
                     case 3:
-                        countOfSpawners = Random.Range(1, 4);
+                        countOfSpawners = Random.Range(2, 4);
                         for (int i = 0; i < countOfSpawners; i++)
                         {
                             Runner.Spawn(_networkSupplies[(SupplyType)Random.Range(0, 3)],
@@ -90,6 +90,18 @@ namespace VitaliyNULL.Factory
         public void SetWave(int wave)
         {
             _currentWave = wave;
+            switch (_currentWave)
+            {
+                case 1:
+                    _spawnRate = 15f;
+                    break;
+                case 2:
+                    _spawnRate = 10f;
+                    break;
+                case 3:
+                    _spawnRate = 7f;
+                    break;
+            }
         }
 
         public void StartSpawning()
@@ -114,6 +126,7 @@ namespace VitaliyNULL.Factory
                 {
                     Spawn(_currentWave);
                 }
+
                 yield return new WaitForSeconds(_spawnRate);
             }
         }

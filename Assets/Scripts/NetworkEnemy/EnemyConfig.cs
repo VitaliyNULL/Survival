@@ -15,6 +15,7 @@ namespace VitaliyNULL.NetworkEnemy
         [SerializeField] private float attackRate;
         [SerializeField] private AudioClip meleeSound;
         [SerializeField] private AudioClip hitSound;
+        [SerializeField] private AudioClip deathSound;
         [SerializeField] private EnemyType enemyType;
 
         #endregion
@@ -24,6 +25,7 @@ namespace VitaliyNULL.NetworkEnemy
         public float Speed => speed;
         public int Damage => damage;
 
+        public AudioClip DeathSound => deathSound;
         public EnemyType EnemyType => enemyType;
 
         public int Health => health;

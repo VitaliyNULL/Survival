@@ -15,6 +15,7 @@ namespace VitaliyNULL.NetworkEnemy
         [SerializeField] private EnemyConfig enemyConfig;
         [SerializeField] private StateMachine.StateMachine stateMachine;
         [SerializeField] private LayerMask playerMask;
+        private AudioSource _audioSource;
         private float _speed;
         private int _currentHealth;
         private int _maxHealth;
@@ -23,6 +24,7 @@ namespace VitaliyNULL.NetworkEnemy
         private float _attackRate;
         private AudioClip _meleeSound;
         private AudioClip _hitSound;
+        private AudioClip _deathSound;
         private Collider2D _player;
         private NetworkRigidbody2D _networkRigidbody2D;
         private bool _hasPlayer = false;
@@ -67,6 +69,7 @@ namespace VitaliyNULL.NetworkEnemy
             _isDead = true;
             _deathPos = transform.position;
             StartCoroutine(WaitForDespawnDeadEnemy());
+            _audioSource.PlayOneShot(_deathSound);
             PlayerController.FindPlayer(_killer.PlayerId).SetKill();
         }
 
@@ -87,6 +90,7 @@ namespace VitaliyNULL.NetworkEnemy
 
         void Damage(IDamageable damageable, PlayerRef playerRef)
         {
+            _audioSource.PlayOneShot(_meleeSound);
             StartCoroutine(WaitForAttackRate(damageable, playerRef));
         }
 
@@ -122,8 +126,11 @@ namespace VitaliyNULL.NetworkEnemy
             _meleeSound = enemyConfig.MeleeSound;
             _hitSound = enemyConfig.HitSound;
             _maxHealth = enemyConfig.Health;
+            _deathSound = enemyConfig.DeathSound;
             _currentHealth = _maxHealth;
+            _audioSource = GetComponent<AudioSource>();
             _networkRigidbody2D = GetComponent<NetworkRigidbody2D>();
+            
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -224,6 +231,7 @@ namespace VitaliyNULL.NetworkEnemy
             StartCoroutine(WaitForTakeDamage());
             stateMachine.SwitchState<HitState>();
             Health -= damage;
+            _audioSource.PlayOneShot(_hitSound);
             try
             {
                 var obj = PlayerController.FindPlayer(playerRef);

@@ -15,6 +15,9 @@ namespace VitaliyNULL.NetworkPlayer
 
         [SerializeField] private StateMachine.StateMachine stateMachine;
         [SerializeField] private WeaponController weaponController;
+        [SerializeField] private AudioClip hitClip;
+        [SerializeField] private AudioClip deadClip;
+        private AudioSource _audioSource;
         private CinemachineVirtualCamera _camera;
         private readonly string _nameKey = "USERNAME";
         private string _username;
@@ -64,6 +67,7 @@ namespace VitaliyNULL.NetworkPlayer
                 if (_currentHealth == 0)
                 {
                     RPC_Death();
+                    _audioSource.PlayOneShot(deadClip,1);
                 }
             }
         }
@@ -113,6 +117,7 @@ namespace VitaliyNULL.NetworkPlayer
             {
                 _camera = FindObjectOfType<CinemachineVirtualCamera>();
                 _camera.Follow = transform;
+                _audioSource = GetComponent<AudioSource>();
                 _gameUIManager = FindObjectOfType<GameUIManager>();
                 _gameUIManager.SetHpUI(_currentHealth, _maxHealth);
                 _gameUIManager.SetKillsUI(_kills);
@@ -197,6 +202,7 @@ namespace VitaliyNULL.NetworkPlayer
         public void TakeDamage(int damage, PlayerRef playerRef)
         {
             Health -= damage;
+            _audioSource.PlayOneShot(hitClip,1);
             Debug.Log($"Player health is {Health}");
         }
 
