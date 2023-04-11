@@ -215,7 +215,7 @@ namespace VitaliyNULL.NetworkWeapon
             _damage = gunConfig.Damage;
             _storageCapacity = gunConfig.StorageCapacity;
             _ammoCapacity = gunConfig.AmmoCapacity;
-            _allAmmo = _ammoCapacity;
+            _allAmmo = Mathf.FloorToInt(_ammoCapacity/2);
             _currentAmmo = _storageCapacity;
             _bulletSpeed = gunConfig.BulletSpeed;
             _gunBullet = gunConfig.GunBullet;

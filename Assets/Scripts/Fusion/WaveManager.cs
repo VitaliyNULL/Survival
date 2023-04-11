@@ -83,7 +83,7 @@ namespace VitaliyNULL.Fusion
             _networkEnemyFactory = FindObjectOfType<NetworkEnemyFactory>();
             _networkSupplyFactory = FindObjectOfType<NetworkSupplyFactory>();
             _gameTime = new GameTime();
-            CurrentWave = 1;
+            CurrentWave = 3;
             _currentTime = _firstWaveTime;
             _gameTime.SetTime(Mathf.FloorToInt(_currentTime));
             _isTimerWork = true;
@@ -123,6 +123,7 @@ namespace VitaliyNULL.Fusion
             _gameTime.SetTime(seconds);
             timeText.text = _gameTime.ToString();
         }
+        
 
         #endregion
     }

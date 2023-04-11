@@ -2,22 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac3a7e1-3b96-4ad8-9296-96be1b38113b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/SupplyType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/SupplyType.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Survival/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Supply/AmmoSupply.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Supply/AmmoSupply.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Supply/BombSupply.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Supply/BombSupply.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Supply/HealthSupply.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Supply/HealthSupply.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/IPickupable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/IPickupable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Factory/NetworkSupplyFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Factory/NetworkSupplyFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Enemy/SkeletonConfig.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Enemy/SkeletonConfig.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Gun/RifleConfig.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Gun/RifleConfig.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Gun/ShootgunConfig.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Gun/ShootgunConfig.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Gun/TompsonConfig.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ScriptableObjects/Gun/TompsonConfig.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/LobbyScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/LobbyScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Fusion/WaveManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Fusion/WaveManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/NetworkEnemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkEnemy/NetworkEnemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkPlayer/PlayerController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkGun.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkWeapon/NetworkGun.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Supply/AmmoSupply.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Supply/AmmoSupply.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Supply/BombSupply.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Supply/BombSupply.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Supply/HealSupply.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Supply/HealSupply.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Supply/NetworkSupply.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Supply/NetworkSupply.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,6 +134,7 @@
       <workItem from="1680765287415" duration="10422000" />
       <workItem from="1680851771116" duration="22364000" />
       <workItem from="1681049304797" duration="4826000" />
+      <workItem from="1681196660253" duration="4050000" />
     </task>
     <servers />
   </component>
