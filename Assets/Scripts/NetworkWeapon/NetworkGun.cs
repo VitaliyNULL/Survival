@@ -128,7 +128,6 @@ namespace VitaliyNULL.NetworkWeapon
             if (_canShoot)
             {
                 _canShoot = false;
-                Debug.Log("Shoot " + _gunRotation);
                 _gunEvent?.Invoke(_gunDirection, _bulletSpeed, _gunRotation, playerRef);
             }
         }
@@ -145,7 +144,6 @@ namespace VitaliyNULL.NetworkWeapon
                 Vector3 rotation = data.directionToShoot.normalized;
                 float rotateZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
                 _gunRotation = Quaternion.Euler(0, 0, rotateZ-90);
-                Debug.Log("Fixed Update "+ rotateZ);
             }
         }
 
