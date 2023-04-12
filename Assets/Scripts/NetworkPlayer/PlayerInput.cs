@@ -74,7 +74,7 @@ namespace VitaliyNULL.NetworkPlayer
             Debug.Log("Pointer up");
             _touchedJoystick = false;
         }
-        
+
         #endregion
 
         #region INetworkRunnerCallbacks
@@ -92,11 +92,12 @@ namespace VitaliyNULL.NetworkPlayer
             var data = new NetworkInputData();
             data.isShoot = _touchedJoystick;
             // Debug.Log("Data is shoot: " + data.isShoot);
-            // #if UNITY_EDITOR
+#if UNITY_EDITOR
             data.directionToMove = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            // #endif
-            //Android
-            // data.directionToMove = movementJoystick.Direction;
+#endif
+#if UNITY_ANDROID
+            data.directionToMove = movementJoystick.Direction;
+#endif
             data.directionToShoot = weaponJoystick.Direction;
             input.Set(data);
         }
