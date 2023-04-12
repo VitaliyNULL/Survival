@@ -23,7 +23,7 @@ namespace VitaliyNULL.Fusion
         private readonly string _lobbyName = "MainLobby";
         private readonly string _mySkin = "MY_SKIN";
         public NetworkObject playerController;
-        private NetworkObject _playerInput;
+        // private NetworkObject _playerInput;
 
         #endregion
 
@@ -124,7 +124,7 @@ namespace VitaliyNULL.Fusion
         #endregion
 
         #region Public Methods
-        
+
         public void OnJoinLobby()
         {
             if (PlayerPrefs.GetString(_nameKey).Length > 0)
@@ -164,7 +164,7 @@ namespace VitaliyNULL.Fusion
                     new Vector3((player.RawEncoded % runner.Config.Simulation.DefaultPlayers) * 3, 1, 0);
                 NetworkObject playerController =
                     runner.Spawn(this.playerController, spawnPosition, Quaternion.identity, player);
-                
+
                 runner.Spawn(Resources.Load<NetworkObject>("WaveManager"), transform.position,
                     Quaternion.identity, player);
 
@@ -176,11 +176,7 @@ namespace VitaliyNULL.Fusion
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
             Debug.Log($"Player with id: {player.PlayerId} left the room ");
-            if (spawnedCharacters.TryGetValue(player, out NetworkObject playerController))
-            {
-                // runner.Despawn(playerController);
-                spawnedCharacters.Remove(player);
-            }
+            spawnedCharacters.Remove(player);
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -194,7 +190,6 @@ namespace VitaliyNULL.Fusion
 
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
-            Debug.Log($"Shut down {runner.LocalPlayer.PlayerId}");
             // Can check if the Runner is being shutdown because of the Host Migration
             if (shutdownReason == ShutdownReason.HostMigration)
             {
