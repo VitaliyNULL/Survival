@@ -8,7 +8,7 @@ namespace VitaliyNULL.MainMenuUI
     public class UIMainMenuManager : MonoBehaviour
     {
         #region Private Fields
-
+        
         [SerializeField] private TMP_Text warningText;
         [SerializeField] private SessionInfoUIContainer prefabSessionInfoUIContainer;
         [SerializeField] private RectTransform lobbyContent;
@@ -22,7 +22,7 @@ namespace VitaliyNULL.MainMenuUI
         private GameObject _currentUIObject;
         private readonly string _gameSceneName = "GameScene";
         private readonly string _nameKey = "USERNAME";
-        private string _sessionName;
+        private string _sessionName = "";
 
         #endregion
 
@@ -61,6 +61,11 @@ namespace VitaliyNULL.MainMenuUI
             {
                 ChangeCurrentUIObject(createRoomUI);
                 OpenCurrentUIObject();
+                CleanWarningText();
+            }
+            else
+            {
+                ChangeWarningText("Write username!");
             }
         }
 
@@ -106,8 +111,16 @@ namespace VitaliyNULL.MainMenuUI
 
         public void CreateNewGameSession()
         {
-            FusionManager.Instance.OnCreateRoom(_sessionName);
-            Debug.Log(_sessionName);
+            if (_sessionName.Length >0)
+            {
+                FusionManager.Instance.OnCreateRoom(_sessionName);
+                Debug.Log(_sessionName);
+                CleanWarningText();
+            }
+            else
+            {
+                ChangeWarningText("Write room name!");
+            }
         }
 
         public void OpenWaitingUI()

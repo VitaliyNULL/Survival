@@ -94,8 +94,7 @@ namespace VitaliyNULL.NetworkPlayer
             // Debug.Log("Data is shoot: " + data.isShoot);
 #if UNITY_EDITOR
             data.directionToMove = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-#endif
-#if UNITY_ANDROID
+#elif UNITY_ANDROID
             data.directionToMove = movementJoystick.Direction;
 #endif
             data.directionToShoot = weaponJoystick.Direction;
