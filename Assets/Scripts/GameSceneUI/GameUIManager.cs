@@ -43,7 +43,6 @@ namespace VitaliyNULL.GameSceneUI
 
         public void SpawnContainer(string name, int damage, int kills)
         {
-            Debug.LogError("Spawning Container");
             background.SetActive(true);
             joystickUI.SetActive(false);
             gameUI.SetActive(false);
@@ -54,7 +53,6 @@ namespace VitaliyNULL.GameSceneUI
 
         public void SpawnContainer(string name, int damage, int kills, out GameObject disconnectButton)
         {
-            Debug.LogError("Spawning Container");
             background.SetActive(true);
             joystickUI.SetActive(false);
             gameUI.SetActive(false);

@@ -12,7 +12,8 @@ namespace VitaliyNULL.NetworkWeapon
 
         [SerializeField] private List<NetworkGun> guns = new List<NetworkGun>();
         private bool _isGunChose;
-        [HideInInspector]public NetworkGun currentGun;
+        [HideInInspector] public NetworkGun currentGun;
+        [SerializeField] private Transform aim;
         private bool _isGameOver = false;
 
         #endregion
@@ -21,19 +22,32 @@ namespace VitaliyNULL.NetworkWeapon
 
         public override void Spawned()
         {
-             if (HasInputAuthority)
-             {
-                 RPC_ChooseGun(ChooseRandomGun());
-             }
-             RPC_ChangeRemoteGun();
+            if (HasInputAuthority)
+            {
+                RPC_ChooseGun(ChooseRandomGun());
+            }
+            RPC_ChangeRemoteGun();
         }
 
         public override void FixedUpdateNetwork()
         {
-            if(_isGameOver) return;
+            if (_isGameOver) return;
             if (GetInput(out NetworkInputData data) && data.isShoot)
             {
                 currentGun.Shoot(Object.InputAuthority);
+            }
+
+            if (HasInputAuthority)
+            {
+                if (data.directionToShoot.magnitude > 0)
+                {
+                    aim.gameObject.SetActive(true);
+                    aim.position = transform.position + data.directionToShoot.normalized * 2;
+                }
+                else
+                {
+                    aim.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -47,6 +61,7 @@ namespace VitaliyNULL.NetworkWeapon
         }
 
         #endregion
+
         #region RPC
 
         #region Rpc for All
