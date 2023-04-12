@@ -118,6 +118,15 @@ namespace VitaliyNULL.Fusion
 
         #endregion
 
+        #region Public Methods
+
+        public void SetGameOver()
+        {
+            RPC_GameOver();
+        }
+        
+
+        #endregion
         #region RPC
 
         [Rpc]

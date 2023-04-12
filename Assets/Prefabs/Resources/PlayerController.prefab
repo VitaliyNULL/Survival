@@ -477,6 +477,7 @@ MonoBehaviour:
   weaponController: {fileID: 1298529720280943033}
   hitClip: {fileID: 8300000, guid: 0bddcb411d826e14bb26d40ae45d8e22, type: 3}
   deadClip: {fileID: 8300000, guid: 291608b8d286e2a4580ff36324455ce2, type: 3}
+  audioSource: {fileID: 7151806323901205572}
   isDead: 0
 --- !u!114 &2892001179636806175
 MonoBehaviour:

@@ -203,7 +203,7 @@ namespace VitaliyNULL.NetworkEnemy
             if (!_isAttacked)
             {
                 Collider2D collider2D = Physics2D.OverlapCircle(transform.position, _radiusOfAttack, playerMask);
-                if (collider2D)
+                if (collider2D !=null)
                 {
                     Damage(collider2D.gameObject.GetComponent<IDamageable>(), _killer);
                 }

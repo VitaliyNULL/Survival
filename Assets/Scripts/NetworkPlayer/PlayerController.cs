@@ -2,6 +2,7 @@ using Cinemachine;
 using Fusion;
 using UnityEngine;
 using VitaliyNULL.Core;
+using VitaliyNULL.Fusion;
 using VitaliyNULL.GameSceneUI;
 using VitaliyNULL.NetworkWeapon;
 using VitaliyNULL.StateMachine;
@@ -17,7 +18,7 @@ namespace VitaliyNULL.NetworkPlayer
         [SerializeField] private WeaponController weaponController;
         [SerializeField] private AudioClip hitClip;
         [SerializeField] private AudioClip deadClip;
-        private AudioSource _audioSource;
+        [SerializeField] private AudioSource audioSource;
         private CinemachineVirtualCamera _camera;
         private readonly string _nameKey = "USERNAME";
         private string _username;
@@ -67,7 +68,7 @@ namespace VitaliyNULL.NetworkPlayer
                 if (_currentHealth == 0)
                 {
                     RPC_Death();
-                    _audioSource.PlayOneShot(deadClip,1);
+                    audioSource.PlayOneShot(deadClip,1);
                 }
             }
         }
@@ -117,7 +118,6 @@ namespace VitaliyNULL.NetworkPlayer
             {
                 _camera = FindObjectOfType<CinemachineVirtualCamera>();
                 _camera.Follow = transform;
-                _audioSource = GetComponent<AudioSource>();
                 _gameUIManager = FindObjectOfType<GameUIManager>();
                 _gameUIManager.SetHpUI(_currentHealth, _maxHealth);
                 _gameUIManager.SetKillsUI(_kills);
@@ -202,7 +202,7 @@ namespace VitaliyNULL.NetworkPlayer
         public void TakeDamage(int damage, PlayerRef playerRef)
         {
             Health -= damage;
-            _audioSource.PlayOneShot(hitClip,1);
+            audioSource.PlayOneShot(hitClip,1);
             Debug.Log($"Player health is {Health}");
         }
 
@@ -243,15 +243,21 @@ namespace VitaliyNULL.NetworkPlayer
             Destroy(GetComponentInChildren<Collider2D>());
             Destroy(GetComponent<NetworkRigidbody2D>());
             Destroy(GetComponent<Rigidbody2D>());
-
             _gameUIManager.ActivateDisconnectButton();
             var players = Runner.ActivePlayers;
+            int playersThatDead = 0;
             foreach (var player in players)
             {
+                PlayerController playerController = FindPlayer(player);
+                if (playerController.isDead) playersThatDead++;
+                if (playersThatDead == Runner.SessionInfo.MaxPlayers)
+                {
+                    FindObjectOfType<WaveManager>().SetGameOver();
+                    break;
+                }
                 if (player != Runner.LocalPlayer)
                 {
-                    _camera.Follow = FindPlayer(player).transform;
-                    break;
+                    _camera.Follow = playerController.transform;
                 }
             }
         }
