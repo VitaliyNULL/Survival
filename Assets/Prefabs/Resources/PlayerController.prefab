@@ -122,6 +122,7 @@ MonoBehaviour:
   guns:
   - {fileID: 504006509645841987}
   - {fileID: 560840426272183476}
+  - {fileID: 5911072180414758347}
   currentGun: {fileID: 0}
 --- !u!114 &5977436162961939938
 MonoBehaviour:
@@ -1084,6 +1085,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ad0e2ce11e035e4ea2686263026f7d5, type: 3}
+--- !u!114 &5911072180414758347 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3773212611617121394, guid: 2ad0e2ce11e035e4ea2686263026f7d5, type: 3}
+  m_PrefabInstance: {fileID: 7373936533879314873}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e2c163aaf7427fa04b50cac16eff44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6398940407395443264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4510608261096160249, guid: 2ad0e2ce11e035e4ea2686263026f7d5, type: 3}

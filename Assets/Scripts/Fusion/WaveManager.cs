@@ -1,6 +1,7 @@
 using Fusion;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using VitaliyNULL.Core;
 using VitaliyNULL.Factory;
 using VitaliyNULL.NetworkPlayer;
@@ -12,6 +13,7 @@ namespace VitaliyNULL.Fusion
         #region Private Fields
 
         [SerializeField] private TMP_Text timeText;
+        // [SerializeField] private Button startGameButton;
         private NetworkEnemyFactory _networkEnemyFactory;
         private NetworkSupplyFactory _networkSupplyFactory;
         private bool _isTimerWork;
@@ -75,7 +77,7 @@ namespace VitaliyNULL.Fusion
         #endregion
 
         #region NetworkBehaviour Callbacks
-
+        
         public override void Spawned()
         {
             if (!HasInputAuthority)
@@ -83,6 +85,11 @@ namespace VitaliyNULL.Fusion
                 Runner.Despawn(Object);
             }
 
+            // if (!HasStateAuthority)
+            // {
+            //     Destroy(startGameButton);
+            // }
+      
             _networkEnemyFactory = FindObjectOfType<NetworkEnemyFactory>();
             _networkSupplyFactory = FindObjectOfType<NetworkSupplyFactory>();
             _gameTime = new GameTime();
@@ -94,6 +101,9 @@ namespace VitaliyNULL.Fusion
             CanSpawn = true;
             _networkEnemyFactory.StartSpawning();
             _networkSupplyFactory.StartSpawning();
+            
+            //TODO: Realization this code when HOST start play
+            
         }
 
         public override void FixedUpdateNetwork()
@@ -120,6 +130,10 @@ namespace VitaliyNULL.Fusion
 
         #region Public Methods
 
+        // public void StartGame()
+        // {
+        //     RPC_StartGame();
+        // }
         public void SetGameOver()
         {
             RPC_GameOver();
@@ -157,6 +171,22 @@ namespace VitaliyNULL.Fusion
                 playerController.GameOver();
             }
         }
+        //
+        // [Rpc]
+        // private void RPC_StartGame()
+        // {
+        //     _networkEnemyFactory = FindObjectOfType<NetworkEnemyFactory>();
+        //     _networkSupplyFactory = FindObjectOfType<NetworkSupplyFactory>();
+        //     _gameTime = new GameTime();
+        //     CurrentWave = 1;
+        //     _currentTime = _firstWaveTime;
+        //     _gameTime.SetTime(Mathf.FloorToInt(_currentTime));
+        //     _isTimerWork = true;
+        //     _isRelaxing = false;
+        //     CanSpawn = true;
+        //     _networkEnemyFactory.StartSpawning();
+        //     _networkSupplyFactory.StartSpawning();
+        // }
         #endregion
     }
 }

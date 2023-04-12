@@ -19,6 +19,7 @@ namespace VitaliyNULL.NetworkPlayer
         [SerializeField] private AudioClip hitClip;
         [SerializeField] private AudioClip deadClip;
         [SerializeField] private AudioSource audioSource;
+        private WaveManager _waveManager;
         private CinemachineVirtualCamera _camera;
         private readonly string _nameKey = "USERNAME";
         private string _username;
@@ -128,6 +129,7 @@ namespace VitaliyNULL.NetworkPlayer
             }
             _gameUIManager = FindObjectOfType<GameUIManager>();
             RPC_ChangeNickNameRemotePlayer();
+            
         }
 
         private void FixedUpdate()

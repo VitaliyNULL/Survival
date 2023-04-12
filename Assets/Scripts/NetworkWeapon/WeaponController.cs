@@ -21,12 +21,11 @@ namespace VitaliyNULL.NetworkWeapon
 
         public override void Spawned()
         {
-            if (HasInputAuthority)
-            {
-                RPC_ChooseGun(ChooseRandomGun());
-            }
-
-            RPC_ChangeRemoteGun();
+             if (HasInputAuthority)
+             {
+                 RPC_ChooseGun(ChooseRandomGun());
+             }
+             RPC_ChangeRemoteGun();
         }
 
         public override void FixedUpdateNetwork()

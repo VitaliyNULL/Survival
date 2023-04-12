@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using VitaliyNULL.Core;
 
@@ -24,6 +25,16 @@ namespace VitaliyNULL.MainMenuUI
         {
             _mainAnimator = GetComponent<Animator>();
             Instance = this;
+            if (PlayerPrefs.HasKey(_mySkin))
+            {
+                PlayerSkinChange((PlayerSkin)PlayerPrefs.GetInt(_mySkin));
+            }
+            else _mainAnimator.CrossFade("farmer0", 0);
+        }
+
+        private void OnEnable()
+        {
+            _mainAnimator ??= GetComponent<Animator>();
             if (PlayerPrefs.HasKey(_mySkin))
             {
                 PlayerSkinChange((PlayerSkin)PlayerPrefs.GetInt(_mySkin));

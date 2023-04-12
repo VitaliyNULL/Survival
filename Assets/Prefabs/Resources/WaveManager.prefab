@@ -48,7 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   timeText: {fileID: 3404935378709936968}
-  disconnectButton: {fileID: 0}
 --- !u!114 &6990987571776525818
 MonoBehaviour:
   m_ObjectHideFlags: 0
