@@ -112,13 +112,23 @@ namespace VitaliyNULL.NetworkWeapon
 
         public void AddAmmo()
         {
+            if (AllAmmo == 0)
+            {
+                _canReload = true;
+            }
             AllAmmo += _storageCapacity;
+            if (CurrentAmmo == 0)
+            {
+                CurrentAmmo = 0;
+            }
         }
+
         public void Shoot(PlayerRef playerRef)
         {
             if (_canShoot)
             {
                 _canShoot = false;
+                Debug.Log("Shoot " + _gunRotation);
                 _gunEvent?.Invoke(_gunDirection, _bulletSpeed, _gunRotation, playerRef);
             }
         }
@@ -129,12 +139,13 @@ namespace VitaliyNULL.NetworkWeapon
 
         public override void FixedUpdateNetwork()
         {
-            if (GetInput(out NetworkInputData data))
+            if (GetInput(out NetworkInputData data) && data.isShoot)
             {
-                Vector3 rotation = data.directionToShoot - transform.position;
                 _gunDirection = data.directionToShoot.normalized;
+                Vector3 rotation = data.directionToShoot.normalized;
                 float rotateZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-                _gunRotation = Quaternion.Euler(0, 0, rotateZ);
+                _gunRotation = Quaternion.Euler(0, 0, rotateZ-90);
+                Debug.Log("Fixed Update "+ rotateZ);
             }
         }
 
@@ -218,7 +229,7 @@ namespace VitaliyNULL.NetworkWeapon
             _damage = gunConfig.Damage;
             _storageCapacity = gunConfig.StorageCapacity;
             _ammoCapacity = gunConfig.AmmoCapacity;
-            _allAmmo = Mathf.FloorToInt(_ammoCapacity/2);
+            _allAmmo = Mathf.FloorToInt(_ammoCapacity / 2);
             _currentAmmo = _storageCapacity;
             _bulletSpeed = gunConfig.BulletSpeed;
             _gunBullet = gunConfig.GunBullet;

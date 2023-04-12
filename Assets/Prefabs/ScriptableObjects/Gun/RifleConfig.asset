@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RifleConfig
   m_EditorClassIdentifier: 
   gunName: Rifle
-  damage: 10
+  damage: 5
   storageCapacity: 10
   ammoCapacity: 90
   bulletSpeed: 30

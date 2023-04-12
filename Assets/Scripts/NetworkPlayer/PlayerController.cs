@@ -243,14 +243,17 @@ namespace VitaliyNULL.NetworkPlayer
             Destroy(GetComponentInChildren<Collider2D>());
             Destroy(GetComponent<NetworkRigidbody2D>());
             Destroy(GetComponent<Rigidbody2D>());
-            _gameUIManager.ActivateDisconnectButton();
+            if (HasInputAuthority)
+            {
+                _gameUIManager.ActivateDisconnectButton();
+            }
             var players = Runner.ActivePlayers;
             int playersThatDead = 0;
             foreach (var player in players)
             {
                 PlayerController playerController = FindPlayer(player);
                 if (playerController.isDead) playersThatDead++;
-                if (playersThatDead == Runner.SessionInfo.MaxPlayers)
+                if (playersThatDead == Runner.SessionInfo.PlayerCount)
                 {
                     FindObjectOfType<WaveManager>().SetGameOver();
                     break;
