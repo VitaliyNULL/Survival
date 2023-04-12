@@ -19,11 +19,10 @@ namespace VitaliyNULL.NetworkWeapon
         {
             if (!HasStateAuthority) return;
             StartCoroutine(WaitBetweenShoot());
-            // _audioSource.PlayOneShot(_gunShootSound);
+            _audioSource.PlayOneShot(_gunShootSound);
             float step = _range / 10;
             for (int i = 0; i < _countOfBullets; i++)
             {
-                _audioSource.PlayOneShot(_gunShootSound);
                 Vector2 directionNormalized = direction.normalized;
                 directionNormalized.x += Random.Range(-step, step);
                 directionNormalized.y -= Random.Range(-step, step);
